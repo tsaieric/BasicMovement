@@ -18,7 +18,7 @@ public class MovementBehavior : MonoBehaviour
 	private float maxForce = 10f;
 	private Vector3 currentPos, currentVelocity, finalSteering, targetPosition;
 	private RaycastHit hitInfo;
-
+	//erictsai
 	void Start ()
 	{
 		currentVelocity = Vector3.zero;

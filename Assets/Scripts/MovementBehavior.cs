@@ -16,7 +16,7 @@ public class MovementBehavior : MonoBehaviour
 
 	private float maxSpeed = 10f;
 	private float maxForce = 30f;
-    private float randomAngle = 0f;
+	private float randomAngle = 0f;
 	private Vector3 currentPos, currentVelocity, finalSteering, targetPosition;
 	private RaycastHit hitInfo;
 
@@ -37,22 +37,23 @@ public class MovementBehavior : MonoBehaviour
 			finalSteering += Flee (targetPosition);
 		if (thisBehavior == Behavior.Arrive)
 			finalSteering += Arrive (targetPosition);
-        if (thisBehavior == Behavior.Wander)
-            finalSteering += Wander();
-		finalSteering += ObstacleAvoidance ()*10f;
+		if (thisBehavior == Behavior.Wander)
+			finalSteering += Wander ();
+		finalSteering += ObstacleAvoidance () * 20f;
 		finalSteering.y = 0f; //zero out y velocities
+		finalSteering = Vector3.ClampMagnitude (finalSteering, maxForce);
 
-        finalSteering = Vector3.ClampMagnitude(finalSteering, maxForce);
 		//v_0 + a*t
 		Vector3 finalVelocity = currentVelocity + finalSteering * Time.deltaTime;
 		finalVelocity = Vector3.ClampMagnitude (finalVelocity, maxSpeed);
 
 		//p_0 + v*t
 		this.transform.position = currentPos + finalVelocity * Time.deltaTime;
-        this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (finalVelocity), Time.deltaTime*2);
+		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (finalVelocity), Time.deltaTime * 2);
 
 		//update current velocity for the next second
 		currentVelocity = finalVelocity;
+
 		//change Zombie animation speed based on current speed
 		this.GetComponent<Animator> ().SetFloat ("currentSpeed", currentVelocity.magnitude);
 	}
@@ -64,7 +65,7 @@ public class MovementBehavior : MonoBehaviour
 
 		Vector3 obsSteering = Vector3.zero;
 		float minAheadDist = 3f;
-        //change the detecting distance based on currentVelocity
+		//change the detecting distance based on currentVelocity
 		float detectDistance = minAheadDist + currentVelocity.magnitude / maxSpeed * minAheadDist;
 
 		//Raycast ahead
@@ -77,11 +78,17 @@ public class MovementBehavior : MonoBehaviour
 				Debug.DrawRay (currentPos, steering * maxForce, Color.red);
 				obsSteering += steering;
 			}
+			if (hitInfo.transform.tag == wallTag) {
+				float lengthPastWall = ((currentPos + velocityAhead.normalized * detectDistance) - hitInfo.point).magnitude;
+				Vector3 steering = hitInfo.normal.normalized * lengthPastWall;
+				Debug.DrawRay (currentPos, steering, Color.red);
+				obsSteering += steering;
+			} 
 		}
 		
-		//Raycast left
+		//Raycast right
 		velocityAhead = Quaternion.Euler (0, 45, 0) * velocityAhead;
-		Debug.DrawRay (currentPos, velocityAhead.normalized * detectDistance * 2, Color.yellow);
+		Debug.DrawRay (currentPos, velocityAhead.normalized * detectDistance, Color.yellow);
 		if (Physics.Raycast (currentPos, velocityAhead, out hitInfo, detectDistance)) {
 			if (hitInfo.transform.tag == sphereTag) {
 				Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
@@ -89,19 +96,17 @@ public class MovementBehavior : MonoBehaviour
 				Debug.DrawRay (currentPos, steering * maxForce, Color.red);
 				obsSteering += steering;
 			}
+			if (hitInfo.transform.tag == wallTag) {
+				float lengthPastWall = ((currentPos + velocityAhead.normalized * detectDistance) - hitInfo.point).magnitude;
+				Vector3 steering = hitInfo.normal.normalized * lengthPastWall;
+				Debug.DrawRay (currentPos, steering, Color.red);
+				obsSteering += steering;
+			} 
 		}
-		//if (Physics.Raycast (currentPos, velocityAhead, out hitInfo, detectDistance / 2)) {
-		//	if (hitInfo.transform.tag == sphereTag) {
-		//		Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
-		//		Vector3 steering = velocityAhead - collisionVelocity;
-		//		Debug.DrawRay (currentPos, steering, Color.red);
-		//		obsSteering += steering;
-		//	}
-		//}
 		
-		//Raycast right
+		//Raycast left
 		velocityAhead = Quaternion.Euler (0, -90, 0) * velocityAhead;//rotating +45-90 = -45 degrees
-		Debug.DrawRay (currentPos, velocityAhead.normalized * detectDistance * 2, Color.yellow);
+		Debug.DrawRay (currentPos, velocityAhead.normalized * detectDistance, Color.yellow);
 		if (Physics.Raycast (currentPos, velocityAhead, out hitInfo, detectDistance)) {
 			if (hitInfo.transform.tag == sphereTag) {
 				Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
@@ -109,15 +114,14 @@ public class MovementBehavior : MonoBehaviour
 				Debug.DrawRay (currentPos, steering, Color.red);
 				obsSteering += steering;
 			} 
+
+			if (hitInfo.transform.tag == wallTag) {
+				float lengthPastWall = ((currentPos + velocityAhead.normalized * detectDistance) - hitInfo.point).magnitude;
+				Vector3 steering = hitInfo.normal.normalized * lengthPastWall;
+				Debug.DrawRay (currentPos, steering, Color.red);
+				obsSteering += steering;
+			} 
 		}
-		//if (Physics.Raycast (currentPos, velocityAhead, out hitInfo, detectDistance / 2)) {
-		//	if (hitInfo.transform.tag == sphereTag) {
-		//		Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
-		//		Vector3 steering = velocityAhead - collisionVelocity;
-		//		Debug.DrawRay (currentPos, steering, Color.red);
-		//		obsSteering += steering;
-		//	} 
-		//}
 		return obsSteering;
 	}
 
@@ -161,16 +165,16 @@ public class MovementBehavior : MonoBehaviour
 
 	public Vector3 Wander ()
 	{
-        randomAngle = randomAngle+Random.Range(-15, 15);
-        //restrict randomAngle from reaching extreme angles
-        randomAngle = Mathf.Clamp(randomAngle, -120f, 120f);
-        Vector3 desiredVelocity = Quaternion.Euler(0, randomAngle, 0) * currentVelocity;
-        if (currentVelocity == Vector3.zero)
-            desiredVelocity = Quaternion.Euler(0, randomAngle, 0) * transform.forward;
-        desiredVelocity = desiredVelocity.normalized *maxSpeed/2;
-        Debug.DrawRay(currentPos, desiredVelocity, Color.blue);
-        Vector3 steering = desiredVelocity; //- currentVelocity;
-        //steering = Vector3.ClampMagnitude(steering, maxSpeed);
-        return steering;
+		randomAngle = randomAngle + Random.Range (-15f, 15f);
+		//reset randomAngle if it goes past 120,-120 degrees
+		if (Mathf.Abs (randomAngle) > 120f)
+			randomAngle = 0f;
+		Vector3 desiredVelocity = Quaternion.Euler (0, randomAngle, 0) * currentVelocity;
+		if (currentVelocity == Vector3.zero)
+			desiredVelocity = Quaternion.Euler (0, randomAngle, 0) * transform.forward;
+		desiredVelocity = desiredVelocity.normalized * maxSpeed / 2;
+		Vector3 steering = desiredVelocity;
+		Debug.DrawRay (currentPos, steering, Color.blue);
+		return steering;
 	}
 }

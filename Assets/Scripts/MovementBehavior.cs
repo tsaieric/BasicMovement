@@ -36,6 +36,8 @@ public class MovementBehavior : MonoBehaviour
 			finalSteering += Flee (targetPosition);
 		if (thisBehavior == Behavior.Arrive)
 			finalSteering += Arrive (targetPosition);
+        if (thisBehavior == Behavior.Wander)
+            finalSteering += Wander();
 		finalSteering += ObstacleAvoidance ();
 		finalSteering.y = 0f; //zero out y velocities
 
@@ -43,7 +45,7 @@ public class MovementBehavior : MonoBehaviour
 		Vector3 finalVelocity = currentVelocity + finalSteering * Time.deltaTime;
 		finalVelocity = Vector3.ClampMagnitude (finalVelocity, maxSpeed);
 
-		//p_0 + v*t + 1/2a*t^2
+		//p_0 + v*t
 		this.transform.position = currentPos + finalVelocity * Time.deltaTime;
 		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (finalVelocity), Time.deltaTime);
 
@@ -154,8 +156,13 @@ public class MovementBehavior : MonoBehaviour
 		return steering;
 	}
 
-	public void Wander ()
+	public Vector3 Wander ()
 	{
-
+        float randomAngle = Random.Range(-90, 90);
+        Vector3 desiredVelocity = Quaternion.Euler(0, randomAngle, 0) * this.transform.forward;
+        desiredVelocity = desiredVelocity.normalized * maxSpeed;
+        Vector3 steering = desiredVelocity - currentVelocity;
+        //steering = Vector3.ClampMagnitude(steering, maxSpeed);
+        return steering;
 	}
 }

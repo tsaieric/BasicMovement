@@ -38,9 +38,10 @@ public class MovementBehavior : MonoBehaviour
 			finalSteering += Arrive (targetPosition);
         if (thisBehavior == Behavior.Wander)
             finalSteering += Wander();
-		finalSteering += ObstacleAvoidance ();
+		finalSteering += ObstacleAvoidance ()*10;
 		finalSteering.y = 0f; //zero out y velocities
 
+        finalSteering = Vector3.ClampMagnitude(finalSteering, maxForce);
 		//v_0 + a*t
 		Vector3 finalVelocity = currentVelocity + finalSteering * Time.deltaTime;
 		finalVelocity = Vector3.ClampMagnitude (finalVelocity, maxSpeed);
@@ -62,6 +63,7 @@ public class MovementBehavior : MonoBehaviour
 
 		Vector3 obsSteering = Vector3.zero;
 		float minAheadDist = 3f;
+        //change the detecting distance based on currentVelocity
 		float detectDistance = minAheadDist + currentVelocity.magnitude / maxSpeed * minAheadDist;
 
 		//Raycast ahead
@@ -87,14 +89,14 @@ public class MovementBehavior : MonoBehaviour
 				obsSteering += steering;
 			}
 		}
-		if (Physics.Raycast (currentPos, velocityAhead, out hitInfo, detectDistance / 2)) {
-			if (hitInfo.transform.tag == sphereTag) {
-				Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
-				Vector3 steering = velocityAhead - collisionVelocity;
-				Debug.DrawRay (currentPos, steering * maxForce, Color.red);
-				obsSteering += steering;
-			}
-		}
+		//if (Physics.Raycast (currentPos, velocityAhead, out hitInfo, detectDistance / 2)) {
+		//	if (hitInfo.transform.tag == sphereTag) {
+		//		Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
+		//		Vector3 steering = velocityAhead - collisionVelocity;
+		//		Debug.DrawRay (currentPos, steering, Color.red);
+		//		obsSteering += steering;
+		//	}
+		//}
 		
 		//Raycast right
 		velocityAhead = Quaternion.Euler (0, -90, 0) * velocityAhead;//rotating +45-90 = -45 degrees
@@ -103,19 +105,19 @@ public class MovementBehavior : MonoBehaviour
 			if (hitInfo.transform.tag == sphereTag) {
 				Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
 				Vector3 steering = velocityAhead - collisionVelocity;
-				Debug.DrawRay (currentPos, steering * maxForce, Color.red);
+				Debug.DrawRay (currentPos, steering, Color.red);
 				obsSteering += steering;
 			} 
 		}
-		if (Physics.Raycast (currentPos, velocityAhead, out hitInfo, detectDistance / 2)) {
-			if (hitInfo.transform.tag == sphereTag) {
-				Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
-				Vector3 steering = velocityAhead - collisionVelocity;
-				Debug.DrawRay (currentPos, steering * maxForce, Color.red);
-				obsSteering += steering;
-			} 
-		}
-		return obsSteering * maxForce;
+		//if (Physics.Raycast (currentPos, velocityAhead, out hitInfo, detectDistance / 2)) {
+		//	if (hitInfo.transform.tag == sphereTag) {
+		//		Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
+		//		Vector3 steering = velocityAhead - collisionVelocity;
+		//		Debug.DrawRay (currentPos, steering, Color.red);
+		//		obsSteering += steering;
+		//	} 
+		//}
+		return obsSteering;
 	}
 
 	public Vector3 Seek (Vector3 targetPos)

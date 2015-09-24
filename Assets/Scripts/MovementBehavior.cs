@@ -15,7 +15,8 @@ public class MovementBehavior : MonoBehaviour
 	public Behavior thisBehavior;
 
 	private float maxSpeed = 10f;
-	private float maxForce = 10f;
+	private float maxForce = 30f;
+    private float randomAngle = 0f;
 	private Vector3 currentPos, currentVelocity, finalSteering, targetPosition;
 	private RaycastHit hitInfo;
 
@@ -38,7 +39,7 @@ public class MovementBehavior : MonoBehaviour
 			finalSteering += Arrive (targetPosition);
         if (thisBehavior == Behavior.Wander)
             finalSteering += Wander();
-		finalSteering += ObstacleAvoidance ()*10;
+		finalSteering += ObstacleAvoidance ()*10f;
 		finalSteering.y = 0f; //zero out y velocities
 
         finalSteering = Vector3.ClampMagnitude(finalSteering, maxForce);
@@ -48,7 +49,7 @@ public class MovementBehavior : MonoBehaviour
 
 		//p_0 + v*t
 		this.transform.position = currentPos + finalVelocity * Time.deltaTime;
-		this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (finalVelocity), Time.deltaTime);
+        this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (finalVelocity), Time.deltaTime*2);
 
 		//update current velocity for the next second
 		currentVelocity = finalVelocity;
@@ -160,10 +161,15 @@ public class MovementBehavior : MonoBehaviour
 
 	public Vector3 Wander ()
 	{
-        float randomAngle = Random.Range(-90, 90);
-        Vector3 desiredVelocity = Quaternion.Euler(0, randomAngle, 0) * this.transform.forward;
-        desiredVelocity = desiredVelocity.normalized * maxSpeed;
-        Vector3 steering = desiredVelocity - currentVelocity;
+        randomAngle = randomAngle+Random.Range(-15, 15);
+        //restrict randomAngle from reaching extreme angles
+        randomAngle = Mathf.Clamp(randomAngle, -120f, 120f);
+        Vector3 desiredVelocity = Quaternion.Euler(0, randomAngle, 0) * currentVelocity;
+        if (currentVelocity == Vector3.zero)
+            desiredVelocity = Quaternion.Euler(0, randomAngle, 0) * transform.forward;
+        desiredVelocity = desiredVelocity.normalized *maxSpeed/2;
+        Debug.DrawRay(currentPos, desiredVelocity, Color.blue);
+        Vector3 steering = desiredVelocity; //- currentVelocity;
         //steering = Vector3.ClampMagnitude(steering, maxSpeed);
         return steering;
 	}

@@ -62,9 +62,6 @@ public class MovementBehavior : MonoBehaviour
 
 	public Vector3 ObstacleAvoidance ()
 	{
-		string sphereTag = "SphereObs";
-		string wallTag = "WallObs";
-
 		Vector3 obsSteering = Vector3.zero;
 		float minAheadDist = 3f;
 		//change the detecting distance based on currentVelocity
@@ -75,11 +72,11 @@ public class MovementBehavior : MonoBehaviour
 		obsSteering += ObstacleHelperMethod (raycastVector, detectDistance);
 
 		//Raycast right
-		raycastVector = Quaternion.Euler (0, 45, 0) * raycastVector;
+		raycastVector = Quaternion.Euler (0, 45, 0) * raycastVector; //rotating +45 degrees
 		obsSteering += ObstacleHelperMethod (raycastVector, detectDistance);
 
 		//Raycast left
-		raycastVector = Quaternion.Euler (0, -90, 0) * raycastVector;//rotating +45-90 = -45 degrees
+		raycastVector = Quaternion.Euler (0, -90, 0) * raycastVector; //rotating +45-90 = -45 degrees
 		obsSteering += ObstacleHelperMethod (raycastVector, detectDistance);
 
 		return obsSteering;
@@ -120,6 +117,7 @@ public class MovementBehavior : MonoBehaviour
 
 	public Vector3 Flee (Vector3 targetPos)
 	{
+        //same as Seek except desiredVelocity is opposite (currentPos - targetPos)
 		Vector3 desiredVelocity = (currentPos - targetPos).normalized * maxSpeed;
 		Vector3 steering = desiredVelocity - currentVelocity;
 		if (steering.magnitude < 1f)

@@ -23,7 +23,7 @@ public class MovementBehavior : MonoBehaviour
 	private RaycastHit hitInfo;
 
 	void Start ()
-	{
+	{	Debug.Log ("test");
 		currentVelocity = Vector3.zero;
 	}
 	

@@ -11,13 +11,8 @@ public class TargetHop : MonoBehaviour
 	{
 		StartCoroutine (ChangePosition ());
 	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	}
 
-	public IEnumerator ChangePosition ()
+    public IEnumerator ChangePosition ()
 	{
 		yield return new WaitForSeconds (changePosDelay);
 		int index = Random.Range (0, positions.Length - 1);

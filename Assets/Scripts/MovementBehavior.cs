@@ -13,9 +13,9 @@ public class MovementBehavior : MonoBehaviour
 {
 	public GameObject targetObj;
 	public Behavior thisBehavior;
+	public float maxSpeed = 10f;
 
-	private float maxSpeed = 10f;
-	private float maxForce = 30f;
+	private float maxForce = 20f;
 	private float randomAngle = 0f;
 	private Vector3 currentPos, currentVelocity, finalSteering, targetPosition;
 	private string sphereTag = "SphereObs";
@@ -24,7 +24,10 @@ public class MovementBehavior : MonoBehaviour
 
 	void Start ()
 	{	
+<<<<<<< HEAD
 		Debug.Log ("test");
+=======
+>>>>>>> master
 		currentVelocity = Vector3.zero;
 	}
 	
@@ -37,7 +40,7 @@ public class MovementBehavior : MonoBehaviour
 		if (thisBehavior == Behavior.Seek)
 			finalSteering += Seek (targetPosition);
 		if (thisBehavior == Behavior.Flee)
-			finalSteering += Flee (targetPosition);
+			finalSteering += Flee (targetPosition, 50f);
 		if (thisBehavior == Behavior.Arrive)
 			finalSteering += Arrive (targetPosition, 20f);
 		if (thisBehavior == Behavior.Wander)
@@ -64,7 +67,7 @@ public class MovementBehavior : MonoBehaviour
 	public Vector3 ObstacleAvoidance ()
 	{
 		Vector3 obsSteering = Vector3.zero;
-		float minAheadDist = 3f;
+		float minAheadDist = 2f;
 		//change the detecting distance based on currentVelocity
 		float detectDistance = minAheadDist + currentVelocity.magnitude / maxSpeed * minAheadDist;
 
@@ -79,29 +82,31 @@ public class MovementBehavior : MonoBehaviour
 		//Raycast left
 		raycastVector = Quaternion.Euler (0, -90, 0) * raycastVector; //rotating +45-90 = -45 degrees
 		obsSteering += ObstacleHelperMethod (raycastVector, detectDistance);
-
 		return obsSteering;
 	}
 
-	private Vector3 ObstacleHelperMethod (Vector3 raycastVector, float detectDistance)
-	{
-		Vector3 combinedSteering = Vector3.zero;
-		Debug.DrawRay (currentPos, raycastVector.normalized * detectDistance, Color.yellow);
-		if (Physics.Raycast (currentPos, raycastVector, out hitInfo, detectDistance)) {
-			if (hitInfo.transform.tag == sphereTag) {
-				Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
-				Vector3 steering = raycastVector - collisionVelocity;
-				Debug.DrawRay (currentPos, steering, Color.red);
-				combinedSteering += steering;
-			} 
-			
-			if (hitInfo.transform.tag == wallTag) {
-				float lengthPastWall = ((currentPos + raycastVector.normalized * detectDistance) - hitInfo.point).magnitude;
-				Vector3 steering = hitInfo.normal.normalized * lengthPastWall;
-				Debug.DrawRay (currentPos, steering, Color.black);
-				combinedSteering += steering;
-			} 
-		}
+    private Vector3 ObstacleHelperMethod(Vector3 raycastVector, float detectDistance)
+    {
+        Vector3 combinedSteering = Vector3.zero;
+        Debug.DrawRay(currentPos, raycastVector.normalized * detectDistance, Color.yellow);
+            if (Physics.Raycast(currentPos, raycastVector, out hitInfo, detectDistance))
+            {
+                if (hitInfo.transform.tag == sphereTag)
+                {
+                    Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
+                    Vector3 steering = raycastVector - collisionVelocity;
+                    Debug.DrawRay(currentPos, steering, Color.red);
+                    combinedSteering += steering;
+                }
+
+                if (hitInfo.transform.tag == wallTag)
+                {
+                    float lengthPastWall = ((currentPos + raycastVector.normalized * detectDistance) - hitInfo.point).magnitude;
+                    Vector3 steering = hitInfo.normal.normalized * lengthPastWall;
+                    Debug.DrawRay(currentPos, steering, Color.black);
+                    combinedSteering += steering;
+                }
+            }
 		return combinedSteering;
 	}
 
@@ -111,21 +116,30 @@ public class MovementBehavior : MonoBehaviour
 		Vector3 steering = desiredVelocity - currentVelocity;
 		if (steering.magnitude < 1f)
 			steering = steering.normalized;
-		else
-			steering = Vector3.ClampMagnitude (steering, maxForce);
+		//else
+		//	steering = Vector3.ClampMagnitude (steering, maxForce);
 		return steering;
 	}
 
-	public Vector3 Flee (Vector3 targetPos)
+	public Vector3 Flee (Vector3 targetPos, float fleeRange)
 	{
-        //same as Seek except desiredVelocity is opposite (currentPos - targetPos)
-		Vector3 desiredVelocity = (currentPos - targetPos).normalized * maxSpeed;
-		Vector3 steering = desiredVelocity - currentVelocity;
-		if (steering.magnitude < 1f)
-			steering = steering.normalized;
-		else
-			steering = Vector3.ClampMagnitude (steering, maxForce);
-		return steering;
+        //if distance from target > fleeRange, Wander
+        float distance = (currentPos - targetPos).magnitude;
+        if (distance <= fleeRange)
+        {
+            //same as Seek except desiredVelocity is opposite (currentPos - targetPos)
+            Vector3 desiredVelocity = (currentPos - targetPos).normalized * maxSpeed;
+            Vector3 steering = desiredVelocity - currentVelocity;
+            if (steering.magnitude < 1f)
+                steering = steering.normalized;
+            //else
+            //    steering = Vector3.ClampMagnitude(steering, maxForce);
+            return steering;
+        }
+        else
+        {
+            return Wander(15f, 120f);
+        }
 	}
 
 	public Vector3 Arrive (Vector3 targetPos, float slowDistance)
@@ -138,8 +152,8 @@ public class MovementBehavior : MonoBehaviour
 		Vector3 steering = desiredVelocity - currentVelocity;
 		if (steering.magnitude < 1f)
 			steering = steering.normalized;
-		else
-			steering = Vector3.ClampMagnitude (steering, maxForce);
+		//else
+		//	steering = Vector3.ClampMagnitude (steering, maxForce);
 		return steering;
 	}
 
@@ -149,11 +163,10 @@ public class MovementBehavior : MonoBehaviour
 		//reset randomAngle if it goes past maxAngle degrees
 		if (Mathf.Abs (randomAngle) > maxAngle)
 			randomAngle = 0f;
-		Vector3 desiredVelocity = Quaternion.Euler (0, randomAngle, 0) * currentVelocity;
+		Vector3 steering = Quaternion.Euler (0, randomAngle, 0) * currentVelocity;
 		if (currentVelocity == Vector3.zero)
-			desiredVelocity = Quaternion.Euler (0, randomAngle, 0) * transform.forward;
-		desiredVelocity = desiredVelocity.normalized * maxSpeed / 2;
-		Vector3 steering = desiredVelocity;
+			steering = Quaternion.Euler (0, randomAngle, 0) * transform.forward;
+		steering = steering.normalized * maxSpeed / 2;
 		Debug.DrawRay (currentPos, steering, Color.blue);
 		return steering;
 	}

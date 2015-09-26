@@ -23,7 +23,7 @@ public class MovementBehavior : MonoBehaviour
 	private RaycastHit hitInfo;
 
 	void Start ()
-	{	Debug.Log ("test");
+	{	
 		currentVelocity = Vector3.zero;
 	}
 	
@@ -63,7 +63,7 @@ public class MovementBehavior : MonoBehaviour
 	public Vector3 ObstacleAvoidance ()
 	{
 		Vector3 obsSteering = Vector3.zero;
-		float minAheadDist = 3f;
+		float minAheadDist = 2f;
 		//change the detecting distance based on currentVelocity
 		float detectDistance = minAheadDist + currentVelocity.magnitude / maxSpeed * minAheadDist;
 
@@ -78,29 +78,31 @@ public class MovementBehavior : MonoBehaviour
 		//Raycast left
 		raycastVector = Quaternion.Euler (0, -90, 0) * raycastVector; //rotating +45-90 = -45 degrees
 		obsSteering += ObstacleHelperMethod (raycastVector, detectDistance);
-
 		return obsSteering;
 	}
 
-	private Vector3 ObstacleHelperMethod (Vector3 raycastVector, float detectDistance)
-	{
-		Vector3 combinedSteering = Vector3.zero;
-		Debug.DrawRay (currentPos, raycastVector.normalized * detectDistance, Color.yellow);
-		if (Physics.Raycast (currentPos, raycastVector, out hitInfo, detectDistance)) {
-			if (hitInfo.transform.tag == sphereTag) {
-				Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
-				Vector3 steering = raycastVector - collisionVelocity;
-				Debug.DrawRay (currentPos, steering, Color.red);
-				combinedSteering += steering;
-			} 
-			
-			if (hitInfo.transform.tag == wallTag) {
-				float lengthPastWall = ((currentPos + raycastVector.normalized * detectDistance) - hitInfo.point).magnitude;
-				Vector3 steering = hitInfo.normal.normalized * lengthPastWall;
-				Debug.DrawRay (currentPos, steering, Color.black);
-				combinedSteering += steering;
-			} 
-		}
+    private Vector3 ObstacleHelperMethod(Vector3 raycastVector, float detectDistance)
+    {
+        Vector3 combinedSteering = Vector3.zero;
+        Debug.DrawRay(currentPos, raycastVector.normalized * detectDistance, Color.yellow);
+            if (Physics.Raycast(currentPos, raycastVector, out hitInfo, detectDistance))
+            {
+                if (hitInfo.transform.tag == sphereTag)
+                {
+                    Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
+                    Vector3 steering = raycastVector - collisionVelocity;
+                    Debug.DrawRay(currentPos, steering, Color.red);
+                    combinedSteering += steering;
+                }
+
+                if (hitInfo.transform.tag == wallTag)
+                {
+                    float lengthPastWall = ((currentPos + raycastVector.normalized * detectDistance) - hitInfo.point).magnitude;
+                    Vector3 steering = hitInfo.normal.normalized * lengthPastWall;
+                    Debug.DrawRay(currentPos, steering, Color.black);
+                    combinedSteering += steering;
+                }
+            }
 		return combinedSteering;
 	}
 

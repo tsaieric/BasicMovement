@@ -24,6 +24,7 @@ public class MovementBehavior : MonoBehaviour
 
 	void Start ()
 	{	
+
 		currentVelocity = Vector3.zero;
 	}
 	

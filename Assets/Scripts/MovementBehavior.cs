@@ -24,10 +24,7 @@ public class MovementBehavior : MonoBehaviour
 
 	void Start ()
 	{	
-<<<<<<< HEAD
-		Debug.Log ("test");
-=======
->>>>>>> master
+
 		currentVelocity = Vector3.zero;
 	}
 	

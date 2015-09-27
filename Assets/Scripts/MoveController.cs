@@ -94,7 +94,12 @@ public class MoveController : MonoBehaviour
 		return combinedSteering;
 	}
 
-	public Vector3 Seek (Vector3 targetPos)
+    public void Seek(Vector3 targetPos)
+    {
+        finalSteering += _Seek(targetPos);
+    }
+
+	private Vector3 _Seek (Vector3 targetPos)
 	{
 		Vector3 desiredVelocity = (targetPos - currentPos).normalized * maxSpeed;
 		Vector3 steering = desiredVelocity - currentVelocity;
@@ -102,24 +107,32 @@ public class MoveController : MonoBehaviour
 			steering = steering.normalized;
         //else
         //	steering = Vector3.ClampMagnitude (steering, maxForce);
-        finalSteering += steering;
         return steering;
 	}
 
-	public Vector3 Flee (Vector3 targetPos)
+    public void Flee(Vector3 targetPos)
+    {
+        finalSteering += _Flee(targetPos);
+    }
+
+	private Vector3 _Flee (Vector3 targetPos)
 	{
-            //same as Seek except desiredVelocity is opposite (currentPos - targetPos)
-            Vector3 desiredVelocity = (currentPos - targetPos).normalized * maxSpeed;
-            Vector3 steering = desiredVelocity - currentVelocity;
-            if (steering.magnitude < 1f)
-                steering = steering.normalized;
+        //same as Seek except desiredVelocity is opposite (currentPos - targetPos)
+        Vector3 desiredVelocity = (currentPos - targetPos).normalized * maxSpeed;
+        Vector3 steering = desiredVelocity - currentVelocity;
+        if (steering.magnitude < 1f)
+            steering = steering.normalized;
         //else
         //    steering = Vector3.ClampMagnitude(steering, maxForce);
-        finalSteering += steering;
         return steering;
 	}
 
-	public Vector3 Arrive (Vector3 targetPos, float slowDistance)
+    public void Arrive(Vector3 targetPos, float slowDistance)
+    {
+        finalSteering += _Arrive(targetPos, slowDistance);
+    }
+
+    private Vector3 _Arrive (Vector3 targetPos, float slowDistance)
 	{
 		float distance = (targetPos - currentPos).magnitude;
 		//distance/slowDistance will be greater than 1 if he's farther away
@@ -131,11 +144,14 @@ public class MoveController : MonoBehaviour
 			steering = steering.normalized;
         //else
         //	steering = Vector3.ClampMagnitude (steering, maxForce);
-        finalSteering += steering;
         return steering;
 	}
 
-	public Vector3 Wander (float angleRange, float maxAngle)
+    public void Wander(float angleRange, float maxAngle)
+    {
+        finalSteering += _Wander(angleRange, maxAngle);
+    }
+    private Vector3 _Wander (float angleRange, float maxAngle)
 	{
 		randomAngle = randomAngle + Random.Range (-angleRange, angleRange);
         //reset randomAngle if it goes past maxAngle degrees
@@ -144,28 +160,31 @@ public class MoveController : MonoBehaviour
         Vector3 steering = Quaternion.Euler (0, randomAngle, 0) * currentVelocity;
 		if (currentVelocity == Vector3.zero)
 			steering = Quaternion.Euler (0, randomAngle, 0) * transform.forward;
-        steering = steering.normalized * maxSpeed / 2;
+        steering = steering.normalized * maxSpeed;
 		Debug.DrawRay (currentPos, steering, Color.blue);
-        finalSteering += steering*2f;
         return steering;
 	}
 
-    public Vector3 FlockingWander()
+    public void Separation(float neighborRange)
+    {
+        finalSteering += _Separation(neighborRange);
+    }
+    private Vector3 _Separation(float neighborRange)
     {
         Vector3 steering = Vector3.zero;
-        float neighborRange = 10f;
         float neighborCount = 0f;
         foreach(MoveController moveControl in group)
         {
             //separation
-            float distance = (currentPos - moveControl.transform.position).magnitude;
+            Vector3 neighborDirection = moveControl.transform.position - currentPos;
+            float distance = neighborDirection.magnitude;
             if (distance <=neighborRange && distance!=0)
             {
-                steering += Flee(moveControl.transform.position);
-                neighborCount++;
+                steering += _Flee(moveControl.transform.position);
             }
         }
-        finalSteering += steering/neighborCount;
+        if(neighborCount!=0f)
+            steering = steering/neighborCount;
         return steering;
     }
 

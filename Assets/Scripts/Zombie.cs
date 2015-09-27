@@ -43,7 +43,7 @@ public class Zombie : MonoBehaviour {
         if (thisBehavior == Behavior.Wander)
             moveController.Wander(15f, 150f);
 
-        moveController.FlockingWander();
+        moveController.Separation(5f);
         moveController.ObstacleAvoidance(2f, 20f);
         moveController.UpdateEverything();
 

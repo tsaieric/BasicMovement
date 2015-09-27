@@ -32,9 +32,8 @@ public class Zombie : MonoBehaviour {
             moveController.Seek(targetPosition);
         if (thisBehavior == Behavior.Flee)
         {
-            float fleeRange = 50f;
             float distance = (this.transform.position - targetPosition).magnitude;
-            if (distance <= fleeRange)
+            if (distance <= 50f)
                 moveController.Flee(targetPosition);
             else
                 moveController.Wander(15f, 150f);
@@ -43,6 +42,8 @@ public class Zombie : MonoBehaviour {
             moveController.Arrive(targetPosition, 20f);
         if (thisBehavior == Behavior.Wander)
             moveController.Wander(15f, 150f);
+
+        moveController.FlockingWander();
         moveController.ObstacleAvoidance(2f, 20f);
         moveController.UpdateEverything();
 

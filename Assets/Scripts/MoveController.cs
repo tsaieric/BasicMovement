@@ -11,12 +11,14 @@ public class MoveController : MonoBehaviour
 	private string sphereTag = "SphereObs";
 	private string wallTag = "WallObs";
 	private RaycastHit hitInfo;
-
+    private MoveController[] group;
 	void Start ()
 	{
         currentPos = this.transform.position;
         randomAngle = 0f;
 		currentVelocity = Vector3.zero;
+        if(transform.parent !=null)
+            group = transform.parent.GetComponentsInChildren<MoveController>();
 	}
 
     void FixedUpdate()
@@ -136,17 +138,36 @@ public class MoveController : MonoBehaviour
 	public Vector3 Wander (float angleRange, float maxAngle)
 	{
 		randomAngle = randomAngle + Random.Range (-angleRange, angleRange);
-		//reset randomAngle if it goes past maxAngle degrees
-		if (Mathf.Abs (randomAngle) > maxAngle)
-			randomAngle = 0f;
-		Vector3 steering = Quaternion.Euler (0, randomAngle, 0) * currentVelocity;
+        //reset randomAngle if it goes past maxAngle degrees
+        if (Mathf.Abs(randomAngle) > maxAngle)
+            randomAngle = 0f;
+        Vector3 steering = Quaternion.Euler (0, randomAngle, 0) * currentVelocity;
 		if (currentVelocity == Vector3.zero)
 			steering = Quaternion.Euler (0, randomAngle, 0) * transform.forward;
-		steering = steering.normalized * maxSpeed / 2;
+        steering = steering.normalized * maxSpeed / 2;
 		Debug.DrawRay (currentPos, steering, Color.blue);
         finalSteering += steering*2f;
         return steering;
 	}
+
+    public Vector3 FlockingWander()
+    {
+        Vector3 steering = Vector3.zero;
+        float neighborRange = 10f;
+        float neighborCount = 0f;
+        foreach(MoveController moveControl in group)
+        {
+            //separation
+            float distance = (currentPos - moveControl.transform.position).magnitude;
+            if (distance <=neighborRange && distance!=0)
+            {
+                steering += Flee(moveControl.transform.position);
+                neighborCount++;
+            }
+        }
+        finalSteering += steering/neighborCount;
+        return steering;
+    }
 
     public Vector3 GetCurrentVelocity()
     {

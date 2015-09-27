@@ -1,15 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum Behavior
-{
-	Seek,
-	Flee,
-	Arrive,
-	Wander
-}
-
-public class MovementBehavior : MonoBehaviour
+public class MoveController : MonoBehaviour
 {
 	public GameObject targetObj;
 	public Behavior thisBehavior;
@@ -48,6 +40,7 @@ public class MovementBehavior : MonoBehaviour
 			Arrive (targetPosition, 20f);
         if (thisBehavior == Behavior.Wander)
             Wander(15f, 120f);
+        ObstacleAvoidance(2f, 20f);
         UpdateEverything();
 
 		//change Zombie animation speed based on current speed
@@ -56,7 +49,6 @@ public class MovementBehavior : MonoBehaviour
 
     public void UpdateEverything()
     {
-        finalSteering += ObstacleAvoidance() * 20f;
         finalSteering.y = 0f; //zero out y velocities
         finalSteering = Vector3.ClampMagnitude(finalSteering, maxForce);
 
@@ -72,12 +64,11 @@ public class MovementBehavior : MonoBehaviour
         currentVelocity = finalVelocity;
     }
 
-	public Vector3 ObstacleAvoidance ()
+	public Vector3 ObstacleAvoidance (float minDetectDist, float weight)
 	{
 		Vector3 obsSteering = Vector3.zero;
-		float minAheadDist = 2f;
 		//change the detecting distance based on currentVelocity
-		float detectDistance = minAheadDist + currentVelocity.magnitude / maxSpeed * minAheadDist;
+		float detectDistance = minDetectDist + currentVelocity.magnitude / maxSpeed * minDetectDist;
 
 		//Raycast ahead
 		Vector3 raycastVector = currentVelocity.normalized * detectDistance;
@@ -90,7 +81,9 @@ public class MovementBehavior : MonoBehaviour
 		//Raycast left
 		raycastVector = Quaternion.Euler (0, -90, 0) * raycastVector; //rotating +45-90 = -45 degrees
 		obsSteering += ObstacleHelperMethod (raycastVector, detectDistance);
-		return obsSteering;
+
+        finalSteering += obsSteering*weight;
+		return obsSteering * weight;
 	}
 
     private Vector3 ObstacleHelperMethod(Vector3 raycastVector, float detectDistance)
@@ -115,7 +108,6 @@ public class MovementBehavior : MonoBehaviour
                     combinedSteering += steering;
                 }
             }
-        finalSteering += combinedSteering;
 		return combinedSteering;
 	}
 

@@ -3,49 +3,30 @@ using System.Collections;
 
 public class MoveController : MonoBehaviour
 {
-	public GameObject targetObj;
-	public Behavior thisBehavior;
 	public float maxSpeed = 10f;
+	public float maxForce = 20f;
 
-	private float maxForce = 20f;
-	private float randomAngle = 0f;
-	private Vector3 currentPos, currentVelocity, finalSteering, targetPosition;
+	private float randomAngle;
+    private Vector3 currentPos, currentVelocity, finalSteering;
 	private string sphereTag = "SphereObs";
 	private string wallTag = "WallObs";
 	private RaycastHit hitInfo;
 
 	void Start ()
 	{
+        currentPos = this.transform.position;
+        randomAngle = 0f;
 		currentVelocity = Vector3.zero;
 	}
-	
-	void FixedUpdate ()
-	{
-		targetPosition = targetObj.transform.position;
-		currentPos = this.transform.position;
 
-		finalSteering = Vector3.zero;
-		if (thisBehavior == Behavior.Seek)
-			Seek (targetPosition);
-        if (thisBehavior == Behavior.Flee)
-        {
-            float fleeRange = 50f;
-            float distance = (currentPos - targetPosition).magnitude;
-            if (distance <= fleeRange)
-               Flee(targetPosition);
-            else
-                Wander(15f, 120f);
-        }
-		if (thisBehavior == Behavior.Arrive)
-			Arrive (targetPosition, 20f);
-        if (thisBehavior == Behavior.Wander)
-            Wander(15f, 120f);
-        ObstacleAvoidance(2f, 20f);
-        UpdateEverything();
+    void FixedUpdate()
+    {
+        currentPos = this.transform.position;
+    }
 
-		//change Zombie animation speed based on current speed
-		this.GetComponent<Animator> ().SetFloat ("currentSpeed", currentVelocity.magnitude);
-	}
+    public void ResetSteering() {
+        finalSteering = Vector3.zero;
+    }
 
     public void UpdateEverything()
     {
@@ -163,7 +144,12 @@ public class MoveController : MonoBehaviour
 			steering = Quaternion.Euler (0, randomAngle, 0) * transform.forward;
 		steering = steering.normalized * maxSpeed / 2;
 		Debug.DrawRay (currentPos, steering, Color.blue);
-        finalSteering += steering;
+        finalSteering += steering*2f;
         return steering;
 	}
+
+    public Vector3 GetCurrentVelocity()
+    {
+        return currentVelocity;
+    }
 }

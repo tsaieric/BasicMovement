@@ -1,14 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum Behavior
-{
-	Seek,
-	Flee,
-	Arrive,
-	Wander
-}
-
 public class MovementBehavior : MonoBehaviour
 {
 	public GameObject targetObj;

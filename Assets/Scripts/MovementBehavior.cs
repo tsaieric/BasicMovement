@@ -58,7 +58,8 @@ public class MovementBehavior : MonoBehaviour
 
         //p_0 + v*t
         this.transform.position = currentPos + finalVelocity * Time.deltaTime;
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(finalVelocity), Time.deltaTime * 2);
+        if(finalVelocity != Vector3.zero)
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(finalVelocity), Time.deltaTime * 2);
 
         //update current velocity for the next second
         currentVelocity = finalVelocity;

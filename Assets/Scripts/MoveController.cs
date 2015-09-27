@@ -41,7 +41,8 @@ public class MoveController : MonoBehaviour
 
         //p_0 + v*t
         this.transform.position = currentPos + finalVelocity * Time.deltaTime;
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(finalVelocity), Time.deltaTime * 2);
+        if (finalVelocity != Vector3.zero)
+            this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(finalVelocity), Time.deltaTime * 2);
 
         //update current velocity for the next second
         currentVelocity = finalVelocity;
@@ -165,6 +166,63 @@ public class MoveController : MonoBehaviour
         return steering;
 	}
 
+    public void FollowLeader(MoveController leaderController, float minDistBehind)
+    {
+        Vector3 leaderDirection = leaderController.GetCurrentVelocity().normalized;
+        Vector3 leaderPos = leaderController.transform.position;
+        Vector3 desiredPos = leaderPos - leaderDirection * minDistBehind;
+        finalSteering += _Seek(desiredPos);
+    }
+
+    public void Alignment(float neighborRange)
+    {
+        finalSteering += _Alignment(neighborRange);
+    }
+    private Vector3 _Alignment(float neighborRange)
+    {
+        Vector3 steering = Vector3.zero;
+        float neighborCount = 0f;
+        foreach (MoveController moveControl in group)
+        {
+            Vector3 neighborDirection = moveControl.transform.position - currentPos;
+            float distance = neighborDirection.magnitude;
+            if (distance <= neighborRange && distance != 0)
+            {
+                steering += moveControl.GetCurrentVelocity();
+                neighborCount++;
+            }
+        }
+        if (neighborCount != 0f)
+            steering = steering/ neighborCount;
+        steering = _Seek(steering) / 2f;
+        return steering;
+    }
+
+    public void Cohesion(float neighborRange)
+    {
+        finalSteering += _Cohesion(neighborRange);
+    }
+    private Vector3 _Cohesion(float neighborRange)
+    {
+        Vector3 steering = Vector3.zero;
+        Vector3 centerPos = Vector3.zero;
+        float neighborCount = 0f;
+        foreach (MoveController moveControl in group)
+        {
+            Vector3 neighborDirection = moveControl.transform.position - currentPos;
+            float distance = neighborDirection.magnitude;
+            if (distance <= neighborRange && distance != 0)
+            {
+                centerPos += moveControl.transform.position;
+                neighborCount++;
+            }
+        }
+        if (neighborCount != 0f)
+            centerPos = centerPos / neighborCount;
+        steering = _Seek(centerPos)/2f;
+        return steering;
+    }
+
     public void Separation(float neighborRange)
     {
         finalSteering += _Separation(neighborRange);
@@ -175,12 +233,12 @@ public class MoveController : MonoBehaviour
         float neighborCount = 0f;
         foreach(MoveController moveControl in group)
         {
-            //separation
             Vector3 neighborDirection = moveControl.transform.position - currentPos;
             float distance = neighborDirection.magnitude;
             if (distance <=neighborRange && distance!=0)
             {
                 steering += _Flee(moveControl.transform.position);
+                neighborCount++;
             }
         }
         if(neighborCount!=0f)

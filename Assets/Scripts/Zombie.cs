@@ -5,7 +5,8 @@ public enum Behavior
     Seek,
     Flee,
     Arrive,
-    Wander
+    Wander,
+    FlockingWander
 }
 
 public class Zombie : MonoBehaviour {
@@ -14,12 +15,14 @@ public class Zombie : MonoBehaviour {
 
     private Vector3 targetPosition;
     private MoveController moveController;
+    private MoveController targetMoveController;
     private Animator anim;
 
     // Use this for initialization
     void Start () {
         moveController = this.GetComponent<MoveController>();
         anim = this.GetComponent<Animator>();
+        targetMoveController = targetObj.GetComponent<MoveController>();
 	}
 
     void FixedUpdate()
@@ -43,10 +46,16 @@ public class Zombie : MonoBehaviour {
         if (thisBehavior == Behavior.Wander)
             moveController.Wander(15f, 150f);
 
-        moveController.Separation(5f);
+        if (thisBehavior == Behavior.FlockingWander)
+        {
+            float neighborRange = 6f;
+            moveController.FollowLeader(targetMoveController, 2f);
+            moveController.Cohesion(neighborRange);
+            moveController.Alignment(neighborRange);
+        }
+        moveController.Separation(3f);
         moveController.ObstacleAvoidance(2f, 20f);
         moveController.UpdateEverything();
-
         //change Zombie animation speed based on current speed
         anim.SetFloat("currentSpeed", moveController.GetCurrentVelocity().magnitude);
     }

@@ -33,7 +33,7 @@ public class MoveController : MonoBehaviour
     public void UpdateEverything()
     {
         finalSteering.y = 0f; //zero out y velocities
-        finalSteering = Vector3.ClampMagnitude(finalSteering, maxForce);
+        //finalSteering = Vector3.ClampMagnitude(finalSteering, maxForce);
 
         //v_0 + a*t
         Vector3 finalVelocity = currentVelocity + finalSteering * Time.deltaTime;
@@ -194,8 +194,7 @@ public class MoveController : MonoBehaviour
         }
         if (neighborCount != 0f)
             steering = steering/ neighborCount;
-        steering = _Seek(steering) / 2f;
-        return steering;
+        return steering.normalized;
     }
 
     public void Cohesion(float neighborRange)
@@ -219,13 +218,13 @@ public class MoveController : MonoBehaviour
         }
         if (neighborCount != 0f)
             centerPos = centerPos / neighborCount;
-        steering = _Seek(centerPos)/2f;
-        return steering;
+        steering = _Seek(centerPos);
+        return steering.normalized;
     }
 
     public void Separation(float neighborRange)
     {
-        finalSteering += _Separation(neighborRange);
+        finalSteering += _Separation(neighborRange)*10f;
     }
     private Vector3 _Separation(float neighborRange)
     {
@@ -243,7 +242,7 @@ public class MoveController : MonoBehaviour
         }
         if(neighborCount!=0f)
             steering = steering/neighborCount;
-        return steering;
+        return steering.normalized;
     }
 
     public Vector3 GetCurrentVelocity()

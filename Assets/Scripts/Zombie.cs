@@ -48,12 +48,12 @@ public class Zombie : MonoBehaviour {
 
         if (thisBehavior == Behavior.FlockingWander)
         {
-            float neighborRange = 6f;
-            moveController.FollowLeader(targetMoveController, 2f);
+            float neighborRange = 5f;
+            moveController.FollowLeader(targetMoveController, 1f);
             moveController.Cohesion(neighborRange);
             moveController.Alignment(neighborRange);
         }
-        moveController.Separation(3f);
+        moveController.Separation(4f);
         moveController.ObstacleAvoidance(2f, 20f);
         moveController.UpdateEverything();
         //change Zombie animation speed based on current speed

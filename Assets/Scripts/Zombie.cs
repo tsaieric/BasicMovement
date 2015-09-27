@@ -6,11 +6,13 @@ public enum Behavior
     Flee,
     Arrive,
     Wander,
-    FlockingWander
+    FlockingWander,
+    FleeFromGroup
 }
 
 public class Zombie : MonoBehaviour {
     public GameObject targetObj;
+    public GameObject[] bigZombies;
     public Behavior thisBehavior;
 
     private Vector3 targetPosition;
@@ -22,7 +24,8 @@ public class Zombie : MonoBehaviour {
     void Start () {
         moveController = this.GetComponent<MoveController>();
         anim = this.GetComponent<Animator>();
-        targetMoveController = targetObj.GetComponent<MoveController>();
+        if(targetObj !=null)
+            targetMoveController = targetObj.GetComponent<MoveController>();
 	}
 
     void FixedUpdate()
@@ -45,7 +48,6 @@ public class Zombie : MonoBehaviour {
             moveController.Arrive(targetPosition, 20f);
         if (thisBehavior == Behavior.Wander)
             moveController.Wander(15f, 150f);
-
         if (thisBehavior == Behavior.FlockingWander)
         {
             float neighborRange = 5f;
@@ -53,7 +55,16 @@ public class Zombie : MonoBehaviour {
             moveController.Cohesion(neighborRange);
             moveController.Alignment(neighborRange);
         }
-        moveController.Separation(4f);
+        if(thisBehavior == Behavior.FleeFromGroup)
+        {
+            foreach(GameObject zombie in bigZombies)
+            {
+                float distance = (this.transform.position - zombie.transform.position).magnitude;
+                if (distance <= 50f)
+                    moveController.Flee(zombie.transform.position);
+            }
+        }
+        moveController.Separation(10f,10f);
         moveController.ObstacleAvoidance(2f, 20f);
         moveController.UpdateEverything();
         //change Zombie animation speed based on current speed

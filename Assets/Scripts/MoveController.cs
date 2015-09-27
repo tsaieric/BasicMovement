@@ -209,6 +209,7 @@ public class MoveController : MonoBehaviour
         foreach (MoveController moveControl in group)
         {
             Vector3 neighborDirection = moveControl.transform.position - currentPos;
+
             float distance = neighborDirection.magnitude;
             if (distance <= neighborRange && distance != 0)
             {
@@ -222,9 +223,9 @@ public class MoveController : MonoBehaviour
         return steering.normalized;
     }
 
-    public void Separation(float neighborRange)
+    public void Separation(float neighborRange, float weight)
     {
-        finalSteering += _Separation(neighborRange)*10f;
+        finalSteering += _Separation(neighborRange)*weight;
     }
     private Vector3 _Separation(float neighborRange)
     {

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MoveController : MonoBehaviour
 {
+	//tiffa
 	public float maxSpeed = 10f;
 	public float maxForce = 20f;
 

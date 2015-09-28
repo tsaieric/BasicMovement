@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum Behavior
+/*public enum Behavior
 {
 	Seek,
 	Flee,
 	Arrive,
 	Wander
-}
+} */
 
 public class MovementBehavior : MonoBehaviour
 {

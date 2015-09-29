@@ -206,6 +206,7 @@ public class MoveController : MonoBehaviour
     {
         finalSteering += _Cohesion(neighborRange);
     }
+
     private Vector3 _Cohesion(float neighborRange)
     {
         Vector3 steering = Vector3.zero;

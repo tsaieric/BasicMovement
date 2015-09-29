@@ -10,14 +10,19 @@ public class FlockingAnchor : MonoBehaviour {
     private Vector3 avgCurrentVelocity;
     private Vector3 avgCenterPos;
     private float radius = 15f;
+    private MoveController thisController;
 	// Use this for initialization
 	void Start () {
         flockObjects = flock.GetComponentsInChildren<MoveController>();
         numObjects = flockObjects.Length;
+        thisController = this.GetComponent<MoveController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        thisController.Wander(15f,120f);
+        thisController.ObstacleAvoidance(radius/2, 10f);
+        thisController.UpdateEverything();
         Vector3 totalCurrentVelocity = Vector3.zero;
         Vector3 totalCenterPos = Vector3.zero;
 	    foreach(MoveController obj in flockObjects)

@@ -7,7 +7,8 @@ public enum Behavior
     Arrive,
     Wander,
     FlockingWander,
-    FleeFromGroup
+    FleeFromGroup,
+    Formation
 }
 
 public class Zombie : MonoBehaviour {
@@ -70,9 +71,12 @@ public class Zombie : MonoBehaviour {
             if(awayFromAll)
                 moveController.Wander(15f, 120f);
         }
-        moveController.Separation(5f, 10f);
-        moveController.ObstacleAvoidance(2f, 20f);
-        moveController.UpdateEverything();
+        if(this.thisBehavior != Behavior.Formation)
+        {
+            moveController.Separation(5f, 10f);
+            moveController.ObstacleAvoidance(2f, 20f);
+            moveController.UpdateEverything();
+        }
         //change Zombie animation speed based on current speed
         anim.SetFloat("currentSpeed", moveController.GetCurrentVelocity().magnitude);
     }

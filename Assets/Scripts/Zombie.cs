@@ -39,7 +39,7 @@ public class Zombie : MonoBehaviour {
         if (thisBehavior == Behavior.Flee)
         {
             float distance = (this.transform.position - targetPosition).magnitude;
-            if (distance <= 50f)
+            if (distance <= 30f)
                 moveController.Flee(targetPosition);
             else
                 moveController.Wander(15f, 150f);
@@ -61,7 +61,7 @@ public class Zombie : MonoBehaviour {
             foreach(GameObject zombie in bigZombies)
             {
                 float distance = (this.transform.position - zombie.transform.position).magnitude;
-                if (distance <= 50f)
+                if (distance <= 30f)
                 {
                     awayFromAll = false;
                     moveController.Flee(zombie.transform.position);
@@ -70,7 +70,7 @@ public class Zombie : MonoBehaviour {
             if(awayFromAll)
                 moveController.Wander(15f, 120f);
         }
-        moveController.Separation(5f,10f);
+        moveController.Separation(5f, 10f);
         moveController.ObstacleAvoidance(2f, 20f);
         moveController.UpdateEverything();
         //change Zombie animation speed based on current speed

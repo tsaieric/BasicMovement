@@ -179,6 +179,10 @@ public class MoveController : MonoBehaviour
     {
         finalSteering += _Alignment(neighborRange);
     }
+    public void Alignment(Vector3 avgVelocity)
+    {
+        finalSteering += avgVelocity;
+    }
     private Vector3 _Alignment(float neighborRange)
     {
         Vector3 steering = Vector3.zero;

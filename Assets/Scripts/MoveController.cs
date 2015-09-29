@@ -3,7 +3,6 @@ using System.Collections;
 
 public class MoveController : MonoBehaviour
 {
-	//tiffa
 	public float maxSpeed = 10f;
 	public float maxForce = 20f;
 
@@ -126,7 +125,7 @@ public class MoveController : MonoBehaviour
             steering = steering.normalized;
         //else
         //    steering = Vector3.ClampMagnitude(steering, maxForce);
-        Debug.DrawRay(currentPos, steering, Color.red);
+        Debug.DrawRay(currentPos, steering, Color.white);
         return steering;
 	}
 

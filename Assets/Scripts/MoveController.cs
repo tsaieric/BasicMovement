@@ -126,6 +126,7 @@ public class MoveController : MonoBehaviour
             steering = steering.normalized;
         //else
         //    steering = Vector3.ClampMagnitude(steering, maxForce);
+        Debug.DrawRay(currentPos, steering, Color.red);
         return steering;
 	}
 

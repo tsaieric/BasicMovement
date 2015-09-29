@@ -47,7 +47,7 @@ public class Zombie : MonoBehaviour {
         if (thisBehavior == Behavior.Arrive)
             moveController.Arrive(targetPosition, 20f);
         if (thisBehavior == Behavior.Wander)
-            moveController.Wander(15f, 150f);
+            moveController.Wander(15f, 120f);
         if (thisBehavior == Behavior.FlockingWander)
         {
             float neighborRange = 5f;
@@ -57,12 +57,18 @@ public class Zombie : MonoBehaviour {
         }
         if(thisBehavior == Behavior.FleeFromGroup)
         {
+            bool awayFromAll = true;
             foreach(GameObject zombie in bigZombies)
             {
                 float distance = (this.transform.position - zombie.transform.position).magnitude;
                 if (distance <= 50f)
+                {
+                    awayFromAll = false;
                     moveController.Flee(zombie.transform.position);
+                }
             }
+            if(awayFromAll)
+                moveController.Wander(15f, 120f);
         }
         moveController.Separation(10f,10f);
         moveController.ObstacleAvoidance(2f, 20f);

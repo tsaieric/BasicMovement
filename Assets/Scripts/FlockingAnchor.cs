@@ -60,35 +60,28 @@ public class FlockingAnchor : MonoBehaviour {
                 }
                 break;
 			case Formation.Vshape:
-                Vector3 front = Vector3.forward.normalized;
+                Vector3 direction = Vector3.forward.normalized;
                 Vector3 currentPos;
-				float interval = radius/4;
-                //int count = 0;
-                //float rotateBy = 360 / numObjects;
+				float interval = radius/5;                
                 avgCenterPos = this.transform.position;
-				for (int i=0; i<= numObjects/2-1; i++)
+				Vector3 left = Quaternion.Euler(0f, -135f, 0f) * direction;
+				Debug.DrawRay(avgCenterPos, left * radius, Color.black);
+				Vector3 right = Quaternion.Euler(0f, 135f, 0f) * direction;
+				Debug.DrawRay(avgCenterPos, right * radius, Color.black);
+				for (int i=0; i< numObjects; i++)
 				{	MoveController obj = flockObjects[i];
-                    Vector3 left = Quaternion.Euler(0f, -135f, 0f) * front;
-                    Debug.DrawRay(avgCenterPos, left * radius, Color.black);
-                    currentPos = avgCenterPos + left * interval;
+					avgCenterPos = this.transform.position;
+					if(i%2==0)
+						currentPos = avgCenterPos + left * interval*(i+1);						
+						
+					else						
+						currentPos = avgCenterPos + right * interval*i;					
                     obj.Arrive(currentPos, 10f); //arrive to their position
                     obj.Separation(5f, 10f);
                     obj.ObstacleAvoidance(2f, 20f);
                     obj.UpdateEverything();
-					avgCenterPos = currentPos;
-                }
-				avgCenterPos = this.transform.position;
-				for (int i=numObjects/2; i<numObjects; i++)
-				{	MoveController obj = flockObjects[i];
-                    Vector3 right = Quaternion.Euler(0f, 135f, 0f) * front;
-                    Debug.DrawRay(avgCenterPos, right * radius, Color.black);
-                    currentPos = avgCenterPos + right * interval;
-                    obj.Arrive(currentPos, 10f); //arrive to their position
-                    obj.Separation(5f, 10f);
-                    obj.ObstacleAvoidance(2f, 20f);
-                    obj.UpdateEverything();
-					avgCenterPos = currentPos;
-                }
+					//avgCenterPos = currentPos;					
+                }								
                 break;
             case Formation.Triangle:
                 break;

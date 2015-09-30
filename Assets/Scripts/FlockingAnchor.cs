@@ -24,7 +24,7 @@ public class FlockingAnchor : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         this.movement.Wander(15f,120f);
         this.movement.ObstacleAvoidance(radius/2, 30f);
         this.movement.UpdateEverything();

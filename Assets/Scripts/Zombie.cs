@@ -74,7 +74,7 @@ public class Zombie : MonoBehaviour {
         if(this.thisBehavior != Behavior.Formation)
         {
             moveController.Separation(5f, 10f);
-            moveController.ObstacleAvoidance(2f, 20f);
+            moveController.ObstacleAvoidance(2f, 30f);
             moveController.UpdateEverything();
         }
         //change Zombie animation speed based on current speed

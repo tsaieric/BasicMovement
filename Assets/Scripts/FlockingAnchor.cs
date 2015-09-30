@@ -38,7 +38,16 @@ public class FlockingAnchor : MonoBehaviour {
         }
         //avgCurrentVelocity = totalCurrentVelocity / numObjects;
         avgCenterPos = totalCenterPos / numObjects;
-
+		Vector3 direction = Vector3.forward.normalized;
+		Vector3 currentPos;
+		float interval = radius/5;                
+		avgCenterPos = this.transform.position;
+		Vector3 left = Quaternion.Euler(0f, -135f, 0f) * direction;
+		Debug.DrawRay(avgCenterPos, left * radius, Color.black);
+		Vector3 back = Quaternion.Euler(0f, -180f, 0f) * direction;
+		Debug.DrawRay(avgCenterPos, back * radius, Color.black);
+		Vector3 right = Quaternion.Euler(0f, 135f, 0f) * direction;
+		Debug.DrawRay(avgCenterPos, right * radius, Color.black);
         switch(this.form)
         {
             case Formation.Circle:
@@ -60,14 +69,14 @@ public class FlockingAnchor : MonoBehaviour {
                 }
                 break;
 			case Formation.Vshape:
-                Vector3 direction = Vector3.forward.normalized;
-                Vector3 currentPos;
-				float interval = radius/5;                
-                avgCenterPos = this.transform.position;
-				Vector3 left = Quaternion.Euler(0f, -135f, 0f) * direction;
-				Debug.DrawRay(avgCenterPos, left * radius, Color.black);
-				Vector3 right = Quaternion.Euler(0f, 135f, 0f) * direction;
-				Debug.DrawRay(avgCenterPos, right * radius, Color.black);
+                //Vector3 direction = Vector3.forward.normalized;
+                //Vector3 currentPos;
+				//float interval = radius/5;                
+                //avgCenterPos = this.transform.position;
+				//Vector3 left = Quaternion.Euler(0f, -135f, 0f) * direction;
+				//Debug.DrawRay(avgCenterPos, left * radius, Color.black);
+				//Vector3 right = Quaternion.Euler(0f, 135f, 0f) * direction;
+				//Debug.DrawRay(avgCenterPos, right * radius, Color.black);
 				for (int i=0; i< numObjects; i++)
 				{	MoveController obj = flockObjects[i];
 					avgCenterPos = this.transform.position;
@@ -84,6 +93,31 @@ public class FlockingAnchor : MonoBehaviour {
                 }								
                 break;
             case Formation.Triangle:
+				/*Vector3 direction = Vector3.forward.normalized;
+                Vector3 currentPos;
+				float interval = radius/5;                
+                avgCenterPos = this.transform.position;
+				Vector3 left = Quaternion.Euler(0f, -135f, 0f) * direction;
+				Debug.DrawRay(avgCenterPos, left * radius, Color.black);
+				Vector3 back = Quaternion.Euler(0f, -180f, 0f) * direction;
+				Debug.DrawRay(avgCenterPos, back * radius, Color.black);
+				Vector3 right = Quaternion.Euler(0f, 135f, 0f) * direction;
+				Debug.DrawRay(avgCenterPos, right * radius, Color.black);*/
+				for (int i=0; i< numObjects; i++)
+				{	MoveController obj = flockObjects[i];
+					avgCenterPos = this.transform.position;
+					if(i%3==0)
+						currentPos = avgCenterPos + left * interval*(i+1);						
+					else if(i%3==1)
+						currentPos = avgCenterPos + back * interval*i;
+					else						
+						currentPos = avgCenterPos + right * interval*(i-1);					
+                    obj.Arrive(currentPos, 10f); //arrive to their position
+                    obj.Separation(5f, 10f);
+                    obj.ObstacleAvoidance(2f, 20f);
+                    obj.UpdateEverything();
+					//avgCenterPos = currentPos;					
+                }								
                 break;
         } 
        

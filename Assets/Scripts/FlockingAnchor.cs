@@ -4,6 +4,7 @@ using System.Collections;
 public enum Formation
 {
     Circle,
+	Vshape,
     Triangle
 }
 public class FlockingAnchor : MonoBehaviour {
@@ -12,7 +13,7 @@ public class FlockingAnchor : MonoBehaviour {
     public Formation form;
     private MoveController[] flockObjects;
     private int numObjects;
-    private Vector3 avgCurrentVelocity;
+    //private Vector3 avgCurrentVelocity;
     private Vector3 avgCenterPos;
     private float radius = 15f;
     private MoveController movement;
@@ -35,7 +36,7 @@ public class FlockingAnchor : MonoBehaviour {
             totalCurrentVelocity += obj.GetCurrentVelocity();
             totalCenterPos += obj.transform.position;
         }
-        avgCurrentVelocity = totalCurrentVelocity / numObjects;
+        //avgCurrentVelocity = totalCurrentVelocity / numObjects;
         avgCenterPos = totalCenterPos / numObjects;
 
         switch(this.form)
@@ -57,6 +58,30 @@ public class FlockingAnchor : MonoBehaviour {
                     obj.UpdateEverything();
                     count++;
                 }
+                break;
+			case Formation.Vshape:
+                Vector3 direction = Vector3.forward.normalized;
+                Vector3 currentPos;
+				float interval = radius/5;                
+                avgCenterPos = this.transform.position;
+				Vector3 left = Quaternion.Euler(0f, -135f, 0f) * direction;
+				Debug.DrawRay(avgCenterPos, left * radius, Color.black);
+				Vector3 right = Quaternion.Euler(0f, 135f, 0f) * direction;
+				Debug.DrawRay(avgCenterPos, right * radius, Color.black);
+				for (int i=0; i< numObjects; i++)
+				{	MoveController obj = flockObjects[i];
+					avgCenterPos = this.transform.position;
+					if(i%2==0)
+						currentPos = avgCenterPos + left * interval*(i+1);						
+						
+					else						
+						currentPos = avgCenterPos + right * interval*i;					
+                    obj.Arrive(currentPos, 10f); //arrive to their position
+                    obj.Separation(5f, 10f);
+                    obj.ObstacleAvoidance(2f, 20f);
+                    obj.UpdateEverything();
+					//avgCenterPos = currentPos;					
+                }								
                 break;
             case Formation.Triangle:
                 break;

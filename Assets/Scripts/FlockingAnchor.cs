@@ -52,8 +52,6 @@ public class FlockingAnchor : MonoBehaviour {
                     Debug.DrawRay(avgCenterPos, angle * radius, Color.black);
                     circlePerimeterPos = avgCenterPos + angle * radius;
                     obj.Arrive(circlePerimeterPos, 10f); //arrive to their position
-                                                         //obj.Seek(avgCenterPos); //cohesion
-                                                         //            obj.Alignment(avgCurrentVelocity);
                     obj.Separation(5f, 10f);
                     obj.ObstacleAvoidance(2f, 20f);
                     obj.UpdateEverything();

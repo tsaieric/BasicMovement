@@ -67,8 +67,6 @@ public class FlockingAnchor : MonoBehaviour
 		case Formation.Vshape:
 			Vector3 left = Quaternion.Euler (0f, -135f, 0f) * direction;
 			Debug.DrawRay (avgCenterPos, left * radius, Color.black);
-			Vector3 back = Quaternion.Euler (0f, -180f, 0f) * direction;
-			Debug.DrawRay (avgCenterPos, back * radius, Color.black);
 			Vector3 right = Quaternion.Euler (0f, 135f, 0f) * direction;
 			Debug.DrawRay (avgCenterPos, right * radius, Color.black);
 
@@ -82,8 +80,7 @@ public class FlockingAnchor : MonoBehaviour
 				obj.Arrive (currentPos, 10f); //arrive to their position
 				obj.Separation (2f, 10f);
 				obj.ObstacleAvoidance (2f, 20f);
-				obj.UpdateEverything ();
-				//avgCenterPos = currentPos;					
+				obj.UpdateEverything ();								
 			}								
 			break;
 		case Formation.Square: 

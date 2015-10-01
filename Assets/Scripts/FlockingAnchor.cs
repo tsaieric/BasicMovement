@@ -7,6 +7,7 @@ public enum Formation
 	Vshape,
 	Triangle
 }
+
 public class FlockingAnchor : MonoBehaviour
 {
 
@@ -42,14 +43,9 @@ public class FlockingAnchor : MonoBehaviour
 		avgCenterPos = totalCenterPos / numObjects;
 		Vector3 direction = this.movement.GetCurrentVelocity ().normalized;//.forward.normalized;
 		Vector3 currentPos;
-		float interval = 2;                
+		float interval = 3;                
 		avgCenterPos = this.transform.position;
-		Vector3 left = Quaternion.Euler (0f, -135f, 0f) * direction;
-		Debug.DrawRay (avgCenterPos, left * radius, Color.black);
-		Vector3 back = Quaternion.Euler (0f, -180f, 0f) * direction;
-		Debug.DrawRay (avgCenterPos, back * radius, Color.black);
-		Vector3 right = Quaternion.Euler (0f, 135f, 0f) * direction;
-		Debug.DrawRay (avgCenterPos, right * radius, Color.black);
+
 		switch (this.form) {
 		case Formation.Circle:
 			Vector3 angle = Vector3.forward.normalized;
@@ -69,6 +65,12 @@ public class FlockingAnchor : MonoBehaviour
 			}
 			break;
 		case Formation.Vshape:
+			Vector3 left = Quaternion.Euler (0f, -135f, 0f) * direction;
+			Debug.DrawRay (avgCenterPos, left * radius, Color.black);
+			Vector3 back = Quaternion.Euler (0f, -180f, 0f) * direction;
+			Debug.DrawRay (avgCenterPos, back * radius, Color.black);
+			Vector3 right = Quaternion.Euler (0f, 135f, 0f) * direction;
+			Debug.DrawRay (avgCenterPos, right * radius, Color.black);
 //			direction = Vector3.forward.normalized;
 //                //Vector3 currentPos;
 //			avgCenterPos = this.transform.position;
@@ -84,13 +86,40 @@ public class FlockingAnchor : MonoBehaviour
 				else						
 					currentPos = avgCenterPos + right * interval * i;					
 				obj.Arrive (currentPos, 10f); //arrive to their position
-				//obj.Separation (1f, 10f);
+				obj.Separation (2f, 10f);
 				obj.ObstacleAvoidance (2f, 20f);
 				obj.UpdateEverything ();
 				//avgCenterPos = currentPos;					
 			}								
 			break;
 		case Formation.Triangle:
+			float triangleAngle = 150f;
+			Vector3 leftSideAngle = Quaternion.Euler (0f, -triangleAngle, 0f) * direction;
+			Debug.DrawRay (avgCenterPos, leftSideAngle * radius, Color.black);
+			Vector3 rightAngle = Quaternion.Euler (0f, 90f, 0f) * direction;
+			Debug.DrawRay (avgCenterPos, rightAngle * radius, Color.black);
+			int numRows = 4;
+			int distance = 4;
+			Vector3 leaderPos = this.transform.position;
+			Vector3 objPos = Vector3.zero;
+			Vector3 prevPos = Vector3.zero;
+			int flockIndex = 0;
+			for (int row = 0; row < numRows; row++) {
+				for (int i =0; i <= row; i++) {
+					MoveController flockObj = flockObjects [flockIndex];
+					if (i == 0) {
+						objPos = leaderPos + leftSideAngle.normalized * distance * row;
+						prevPos = objPos;
+					} else {
+						objPos = prevPos + rightAngle.normalized * distance * i;
+					}
+					flockObj.Arrive (objPos, 10f);
+					flockObj.Separation (2f, 10f);
+					flockObj.ObstacleAvoidance (2f, 20f);
+					flockObj.UpdateEverything ();
+					flockIndex++;
+				} 
+			}
 				/*Vector3 direction = Vector3.forward.normalized;
                 Vector3 currentPos;
 				float interval = radius/5;                
@@ -101,22 +130,23 @@ public class FlockingAnchor : MonoBehaviour
 				Debug.DrawRay(avgCenterPos, back * radius, Color.black);
 				Vector3 right = Quaternion.Euler(0f, 135f, 0f) * direction;
 				Debug.DrawRay(avgCenterPos, right * radius, Color.black);*/
-			for (int i=0; i< numObjects; i++) {
-				MoveController obj = flockObjects [i];
-				avgCenterPos = this.transform.position;
-				if (i % 3 == 0)
-					currentPos = avgCenterPos + left * interval * (i + 1);
-				else if (i % 3 == 1)
-					currentPos = avgCenterPos + back * interval * i;
-				else						
-					currentPos = avgCenterPos + right * interval * (i - 1);					
-				obj.Arrive (currentPos, 10f); //arrive to their position
-				obj.Separation (5f, 10f);
-				obj.ObstacleAvoidance (2f, 20f);
-				obj.UpdateEverything ();
-				//avgCenterPos = currentPos;					
-			}								
+//			for (int i=0; i< numObjects; i++) {
+//				MoveController obj = flockObjects [i];
+//				avgCenterPos = this.transform.position;
+//				if (i % 3 == 0)
+//					currentPos = avgCenterPos + left * interval * (i + 1);
+//				else if (i % 3 == 1)
+//					currentPos = avgCenterPos + back * interval * i;
+//				else						
+//					currentPos = avgCenterPos + right * interval * (i - 1);					
+//				obj.Arrive (currentPos, 10f); //arrive to their position
+//				obj.Separation (5f, 10f);
+//				obj.ObstacleAvoidance (2f, 20f);
+//				obj.UpdateEverything ();
+//				//avgCenterPos = currentPos;					
+//			}								
 			break;
+		
 		} 
        
 	}

@@ -5,7 +5,8 @@ public enum Formation
 {
 	Circle,
 	Vshape,
-	Triangle
+	Triangle,
+	Square
 }
 
 public class FlockingAnchor : MonoBehaviour
@@ -71,13 +72,7 @@ public class FlockingAnchor : MonoBehaviour
 			Debug.DrawRay (avgCenterPos, back * radius, Color.black);
 			Vector3 right = Quaternion.Euler (0f, 135f, 0f) * direction;
 			Debug.DrawRay (avgCenterPos, right * radius, Color.black);
-//			direction = Vector3.forward.normalized;
-//                //Vector3 currentPos;
-//			avgCenterPos = this.transform.position;
-//			Vector3 left = Quaternion.Euler (0f, -135f, 0f) * direction;
-//			Debug.DrawRay (avgCenterPos, left * radius, Color.black);
-//			Vector3 right = Quaternion.Euler (0f, 135f, 0f) * direction;
-//			Debug.DrawRay (avgCenterPos, right * radius, Color.black);
+
 			for (int i=0; i< numObjects; i++) {
 				MoveController obj = flockObjects [i];
 				avgCenterPos = this.transform.position;
@@ -91,6 +86,33 @@ public class FlockingAnchor : MonoBehaviour
 				obj.UpdateEverything ();
 				//avgCenterPos = currentPos;					
 			}								
+			break;
+		case Formation.Square: 
+			MoveController leader = flockObjects [0];
+			leader.FollowLeader (this.movement, 1f);
+			leader.Separation (2f, 10f);
+			leader.ObstacleAvoidance (2f, 20f);
+			leader.UpdateEverything ();
+			float dis = 5f;
+			Vector3 squadPerimeterPos = Vector3.zero;
+			int index = 1;
+			for (int j = 0; j < 3; j++) {
+				for (int k = 0; k < numObjects / 3; k++) {
+					MoveController obj = flockObjects [index];
+					Vector3 newPos;
+					Vector3 newAngle;
+					newAngle = Quaternion.Euler (0f, 90f, 0f) * direction;
+					newPos = flockObjects [0].transform.position - direction * dis * k + newAngle * j * dis;
+					squadPerimeterPos = flockObjects [index].transform.position;
+					Debug.DrawRay (squadPerimeterPos, newAngle * dis, Color.black);
+					Debug.DrawRay (squadPerimeterPos, -direction * dis, Color.black);
+					obj.Arrive (newPos, 10f); //arrive to their position
+					obj.Separation (2f, 10f);
+					obj.ObstacleAvoidance (2f, 20f);
+					obj.UpdateEverything ();
+					index++;
+				}
+			}
 			break;
 		case Formation.Triangle:
 			float triangleAngle = 150f;

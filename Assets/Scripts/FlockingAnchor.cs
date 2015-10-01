@@ -26,7 +26,22 @@ public class FlockingAnchor : MonoBehaviour
 		numObjects = flockObjects.Length;
 		this.movement = this.GetComponent<MoveController> ();
 	}
-	
+
+	void Update ()
+	{
+		if (Input.GetKey (KeyCode.C) || Input.GetKey (KeyCode.Alpha1)) {
+			form = Formation.Circle;
+		}
+		if (Input.GetKey (KeyCode.T) || Input.GetKey (KeyCode.Alpha2)) {
+			form = Formation.Triangle;
+		}
+		if (Input.GetKey (KeyCode.S) || Input.GetKey (KeyCode.Alpha3)) {
+			form = Formation.Square;
+		}
+		if (Input.GetKey (KeyCode.V) || Input.GetKey (KeyCode.Alpha4)) {
+			form = Formation.Vshape;
+		}
+	}
 	// Update is called once per frame
 	void FixedUpdate ()
 	{

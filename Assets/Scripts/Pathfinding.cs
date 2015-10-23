@@ -37,7 +37,6 @@ public class Pathfinding : MonoBehaviour
 					currentNode = openSet [i];
 				}
 			}
-
 			openSet.Remove (currentNode);
 			closedSet.Add (currentNode);
 
@@ -64,7 +63,7 @@ public class Pathfinding : MonoBehaviour
 		}
 	}
 
-	void RetracePath (Node startNode, Node endNode)
+	void RetracePath (Node startNode, Node endNode, int x)
 	{
 		List<Node> path = new List<Node> ();
 		Node currentNode = endNode;
@@ -73,7 +72,7 @@ public class Pathfinding : MonoBehaviour
 			currentNode = currentNode.parent;
 		}
 		path.Reverse ();
-		grid.path = path;
+		grid.paths [0] = path;
 	}
 
 	int GetDistance (Node nodeA, Node nodeB)

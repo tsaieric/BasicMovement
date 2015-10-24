@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
+<<<<<<< HEAD
 public class Pathfinding : MonoBehaviour
 {
 	public Transform[] seekers;
 	public Transform target;
+	public int weight;
 	Grid grid;
     
 	// Use this for initialization
@@ -75,14 +77,12 @@ public class Pathfinding : MonoBehaviour
 		grid.paths [0] = path;
 	}
 
-	int GetDistance (Node nodeA, Node nodeB)
-	{
-		int dstX = Mathf.Abs (nodeA.gridX - nodeB.gridX);
-		int dstY = Mathf.Abs (nodeA.gridY - nodeB.gridY);
-		if (dstX > dstY)
-			return 14 * dstY + 10 * (dstX - dstY);
-		return 14 * dstX + 10 * (dstY - dstX);
-	} 
-	
-
+    int GetDistance (Node nodeA, Node nodeB)
+    {
+        int dstX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
+        int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
+        if (dstX > dstY)
+              return 14 * dstY + 10 * (dstX - dstY);
+        return weight*(14*dstX + 10 * (dstY - dstX));
+    } 
 }

@@ -25,8 +25,10 @@ public class Node
 		}
 	}
 
+
 	public bool IsPositionEqualTo (Node input)
 	{
-		return (input.gridX == this.gridX) && (input.gridY == this.gridY);
+        //Debug.Log(input.gridX + "," + input.gridY+" vs. " +this.gridX + "," + this.gridY));
+        return (input.gridX == this.gridX) && (input.gridY == this.gridY);
 	}
 }

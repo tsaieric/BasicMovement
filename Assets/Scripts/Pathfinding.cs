@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-<<<<<<< HEAD
 public class Pathfinding : MonoBehaviour
 {
 	public Transform[] seekers;
@@ -18,12 +17,12 @@ public class Pathfinding : MonoBehaviour
 
 	void Update ()
 	{
-		foreach (Transform seeker in seekers) {
-			FindPath (seeker.position, target.position);
+		for (int x=0; x<seekers.Length; x++) {
+			FindPath (seekers [x].position, target.position, x);
 		}
 	}
 
-	void FindPath (Vector3 startPos, Vector3 targetPos)
+	void FindPath (Vector3 startPos, Vector3 targetPos, int num)
 	{
 		Node startNode = grid.NodeFromWorldPoint (startPos);
 		Node targetNode = grid.NodeFromWorldPoint (targetPos);
@@ -43,7 +42,7 @@ public class Pathfinding : MonoBehaviour
 			closedSet.Add (currentNode);
 
 			if (currentNode == targetNode) {
-				RetracePath (startNode, targetNode);
+				RetracePath (startNode, targetNode, num);
 				return;
 			}
 
@@ -74,15 +73,15 @@ public class Pathfinding : MonoBehaviour
 			currentNode = currentNode.parent;
 		}
 		path.Reverse ();
-		grid.paths [0] = path;
+		grid.paths [x] = path;
 	}
 
-    int GetDistance (Node nodeA, Node nodeB)
-    {
-        int dstX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
-        int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
-        if (dstX > dstY)
-              return 14 * dstY + 10 * (dstX - dstY);
-        return weight*(14*dstX + 10 * (dstY - dstX));
-    } 
+	int GetDistance (Node nodeA, Node nodeB)
+	{
+		int dstX = Mathf.Abs (nodeA.gridX - nodeB.gridX);
+		int dstY = Mathf.Abs (nodeA.gridY - nodeB.gridY);
+		if (dstX > dstY)
+			return 14 * dstY + 10 * (dstX - dstY);
+		return weight * (14 * dstX + 10 * (dstY - dstX));
+	} 
 }

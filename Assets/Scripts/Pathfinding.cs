@@ -7,6 +7,9 @@ public class Pathfinding : MonoBehaviour
 	public Transform[] seekers;
 	public Transform target;
 	public int weight;
+	public bool calculatePerFrame;
+	private Node previousTargetNode;
+	private Node currentTargetNode;
 	Grid grid;
     
 	// Use this for initialization
@@ -15,10 +18,28 @@ public class Pathfinding : MonoBehaviour
 		grid = GetComponent<Grid> ();
 	}
 
+	void Start ()
+	{
+		currentTargetNode = grid.NodeFromWorldPoint (target.position);
+		previousTargetNode = currentTargetNode;
+	}
 	void Update ()
 	{
+		if (!calculatePerFrame) {
+			currentTargetNode = grid.NodeFromWorldPoint (target.position);
+			if (!currentTargetNode.IsPositionEqualTo (previousTargetNode)) {
+				CalculateAllPaths ();
+			}
+			previousTargetNode = currentTargetNode;
+		} else
+			CalculateAllPaths ();
+	}
+
+	void CalculateAllPaths ()
+	{
 		for (int x=0; x<seekers.Length; x++) {
-			FindPath (seekers [x].position, target.position, x);
+			if (seekers [x] != null)
+				FindPath (seekers [x].position, target.position, x);
 		}
 	}
 
@@ -78,10 +99,11 @@ public class Pathfinding : MonoBehaviour
 
 	int GetDistance (Node nodeA, Node nodeB)
 	{
-		int dstX = Mathf.Abs (nodeA.gridX - nodeB.gridX);
-		int dstY = Mathf.Abs (nodeA.gridY - nodeB.gridY);
-		if (dstX > dstY)
-			return 14 * dstY + 10 * (dstX - dstY);
-		return weight * (14 * dstX + 10 * (dstY - dstX));
+		int distX = Mathf.Abs (nodeA.gridX - nodeB.gridX);
+		int distY = Mathf.Abs (nodeA.gridY - nodeB.gridY);
+		return weight * (distY + distX);
+//		if (dstX > dstY)
+//			return 14 * dstY + 10 * (dstX - dstY);
+//		return weight * (14 * dstX + 10 * (dstY - dstX));
 	} 
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Grid: MonoBehaviour
 {
+    public static Grid Instance;
 	public Transform player;
 	public LayerMask unwalkableMask;
 	public Vector2 gridWorldSize;
@@ -13,6 +14,10 @@ public class Grid: MonoBehaviour
 	float nodeDiameter;
 	int gridSizeX, gridSizeY;
 
+    void Awake()
+    {
+        Instance = this;
+    }
 	void Start ()
 	{
 		nodeDiameter = nodeRadius * 2;

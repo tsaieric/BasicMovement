@@ -6,6 +6,7 @@ public class Pathfinding : MonoBehaviour
 {
     public Transform[] seekers;
     public Transform target;
+    public int numPaths;
     public int weight;
     public bool calculatePerFrame;
     public bool usePQ;
@@ -19,6 +20,10 @@ public class Pathfinding : MonoBehaviour
         grid = GetComponent<Grid>();
     }
 
+    void Start()
+    {
+        CalculateAllPaths();
+    }
     void Update()
     {
         if (!calculatePerFrame)
@@ -29,6 +34,7 @@ public class Pathfinding : MonoBehaviour
                 //if current node != previous node, then calculate all paths
                 if (!currentTargetNode.IsPositionEqualTo(previousTargetNode))
                 {
+        Debug.Log("calaculating");
                     CalculateAllPaths();
                 }
             }
@@ -40,7 +46,7 @@ public class Pathfinding : MonoBehaviour
 
     void CalculateAllPaths()
     {
-        for (int x = 0; x < seekers.Length; x++)
+        for (int x = 0; x < numPaths; x++)
         {
             if (seekers[x] != null) {
                 if (usePQ)
@@ -114,7 +120,6 @@ public class Pathfinding : MonoBehaviour
         PriorityQueue<Node> openSet = new PriorityQueue<Node>();
         HashSet<Node> closedSet = new HashSet<Node>();
         openSet.Enqueue(startNode.fCost, startNode);
-
         while (openSet.Count > 0)
         {
             //get the lowest fCost in openSet, 
@@ -161,6 +166,7 @@ public class Pathfinding : MonoBehaviour
         }
         path.Reverse();
         grid.paths[x] = path;
+        seekers[x].GetComponent<Zombie>().SetPath(path);
     }
 
     int GetDistance(Node nodeA, Node nodeB)

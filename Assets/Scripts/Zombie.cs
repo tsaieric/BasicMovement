@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 public enum Behavior
 {
-    SeekAStar,
     Seek,
     Flee,
     Arrive,
     Wander,
     FlockingWander,
     FleeFromGroup,
-    Formation
+    Formation,
+    SeekAStar,
+
 }
 
 public class Zombie : MonoBehaviour
@@ -17,7 +19,8 @@ public class Zombie : MonoBehaviour
     public GameObject targetObj;
     public GameObject[] bigZombies;
     public Behavior thisBehavior;
-
+    private List<Node> path;
+    private int currentNodeIndex;
     private Vector3 targetPosition;
     private MoveController moveController;
     private MoveController targetMoveController;
@@ -32,6 +35,12 @@ public class Zombie : MonoBehaviour
             targetMoveController = targetObj.GetComponent<MoveController>();
     }
 
+    public void SetPath(List<Node> _path)
+    {
+        path = _path;
+        currentNodeIndex = 0;
+    }
+
     void FixedUpdate()
     {
         if (targetObj != null)
@@ -41,6 +50,15 @@ public class Zombie : MonoBehaviour
         switch (thisBehavior)
         {
             case Behavior.SeekAStar:
+                if (path!=null) {
+                    Debug.Log(currentNodeIndex);
+                    moveController.Arrive(path[currentNodeIndex].worldPosition,Grid.Instance.nodeRadius);
+                    if(Grid.Instance.NodeFromWorldPoint(this.transform.position).IsPositionEqualTo(path[currentNodeIndex]))
+                    {
+                        currentNodeIndex++;
+                        currentNodeIndex++;
+                    }
+                }
                 break;
             case Behavior.Seek:
                 moveController.Seek(targetPosition);
@@ -84,7 +102,7 @@ public class Zombie : MonoBehaviour
 
         if (this.thisBehavior != Behavior.Formation)
         {
-            moveController.Separation(5f, 10f);
+            //moveController.Separation(5f, 10f);
             moveController.ObstacleAvoidance(2f, 30f);
             moveController.UpdateEverything();
         }

@@ -26,6 +26,7 @@ public class Pathfinding : MonoBehaviour
             currentTargetNode = grid.NodeFromWorldPoint(target.position);
             if (previousTargetNode != null)
             {
+                //if current node != previous node, then calculate all paths
                 if (!currentTargetNode.IsPositionEqualTo(previousTargetNode))
                 {
                     CalculateAllPaths();
@@ -85,6 +86,7 @@ public class Pathfinding : MonoBehaviour
 
             foreach (Node neighbour in grid.GetNeighbours(currentNode))
             {
+                //if not walkable or visited already, then skip
                 if (!neighbour.walkable || closedSet.Contains(neighbour))
                 {
                     continue;
@@ -92,13 +94,12 @@ public class Pathfinding : MonoBehaviour
 
                 int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
                 //list contains is o(n)
-                //
                 if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
                 {
                     neighbour.gCost = newMovementCostToNeighbour;
                     neighbour.hCost = GetDistance(neighbour, targetNode);
                     neighbour.parent = currentNode;
-
+            
                     if (!openSet.Contains(neighbour))
                         openSet.Add(neighbour);
                 }

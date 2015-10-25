@@ -4,9 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PriorityQueue<T> {
-    public int Count;// = 0;
-    SortedDictionary<int, Stack<T>> dict;// = new SortedDictionary<int, Stack<T>>();
+    public int Count;
+    SortedDictionary<int, Stack<T>> dict;     //int is the priority, and maps to a Stack of objects
     Dictionary<T, bool> valuesAdded;
+
     public PriorityQueue() {
         valuesAdded = new Dictionary<T, bool>();
         Count = 0;
@@ -25,6 +26,7 @@ public class PriorityQueue<T> {
         return Count == 0;
     }
 
+    //o(logn)
     public void Enqueue(int priority, T obj) 
     {
         if(!dict.ContainsKey(priority))
@@ -39,6 +41,7 @@ public class PriorityQueue<T> {
         Count++;
     }
 
+    //should be o(1)
     public T Dequeue() {
         if (this.IsEmpty())
             throw new UnityException("Stack is empty");

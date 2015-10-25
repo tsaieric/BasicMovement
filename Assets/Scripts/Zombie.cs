@@ -50,9 +50,8 @@ public class Zombie : MonoBehaviour
 		switch (thisBehavior) {
 		case Behavior.SeekAStar:
 			if (path != null) {
-				moveController.Arrive (path [currentNodeIndex].worldPosition, Grid.Instance.nodeRadius);
+				moveController.Arrive (path [currentNodeIndex].worldPosition, Grid.Instance.nodeRadius*2);
 				if (Grid.Instance.NodeFromWorldPoint (this.transform.position).IsPositionEqualTo (path [currentNodeIndex])) {
-					currentNodeIndex++;
 					currentNodeIndex++;
 				}
 			}

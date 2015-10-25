@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Grid: MonoBehaviour
 {
 	public static Grid Instance;
-	public Transform player;
+	private Transform player;
 	public LayerMask unwalkableMask;
 	public Vector2 gridWorldSize;
 	public float nodeRadius;

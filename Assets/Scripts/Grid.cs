@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Grid: MonoBehaviour
 {
-    public static Grid Instance;
+	public static Grid Instance;
 	public Transform player;
 	public LayerMask unwalkableMask;
 	public Vector2 gridWorldSize;
@@ -14,10 +14,10 @@ public class Grid: MonoBehaviour
 	float nodeDiameter;
 	int gridSizeX, gridSizeY;
 
-    void Awake()
-    {
-        Instance = this;
-    }
+	void Awake ()
+	{
+		Instance = this;
+	}
 	void Start ()
 	{
 		nodeDiameter = nodeRadius * 2;
@@ -39,22 +39,24 @@ public class Grid: MonoBehaviour
 		}
 	}
 
-	public List<Node> GetNeighbours (Node node)
+	public List<Node> GetNeighbors (Node node)
 	{
-		List<Node> neighbours = new List<Node> ();
+		List<Node> neighbors = new List<Node> ();
 
 		for (int x = -1; x<=1; x++) {
 			for (int y = -1; y<= 1; y++) {
-				if (x == 0 && y == 0)
+				//check if it's origin or corners (we only want to search 4 sides)
+				//if both x!=0 and y!=0 then it's a corner
+				if (x == 0 && y == 0 || x != 0 && y != 0)
 					continue;
 				int checkX = node.gridX + x;
 				int checkY = node.gridY + y;
 				if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeX) {
-					neighbours.Add (grid [checkX, checkY]);
+					neighbors.Add (grid [checkX, checkY]);
 				}
 			}
 		}
-		return neighbours;
+		return neighbors;
 	}
 
 	public Node NodeFromWorldPoint (Vector3 worldPosition)
@@ -78,7 +80,10 @@ public class Grid: MonoBehaviour
 			if (grid != null) {
 				//Node playerNode = NodeFromWorldPoint(player.position);
 				foreach (Node n in grid) {
-					Gizmos.color = (n.walkable) ? Color.white : Color.red;
+					if (n.walkable) 
+						Gizmos.color = Color.white;
+					else
+						Gizmos.color = Color.red;
 					for (int x=0; x<paths.Length; x++) {
 						if (paths [x] != null)
 						if (paths [x].Contains (n))

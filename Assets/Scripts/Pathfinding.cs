@@ -137,6 +137,7 @@ public class Pathfinding : MonoBehaviour
 			}
 		}
 	}
+
 	void RetracePath (Node startNode, Node endNode, int x)
 	{
 		List<Node> path = new List<Node> ();
@@ -147,6 +148,7 @@ public class Pathfinding : MonoBehaviour
 		}
 		path.Reverse ();
 		grid.paths [x] = path;
+        Debug.Log("path has been retraced??");
 		seekers [x].GetComponent<Zombie> ().SetPath (path);
 	}
 

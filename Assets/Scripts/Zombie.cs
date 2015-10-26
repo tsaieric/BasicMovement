@@ -49,12 +49,12 @@ public class Zombie : MonoBehaviour
 		moveController.ResetSteering ();
 		switch (thisBehavior) {
 		case Behavior.SeekAStar:
-			if (path != null) {
-				moveController.Arrive (path [currentNodeIndex].worldPosition, Grid.Instance.nodeRadius*2);
-				if (Grid.Instance.NodeFromWorldPoint (this.transform.position).IsPositionEqualTo (path [currentNodeIndex])) {
-					currentNodeIndex++;
-				}
-			}
+			//if (path != null) {
+			//	moveController.Arrive (path [currentNodeIndex].worldPosition, Grid.Instance.nodeRadius*2);
+			//	if (Grid.Instance.NodeFromWorldPoint (this.transform.position).IsPositionEqualTo (path [currentNodeIndex])) {
+			//		currentNodeIndex++;
+			//	}
+			//}
 			break;
 		case Behavior.Seek:
 			moveController.Seek (targetPosition);

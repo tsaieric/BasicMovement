@@ -24,7 +24,9 @@ public class PlayerMovement : MonoBehaviour
 
 		Move (h, v);
 		//this.transform.position += new Vector3(h, 0, v) * Time.deltaTime * speed;        
-		this.transform.rotation = Quaternion.LookRotation (new Vector3 (h, 0, v));
+		Vector3 direction = new Vector3 (h, 0, v);
+		if (direction != Vector3.zero)
+			this.transform.rotation = Quaternion.LookRotation (direction);
 		Animating (h, v);
 	}
 

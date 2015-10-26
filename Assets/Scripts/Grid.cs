@@ -50,12 +50,11 @@ public class Grid: MonoBehaviour
 				int checkX = node.gridX + x;
 				int checkY = node.gridY + y;
 				if (checkX >= 0 && checkX < gridX && checkY >= 0 && checkY < gridY) {
-					try {
-						neighbors.Add (grid [checkX, checkY]);
-					} catch (System.IndexOutOfRangeException ex) {
-						Debug.Log (gridY);
-						Debug.Log (checkX + ", " + checkY);
-					}
+//					try {
+					neighbors.Add (grid [checkX, checkY]);
+//					} catch (System.IndexOutOfRangeException ex) {
+//						Debug.Log (checkX + ", " + checkY);
+//					}
 				}
 			}
 		}

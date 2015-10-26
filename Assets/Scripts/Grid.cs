@@ -7,12 +7,12 @@ public class Grid: MonoBehaviour
 	public static Grid Instance;
 	private Transform player;
 	public LayerMask unwalkableMask;
-	public Vector2 gridWorldSize;
+	public Vector2 gridSize;
 	public float nodeRadius;
 	public bool drawPath;
 	Node[,] grid;
 	float nodeDiameter;
-	int gridSizeX, gridSizeY;
+	int gridX, gridY;
 
 	void Awake ()
 	{
@@ -21,17 +21,17 @@ public class Grid: MonoBehaviour
 	void Start ()
 	{
 		nodeDiameter = nodeRadius * 2;
-		gridSizeX = Mathf.RoundToInt (gridWorldSize.x / nodeDiameter);
-		gridSizeY = Mathf.RoundToInt (gridWorldSize.y / nodeDiameter);
+		gridX = Mathf.RoundToInt (gridSize.x / nodeDiameter);
+		gridY = Mathf.RoundToInt (gridSize.y / nodeDiameter);
 		CreateGrid ();
 	}
 
 	void CreateGrid ()
 	{
-		grid = new Node[gridSizeX, gridSizeY];
-		Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2;
-		for (int x = 0; x < gridSizeX; x++) {
-			for (int y = 0; y < gridSizeY; y++) {
+		grid = new Node[gridX, gridY];
+		Vector3 worldBottomLeft = transform.position - Vector3.right * gridSize.x / 2 - Vector3.forward * gridSize.y / 2;
+		for (int x = 0; x < gridX; x++) {
+			for (int y = 0; y < gridY; y++) {
 				Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
 				bool walkable = !(Physics.CheckSphere (worldPoint, nodeRadius, unwalkableMask));
 				grid [x, y] = new Node (walkable, worldPoint, x, y);
@@ -42,7 +42,6 @@ public class Grid: MonoBehaviour
 	public List<Node> GetNeighbors (Node node)
 	{
 		List<Node> neighbors = new List<Node> ();
-
 		for (int x = -1; x<=1; x++) {
 			for (int y = -1; y<= 1; y++) {
 				//check if it's origin or corners (we only want to search 4 sides)
@@ -51,7 +50,7 @@ public class Grid: MonoBehaviour
 					continue;
 				int checkX = node.gridX + x;
 				int checkY = node.gridY + y;
-				if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeX) {
+				if (checkX >= 0 && checkX < gridX && checkY >= 0 && checkY < gridX) {
 					neighbors.Add (grid [checkX, checkY]);
 				}
 			}
@@ -61,13 +60,13 @@ public class Grid: MonoBehaviour
 
 	public Node NodeFromWorldPoint (Vector3 worldPosition)
 	{
-		float percentX = (worldPosition.x + gridWorldSize.x / 2) / gridWorldSize.x;
-		float percentY = (worldPosition.z + gridWorldSize.y / 2) / gridWorldSize.y;
+		float percentX = (worldPosition.x + gridSize.x / 2) / gridSize.x;
+		float percentY = (worldPosition.z + gridSize.y / 2) / gridSize.y;
 		percentX = Mathf.Clamp01 (percentX);
 		percentY = Mathf.Clamp01 (percentY);
 
-		int x = Mathf.RoundToInt ((gridSizeX - 1) * percentX);
-		int y = Mathf.RoundToInt ((gridSizeY - 1) * percentY);
+		int x = Mathf.RoundToInt ((gridX - 1) * percentX);
+		int y = Mathf.RoundToInt ((gridY - 1) * percentY);
 		return grid [x, y];
 	}
 
@@ -76,7 +75,7 @@ public class Grid: MonoBehaviour
 	void OnDrawGizmos ()
 	{
 		if (drawPath) {
-			Gizmos.DrawWireCube (transform.position, new Vector3 (gridWorldSize.x, 1, gridWorldSize.y));
+			Gizmos.DrawWireCube (transform.position, new Vector3 (gridSize.x, 1, gridSize.y));
 			if (grid != null) {
 				//Node playerNode = NodeFromWorldPoint(player.position);
 				foreach (Node n in grid) {

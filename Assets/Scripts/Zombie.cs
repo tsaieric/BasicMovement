@@ -19,8 +19,6 @@ public class Zombie : MonoBehaviour
 	public GameObject targetObj;
 	public GameObject[] bigZombies;
 	public Behavior thisBehavior;
-	private List<Node> path;
-	private int currentNodeIndex;
 	private Vector3 targetPosition;
 	private MoveController moveController;
 	private MoveController targetMoveController;
@@ -35,12 +33,6 @@ public class Zombie : MonoBehaviour
 			targetMoveController = targetObj.GetComponent<MoveController> ();
 	}
 
-	public void SetPath (List<Node> _path)
-	{
-		path = _path;
-		currentNodeIndex = 0;
-	}
-
 	void FixedUpdate ()
 	{
 		if (targetObj != null)
@@ -49,14 +41,7 @@ public class Zombie : MonoBehaviour
 		moveController.ResetSteering ();
 		switch (thisBehavior) {
 		case Behavior.SeekAStar:
-                if (path != null)
-                {
-                    moveController.Arrive(path[currentNodeIndex].worldPosition, Grid.Instance.nodeRadius * 2);
-                    if (Grid.Instance.NodeFromWorldPoint(this.transform.position).IsPositionEqualTo(path[currentNodeIndex]))
-                    {
-                        currentNodeIndex++;
-                    }
-                }
+                moveController.FollowPath(2f);
                 break;
 		case Behavior.Seek:
 			moveController.Seek (targetPosition);

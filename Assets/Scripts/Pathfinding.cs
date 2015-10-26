@@ -148,7 +148,7 @@ public class Pathfinding : MonoBehaviour
 		}
 		path.Reverse ();
 		grid.paths [x] = path;
-		seekers [x].GetComponent<Zombie> ().SetPath (path);
+		seekers [x].GetComponent<MoveController> ().SetPath (path);
 	}
 
 	int GetDistance (Node nodeA, Node nodeB)

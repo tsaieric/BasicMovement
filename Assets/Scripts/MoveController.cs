@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 public class MoveController : MonoBehaviour
 {
 	public float maxSpeed = 10f;
 	public float maxForce = 20f;
-
-	private float randomAngle;
+    private List<Node> path;
+    private int destNodeIndex;
+    private float randomAngle;
 	private Vector3 currentPos, currentVelocity, finalSteering;
 	private string sphereTag = "SphereObs";
 	private string wallTag = "WallObs";
@@ -244,6 +245,30 @@ public class MoveController : MonoBehaviour
 			steering = steering / neighborCount;
 		return steering.normalized;
 	}
+
+
+    public void SetPath(List<Node> _path)
+    {
+        path = _path;
+        destNodeIndex = 0;
+    }
+
+    public void FollowPath(float smoothRadius)
+    {
+        Vector3 steering = Vector3.zero;
+        if (path != null)
+        {
+            Vector3 destination = path[destNodeIndex].worldPosition;
+            float distance = (currentPos - destination).magnitude;
+            steering = _Seek(destination);
+            if (distance<=smoothRadius)
+            {
+                if(destNodeIndex<path.Count-1)
+                    destNodeIndex++;
+            }
+        }
+        finalSteering += steering;
+    }
 
 	public Vector3 GetCurrentVelocity ()
 	{

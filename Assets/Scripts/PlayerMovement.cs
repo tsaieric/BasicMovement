@@ -19,8 +19,8 @@ public class PlayerMovement : MonoBehaviour {
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
-        Move(h, v);
-        //this.transform.position += new Vector3(h, 0, v) * Time.deltaTime * speed;        
+        //Move(h, v);
+        this.transform.position += new Vector3(h, 0, v) * Time.deltaTime * speed;        
         this.transform.rotation = Quaternion.LookRotation(new Vector3(h, 0, v));
         Animating(h, v);
     }

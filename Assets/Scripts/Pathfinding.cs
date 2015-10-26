@@ -148,7 +148,6 @@ public class Pathfinding : MonoBehaviour
 		}
 		path.Reverse ();
 		grid.paths [x] = path;
-        Debug.Log("path has been retraced??");
 		seekers [x].GetComponent<Zombie> ().SetPath (path);
 	}
 

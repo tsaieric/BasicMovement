@@ -44,9 +44,8 @@ public class Grid: MonoBehaviour
 		List<Node> neighbors = new List<Node> ();
 		for (int x = -1; x<=1; x++) {
 			for (int y = -1; y<= 1; y++) {
-				//check if it's origin or corners (we only want to search 4 sides)
-				//if both x!=0 and y!=0 then it's a corner
-				if (x == 0 && y == 0 || x != 0 && y != 0)
+				//check if it's origin
+				if (x == 0 && y == 0)
 					continue;
 				int checkX = node.gridX + x;
 				int checkY = node.gridY + y;
@@ -60,8 +59,8 @@ public class Grid: MonoBehaviour
 
 	public Node NodeFromWorldPoint (Vector3 worldPosition)
 	{
-		float percentX = (worldPosition.x + gridSize.x / 2) / gridSize.x;
-		float percentY = (worldPosition.z + gridSize.y / 2) / gridSize.y;
+        float percentX = worldPosition.x / gridSize.x + .5f;//this is the simplification of (worldPosition.x + gridSize.x / 2) / gridSize.x;
+        float percentY = worldPosition.z / gridSize.y + .5f;
 		percentX = Mathf.Clamp01 (percentX);
 		percentY = Mathf.Clamp01 (percentY);
 

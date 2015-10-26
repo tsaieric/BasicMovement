@@ -75,19 +75,19 @@ public class MoveController : MonoBehaviour
 	private Vector3 ObstacleHelperMethod (Vector3 raycastVector, float detectDistance)
 	{
 		Vector3 combinedSteering = Vector3.zero;
-		Debug.DrawRay (currentPos, raycastVector.normalized * detectDistance, Color.yellow);
+		//Debug.DrawRay (currentPos, raycastVector.normalized * detectDistance, Color.yellow);
 		if (Physics.Raycast (currentPos, raycastVector, out hitInfo, detectDistance)) {
 			if (hitInfo.transform.tag == sphereTag) {
 				Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
 				Vector3 steering = raycastVector - collisionVelocity;
-				Debug.DrawRay (currentPos, steering, Color.red);
+				//Debug.DrawRay (currentPos, steering, Color.red);
 				combinedSteering += steering;
 			}
 
 			if (hitInfo.transform.tag == wallTag) {
 				float lengthPastWall = ((currentPos + raycastVector.normalized * detectDistance) - hitInfo.point).magnitude;
 				Vector3 steering = hitInfo.normal.normalized * lengthPastWall;
-				Debug.DrawRay (currentPos, steering, Color.black);
+				//Debug.DrawRay (currentPos, steering, Color.black);
 				combinedSteering += steering;
 			}
 		}
@@ -122,9 +122,7 @@ public class MoveController : MonoBehaviour
 		Vector3 steering = desiredVelocity - currentVelocity;
 		if (steering.magnitude < 1f)
 			steering = steering.normalized;
-		//else
-		//    steering = Vector3.ClampMagnitude(steering, maxForce);
-		Debug.DrawRay (currentPos, steering, Color.white);
+		//Debug.DrawRay (currentPos, steering, Color.white);
 		return steering;
 	}
 
@@ -162,7 +160,7 @@ public class MoveController : MonoBehaviour
 		if (currentVelocity == Vector3.zero)
 			steering = Quaternion.Euler (0, randomAngle, 0) * transform.forward;
 		steering = steering.normalized * maxSpeed;
-		Debug.DrawRay (currentPos, steering, Color.blue);
+		//Debug.DrawRay (currentPos, steering, Color.blue);
 		return steering;
 	}
 
@@ -263,6 +261,7 @@ public class MoveController : MonoBehaviour
             steering = _Seek(destination);
             if (distance<=smoothRadius)
             {
+                steering = Vector3.zero;
                 if(destNodeIndex<path.Count-1)
                     destNodeIndex++;
             }

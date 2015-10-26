@@ -49,8 +49,13 @@ public class Grid: MonoBehaviour
 					continue;
 				int checkX = node.gridX + x;
 				int checkY = node.gridY + y;
-				if (checkX >= 0 && checkX < gridX && checkY >= 0 && checkY < gridX) {
-					neighbors.Add (grid [checkX, checkY]);
+				if (checkX >= 0 && checkX < gridX && checkY >= 0 && checkY < gridY) {
+					try {
+						neighbors.Add (grid [checkX, checkY]);
+					} catch (System.IndexOutOfRangeException ex) {
+						Debug.Log (gridY);
+						Debug.Log (checkX + ", " + checkY);
+					}
 				}
 			}
 		}
@@ -59,8 +64,8 @@ public class Grid: MonoBehaviour
 
 	public Node NodeFromWorldPoint (Vector3 worldPosition)
 	{
-        float percentX = worldPosition.x / gridSize.x + .5f;//this is the simplification of (worldPosition.x + gridSize.x / 2) / gridSize.x;
-        float percentY = worldPosition.z / gridSize.y + .5f;
+		float percentX = worldPosition.x / gridSize.x + .5f;//this is the simplification of (worldPosition.x + gridSize.x / 2) / gridSize.x;
+		float percentY = worldPosition.z / gridSize.y + .5f;
 		percentX = Mathf.Clamp01 (percentX);
 		percentY = Mathf.Clamp01 (percentY);
 

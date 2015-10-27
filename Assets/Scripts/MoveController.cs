@@ -254,7 +254,7 @@ public class MoveController : MonoBehaviour
     public void FollowPath3d(float smoothRadius)
     {
         Vector3 steering = Vector3.zero;
-        if (path3d != null)
+        if (path3d != null && path3d.Count>0)
         {
             Vector3 destination = path3d[destNodeIndex].worldPosition;
             float distance = (currentPos - destination).magnitude;
@@ -281,7 +281,7 @@ public class MoveController : MonoBehaviour
 	public void FollowPath (float smoothRadius)
 	{
 		Vector3 steering = Vector3.zero;
-		if (path != null) {
+		if (path != null && path.Count>0) {
 			Vector3 destination = path [destNodeIndex].worldPosition;
 			float distance = (currentPos - destination).magnitude;
 			//if it's last node, arrive there. If not, seek the node.

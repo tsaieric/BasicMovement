@@ -87,8 +87,6 @@ public class Grid3d : MonoBehaviour
         int x = Mathf.RoundToInt((gridX - 1) * percentX);
         int y = Mathf.RoundToInt((gridY - 1) * percentY);
         int z = Mathf.RoundToInt((gridZ - 1) * percentZ);
-        Debug.Log(worldPosition);
-        Debug.Log(x + "," + z + "," + y);
         return grid[x, y, z];
     }
 

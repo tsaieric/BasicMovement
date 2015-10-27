@@ -6,6 +6,7 @@ public class MoveController : MonoBehaviour
 	public float maxSpeed = 10f;
 	public float maxForce = 20f;
 	private List<Node> path;
+    private List<Node3d> path3d;
 	private int destNodeIndex;
 	private float randomAngle;
 	private Vector3 currentPos, currentVelocity, finalSteering;
@@ -244,8 +245,34 @@ public class MoveController : MonoBehaviour
 		return steering.normalized;
 	}
 
+    public void SetPath3d(List<Node3d> _path)
+    {
+        path3d = _path;
+        destNodeIndex = 0;
+    }
 
-	public void SetPath (List<Node> _path)
+    public void FollowPath3d(float smoothRadius)
+    {
+        Vector3 steering = Vector3.zero;
+        if (path3d != null)
+        {
+            Vector3 destination = path3d[destNodeIndex].worldPosition;
+            float distance = (currentPos - destination).magnitude;
+            //if it's last node, arrive there. If not, seek the node.
+            if (destNodeIndex == path3d.Count - 1)
+                steering = _Arrive(destination, Grid3d.Instance.nodeRadius);
+            else
+                steering = _Seek(destination);
+            if (distance <= smoothRadius)
+            {
+                if (destNodeIndex < path3d.Count - 1)
+                    destNodeIndex++;
+            }
+        }
+        finalSteering += steering;
+    }
+
+    public void SetPath (List<Node> _path)
 	{
 		path = _path;
 		destNodeIndex = 0;

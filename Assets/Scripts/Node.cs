@@ -25,9 +25,17 @@ public class Node
 		}
 	}
 
+	public bool IsNeighbor (Node input)
+	{
+		if (!IsPositionEqualTo (input)) {
+			int distX = Mathf.Abs (this.gridX - input.gridX);
+			int distY = Mathf.Abs (this.gridY - input.gridY);
+			return (distX + distY) <= 2;
+		}
+		return false;
+	}
 	public bool IsPositionEqualTo (Node input)
 	{
-		//Debug.Log(input.gridX + "," + input.gridY+" vs. " +this.gridX + "," + this.gridY));
 		return (input.gridX == this.gridX) && (input.gridY == this.gridY);
 	}
 }

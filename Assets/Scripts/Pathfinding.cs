@@ -10,12 +10,19 @@ public class Pathfinding : MonoBehaviour
 	public int weight;
 	public bool calculatePerFrame;
 	private Node previousTargetNode;
+	private MoveController[] seekerMoveControllers;
 	private Node currentTargetNode;
+	private int seekerIndex;
+	private bool calculatePaths = false;
 	Grid grid;
 
 	// Use this for initialization
 	void Awake ()
 	{
+		seekerIndex = 0;
+		seekerMoveControllers = new MoveController[seekers.Length];
+		for (int x=0; x<seekers.Length; x++)
+			seekerMoveControllers [x] = seekers [x].GetComponent<MoveController> ();
 		grid = GetComponent<Grid> ();
 	}
 
@@ -26,19 +33,38 @@ public class Pathfinding : MonoBehaviour
 
 	void Update ()
 	{
+		if (calculatePaths) {
+			IncrementCalcPaths ();
+		}
 		if (!calculatePerFrame) {
 			currentTargetNode = grid.NodeFromWorldPoint (target.position);
 			if (previousTargetNode != null) {
-				//if current node != previous node, then calculate all paths
+				//if current target node != previous target node, then calculate all paths
 				if (!currentTargetNode.IsPositionEqualTo (previousTargetNode) && currentTargetNode.walkable) {
-					CalculateAllPaths ();
+					calculatePaths = true;
+					//CalculateAllPaths ();
 				}
+				if (!currentTargetNode.IsNeighbor (previousTargetNode))
+					previousTargetNode = currentTargetNode;
+			} else {
+				previousTargetNode = currentTargetNode;
 			}
-			previousTargetNode = currentTargetNode;
+		
 		} else
 			CalculateAllPaths ();
 	}
 
+	void IncrementCalcPaths ()
+	{
+		if (seekerIndex < numPaths) {
+			FindPathPQ (seekers [seekerIndex].position, target.position, seekerIndex);
+			seekerIndex++;
+		}
+		if (seekerIndex == numPaths) {
+			seekerIndex = 0;
+			calculatePaths = false;
+		}
+	}
 	void CalculateAllPaths ()
 	{
 		for (int x = 0; x < numPaths; x++) {
@@ -95,7 +121,7 @@ public class Pathfinding : MonoBehaviour
 //		}
 //	}
 
-	void FindPathPQ (Vector3 startPos, Vector3 targetPos, int num)
+	void FindPathPQ (Vector3 startPos, Vector3 targetPos, int x)
 	{
 		Node startNode = grid.NodeFromWorldPoint (startPos);
 		Node targetNode = grid.NodeFromWorldPoint (targetPos);
@@ -108,10 +134,9 @@ public class Pathfinding : MonoBehaviour
 			closedSet.Add (currentNode);
 
 			if (currentNode == targetNode) {
-				RetracePath (startNode, targetNode, num);
+				RetracePath (startNode, targetNode, x);
 				return;
 			}
-
 			foreach (Node neighbor in grid.GetNeighbors(currentNode)) {
 				if (!neighbor.walkable || closedSet.Contains (neighbor)) {
 					continue;
@@ -142,7 +167,7 @@ public class Pathfinding : MonoBehaviour
 		}
 		path.Reverse ();
 		grid.paths [x] = path;
-		seekers [x].GetComponent<MoveController> ().SetPath (path);
+		seekerMoveControllers [x].SetPath (path);
 	}
 
 	int GetDistance (Node nodeA, Node nodeB)

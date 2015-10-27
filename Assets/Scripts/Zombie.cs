@@ -41,7 +41,7 @@ public class Zombie : MonoBehaviour
 		moveController.ResetSteering ();
 		switch (thisBehavior) {
 		case Behavior.SeekAStar:
-			moveController.FollowPath (2f);
+			moveController.FollowPath (5f);
 			break;
 		case Behavior.Seek:
 			moveController.Seek (targetPosition);
@@ -82,7 +82,7 @@ public class Zombie : MonoBehaviour
 		}
 
 		if (this.thisBehavior != Behavior.Formation) {
-			moveController.Separation (2f, 10f);
+			moveController.Separation (3f, 30f);
 			moveController.ObstacleAvoidance (2f, 30f);
 			moveController.UpdateEverything ();
 		}

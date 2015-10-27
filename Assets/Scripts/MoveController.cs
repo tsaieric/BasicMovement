@@ -81,14 +81,16 @@ public class MoveController : MonoBehaviour
 				Vector3 collisionVelocity = hitInfo.transform.position - this.transform.position;
 				Vector3 steering = raycastVector - collisionVelocity;
 				//Debug.DrawRay (currentPos, steering, Color.red);
-				combinedSteering += steering;
+				combinedSteering += steering * 1.2f;
 			}
 
 			if (hitInfo.transform.tag == wallTag) {
 				float lengthPastWall = ((currentPos + raycastVector.normalized * detectDistance) - hitInfo.point).magnitude;
 				Vector3 steering = hitInfo.normal.normalized * lengthPastWall;
+				Vector3 seekPos = hitInfo.point + hitInfo.normal.normalized * lengthPastWall;
+				combinedSteering += _Seek (seekPos);
 				//Debug.DrawRay (currentPos, steering, Color.black);
-				combinedSteering += steering;
+//				combinedSteering += steering;
 			}
 		}
 		return combinedSteering;
@@ -105,8 +107,6 @@ public class MoveController : MonoBehaviour
 		Vector3 steering = desiredVelocity - currentVelocity;
 		if (steering.magnitude < 1f)
 			steering = steering.normalized;
-		//else
-		//	steering = Vector3.ClampMagnitude (steering, maxForce);
 		return steering;
 	}
 
@@ -257,7 +257,11 @@ public class MoveController : MonoBehaviour
 		if (path != null) {
 			Vector3 destination = path [destNodeIndex].worldPosition;
 			float distance = (currentPos - destination).magnitude;
-			steering = _Arrive (destination, Grid.Instance.nodeRadius);
+			//if it's last node, arrive there. If not, seek the node.
+			if (destNodeIndex == path.Count - 1)
+				steering = _Arrive (destination, Grid.Instance.nodeRadius);
+			else
+				steering = _Seek (destination);
 			if (distance <= smoothRadius) {
 				if (destNodeIndex < path.Count - 1)
 					destNodeIndex++;

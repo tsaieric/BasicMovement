@@ -70,7 +70,9 @@ public class Grid: MonoBehaviour
 
 		int x = Mathf.RoundToInt ((gridX - 1) * percentX);
 		int y = Mathf.RoundToInt ((gridY - 1) * percentY);
-		return grid [x, y];
+        Debug.Log(worldPosition);
+        Debug.Log(x + "," + y);
+        return grid [x, y];
 	}
 
 	public List<Node>[] paths = new List<Node>[10];

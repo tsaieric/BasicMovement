@@ -17,20 +17,26 @@ public class Grid3d : MonoBehaviour
     void Awake()
     {
         Instance = this;
-    }
-    void Start()
-    {
         nodeDiameter = nodeRadius * 2;
         gridX = Mathf.RoundToInt(gridSize.x / nodeDiameter);
         gridY = Mathf.RoundToInt(gridSize.y / nodeDiameter);
         gridZ = Mathf.RoundToInt(gridSize.z / nodeDiameter);
         CreateGrid();
     }
+    void Start()
+    {
+        //nodeDiameter = nodeRadius * 2;
+        //gridX = Mathf.RoundToInt(gridSize.x / nodeDiameter);
+        //gridY = Mathf.RoundToInt(gridSize.y / nodeDiameter);
+        //gridZ = Mathf.RoundToInt(gridSize.z / nodeDiameter);
+        //CreateGrid();
+    }
 
     void CreateGrid()
     {
         grid = new Node3d[gridX, gridY, gridZ];
         Vector3 worldBottomLeft = transform.position - Vector3.right * gridSize.x / 2 - Vector3.forward * gridSize.y / 2 - Vector3.up * gridSize.z / 2;
+        Debug.Log(worldBottomLeft+"left");
         for (int x = 0; x < gridX; x++)
         {
             for (int y = 0; y < gridY; y++)
@@ -81,6 +87,8 @@ public class Grid3d : MonoBehaviour
         int x = Mathf.RoundToInt((gridX - 1) * percentX);
         int y = Mathf.RoundToInt((gridY - 1) * percentY);
         int z = Mathf.RoundToInt((gridZ - 1) * percentZ);
+        Debug.Log(worldPosition);
+        Debug.Log(x + "," + z + "," + y);
         return grid[x, y, z];
     }
 

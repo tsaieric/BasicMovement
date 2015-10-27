@@ -101,7 +101,6 @@ public class Grid3d : MonoBehaviour
             Gizmos.DrawWireCube(transform.position, new Vector3(gridSize.x, gridSize.z, gridSize.y));
             if (grid != null)
             {
-                //Node playerNode = NodeFromWorldPoint(player.position);
                 foreach (Node3d n in grid)
                 {
                     if (n.walkable)
@@ -114,14 +113,8 @@ public class Grid3d : MonoBehaviour
                             if (paths[x].Contains(n))
                                 Gizmos.color = Color.black;
                     }
-                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
-
-                    /* if (playerNode == n)
-                {
-                    Gizmos.color = Color.cyan;
-                }
-                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
-                */
+                    if(Gizmos.color!=Color.white)
+                        Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
                 }
             }
         }

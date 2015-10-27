@@ -35,7 +35,7 @@ public class MoveController : MonoBehaviour
 
 	public void UpdateEverything ()
 	{
-		finalSteering.y = 0f; //zero out y velocities
+		//finalSteering.y = 0f; //zero out y velocities
 		//finalSteering = Vector3.ClampMagnitude(finalSteering, maxForce);
 
 		//v_0 + a*t

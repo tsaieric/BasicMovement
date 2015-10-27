@@ -8,7 +8,6 @@ public class Pathfinding : MonoBehaviour
 	public Transform target;
 	public int numPaths;
 	public int weight;
-	public bool calculatePerFrame;
 	private Node previousTargetNode;
 	private MoveController[] seekerMoveControllers;
 	private Node currentTargetNode;
@@ -34,27 +33,24 @@ public class Pathfinding : MonoBehaviour
 	void Update ()
 	{
 		if (calculatePaths) {
-			IncrementCalcPaths ();
+			CalcOnePathPerFrame ();
 		}
-		if (!calculatePerFrame) {
-			currentTargetNode = grid.NodeFromWorldPoint (target.position);
-			if (previousTargetNode != null) {
-				//if current target node != previous target node, then calculate all paths
-				if (!currentTargetNode.IsPositionEqualTo (previousTargetNode) && currentTargetNode.walkable) {
-					calculatePaths = true;
-					//CalculateAllPaths ();
-				}
-				if (!currentTargetNode.IsNeighbor (previousTargetNode))
-					previousTargetNode = currentTargetNode;
-			} else {
-				previousTargetNode = currentTargetNode;
+		currentTargetNode = grid.NodeFromWorldPoint (target.position);
+		if (previousTargetNode != null) {
+			//if current target node != previous target node, then calculate all paths
+			if (!currentTargetNode.IsPositionEqualTo (previousTargetNode) && currentTargetNode.walkable) {
+				calculatePaths = true;
+				//CalculateAllPaths ();
 			}
-		
-		} else
-			CalculateAllPaths ();
+//			if (!currentTargetNode.IsNeighbor (previousTargetNode))
+//				previousTargetNode = currentTargetNode;
+		} 
+//		else {
+		previousTargetNode = currentTargetNode;
+//		}
 	}
 
-	void IncrementCalcPaths ()
+	void CalcOnePathPerFrame ()
 	{
 		if (seekerIndex < numPaths) {
 			FindPathPQ (seekers [seekerIndex].position, target.position, seekerIndex);
@@ -65,6 +61,20 @@ public class Pathfinding : MonoBehaviour
 			calculatePaths = false;
 		}
 	}
+
+	void CalcXPathsPerFrame (int x)
+	{
+		if (seekerIndex < numPaths * x) {
+			if (seekerIndex % x == 0)
+				FindPathPQ (seekers [seekerIndex / x].position, target.position, seekerIndex / x);
+			seekerIndex++;
+		}
+		if (seekerIndex == numPaths * x && seekerIndex % x == 0) {
+			seekerIndex = 0;
+			calculatePaths = false;
+		}
+	}
+
 	void CalculateAllPaths ()
 	{
 		for (int x = 0; x < numPaths; x++) {

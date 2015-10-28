@@ -1,34 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public enum Behavior
-{
-	Seek,
-	Flee,
-	Arrive,
-	Wander,
-	FlockingWander,
-	FleeFromGroup,
-	Formation,
-	SeekAStar,
-	SeekAStar3D
-}
 
-public class Zombie : MonoBehaviour
+public class Walker : MonoBehaviour
 {
 	public GameObject targetObj;
-	public GameObject[] bigZombies;
 	public Behavior thisBehavior;
+	public GameObject[] fleeFrom;
 	private Vector3 targetPosition;
 	private MoveController moveController;
 	private MoveController targetMoveController;
-	private Animator anim;
 
 	// Use this for initialization
 	void Start ()
 	{
 		moveController = this.GetComponent<MoveController> ();
-		anim = this.GetComponent<Animator> ();
 		if (targetObj != null)
 			targetMoveController = targetObj.GetComponent<MoveController> ();
 		if (thisBehavior == Behavior.SeekAStar3D) {
@@ -73,7 +59,7 @@ public class Zombie : MonoBehaviour
 			break;
 		case Behavior.FleeFromGroup:
 			bool awayFromAll = true;
-			foreach (GameObject zombie in bigZombies) {
+			foreach (GameObject zombie in fleeFrom) {
 				float distFromBigZombie = (this.transform.position - zombie.transform.position).magnitude;
 				if (distFromBigZombie <= 30f) {
 					awayFromAll = false;
@@ -92,8 +78,5 @@ public class Zombie : MonoBehaviour
 			moveController.ObstacleAvoidance (2f, 30f);
 			moveController.UpdateEverything ();
 		}
-
-		//change Zombie animation speed based on current speed
-		anim.SetFloat ("currentSpeed", moveController.GetCurrentVelocity ().magnitude);
 	}
 }

@@ -27,7 +27,7 @@ public class Pathfinding : MonoBehaviour
 
 	void Start ()
 	{
-        calculatePaths = true;
+		calculatePaths = true;
 	}
 
 	void Update ()
@@ -100,7 +100,7 @@ public class Pathfinding : MonoBehaviour
 				if (!neighbor.walkable || closedSet.Contains (neighbor)) {
 					continue;
 				}
-                //calculate new cost it takes to get to neighbor
+				//calculate new cost it takes to get to neighbor
 				int newMovementCostToNeighbor = currentNode.gCost + GetNeighborCost (currentNode, neighbor, x);
 
 				//update if new path to neighbor is less costly, or neighbor hasn't been considered
@@ -129,17 +129,17 @@ public class Pathfinding : MonoBehaviour
 		seekerMoveControllers [x].SetPath (path);
 	}
 
-    //checks for distance and accounts for terrain/type costs
-    int GetNeighborCost (Node current, Node neighbor, int x)
-    {
-        int cost = GetDistance(current, neighbor);
-        if (neighbor.isFire)
-        {
-            if (!seekerMoveControllers[x].canWalkOnFire)
-               cost += 80 * weight;
-        }
-        return cost;
-    }
+	//checks for distance and accounts for terrain/type costs
+	int GetNeighborCost (Node current, Node neighbor, int x)
+	{
+		int cost = GetDistance (current, neighbor);
+		if (neighbor.isFire) {
+			//movement cost of 8, scaled by 10 to match
+			if (!seekerMoveControllers [x].canWalkOnFire)
+				cost += 80 * weight;
+		}
+		return cost;
+	}
 
 	int GetDistance (Node nodeA, Node nodeB)
 	{

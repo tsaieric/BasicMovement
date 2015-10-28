@@ -53,6 +53,7 @@ public class Pathfinding : MonoBehaviour
 	void CalcOnePathPerFrame ()
 	{
 		if (seekerIndex < numPaths) {
+			//check if seeker can walk on fire
 			FindPathPQ (seekers [seekerIndex].position, target.position, seekerIndex);
 			seekerIndex++;
 		}
@@ -62,7 +63,7 @@ public class Pathfinding : MonoBehaviour
 		}
 	}
 
-	void CalcXPathsPerFrame (int x)
+	void CalcPathsPerXFrame (int x)
 	{
 		if (seekerIndex < numPaths * x) {
 			if (seekerIndex % x == 0)
@@ -151,8 +152,12 @@ public class Pathfinding : MonoBehaviour
 				if (!neighbor.walkable || closedSet.Contains (neighbor)) {
 					continue;
 				}
-
 				int newMovementCostToNeighbor = currentNode.gCost + GetDistance (currentNode, neighbor);
+
+				if (neighbor.isFire) {
+					if (!seekerMoveControllers [x].canWalkOnFire)
+						newMovementCostToNeighbor += 800 * weight;
+				}
 				//contains is constant because custom PQ uses another Dict<node,bool> to track values added
 				if (newMovementCostToNeighbor < neighbor.gCost || !openSet.Contains (neighbor)) {
 					neighbor.gCost = newMovementCostToNeighbor;

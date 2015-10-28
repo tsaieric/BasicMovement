@@ -10,10 +10,20 @@ public class Node
 	public int gCost;
 	public int hCost;
 	public Node parent;
+	public bool isFire;
 
 	public Node (bool _walkable, Vector3 _worldPos, int _gridX, int _gridY)
 	{
 		walkable = _walkable;
+		worldPosition = _worldPos;
+		gridX = _gridX;
+		gridY = _gridY;
+		isFire = false;
+	}
+	public Node (bool _walkable, bool _isFire, Vector3 _worldPos, int _gridX, int _gridY)
+	{
+		walkable = _walkable;
+		isFire = _isFire;
 		worldPosition = _worldPos;
 		gridX = _gridX;
 		gridY = _gridY;

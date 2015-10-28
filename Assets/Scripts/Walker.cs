@@ -11,10 +11,14 @@ public class Walker : MonoBehaviour
 	private MoveController moveController;
 	private MoveController targetMoveController;
 
+	void Awake ()
+	{
+		moveController = this.GetComponent<MoveController> ();
+	}
 	// Use this for initialization
 	void Start ()
 	{
-		moveController = this.GetComponent<MoveController> ();
+	
 		if (targetObj != null)
 			targetMoveController = targetObj.GetComponent<MoveController> ();
 		if (thisBehavior == Behavior.SeekAStar3D) {

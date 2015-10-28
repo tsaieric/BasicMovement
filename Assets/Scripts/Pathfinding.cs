@@ -79,7 +79,7 @@ public class Pathfinding : MonoBehaviour
 			}
 		}
 	}
-
+        
 	void FindPathPQ (Vector3 startPos, Vector3 targetPos, int x)
 	{
 		Node startNode = grid.NodeFromWorldPoint (startPos);

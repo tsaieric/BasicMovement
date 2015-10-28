@@ -112,7 +112,6 @@ public class Pathfinding : MonoBehaviour
 						openSet.Enqueue (neighbor.fCost, neighbor);
 					}
 				}
-
 			}
 		}
 	}

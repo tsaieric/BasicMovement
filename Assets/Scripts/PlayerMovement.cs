@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
 		anim = GetComponent<Animator> ();
 		playerRigidbody = GetComponent<Rigidbody> ();
+		anim.SetFloat ("currentSpeed", speed);
 	}
 	
 	// Update is called once per frame

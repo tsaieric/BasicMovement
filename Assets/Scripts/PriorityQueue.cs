@@ -36,7 +36,8 @@ public class PriorityQueue<T>
 		} else {
 			tempStack = new Stack<T> ();
 			tempStack.Push (obj);
-			dict.Add (priority, tempStack);
+            dict[priority] = tempStack;
+			//dict.Add (priority, tempStack);
 		}
 		valuesAdded [obj] = true;
 		Count++;

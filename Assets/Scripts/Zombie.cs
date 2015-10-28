@@ -31,6 +31,10 @@ public class Zombie : MonoBehaviour
         anim = this.GetComponent<Animator>();
         if (targetObj != null)
             targetMoveController = targetObj.GetComponent<MoveController>();
+        if(thisBehavior==Behavior.SeekAStar3D)
+        {
+            moveController.Set3D(true);
+        }
     }
 
     void FixedUpdate()

@@ -92,8 +92,8 @@ public class Grid: MonoBehaviour
 						if (paths [x].Contains (n))
 							Gizmos.color = Color.black;
 					}
-					if (Gizmos.color != Color.white)
-						Gizmos.DrawCube (n.worldPosition, Vector3.one * (nodeDiameter - .1f));
+                    if (Gizmos.color != Color.white)
+                        Gizmos.DrawCube (n.worldPosition, Vector3.one * (nodeDiameter - .1f));
 				}
 			}
 		}

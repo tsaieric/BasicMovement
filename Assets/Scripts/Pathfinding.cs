@@ -27,7 +27,7 @@ public class Pathfinding : MonoBehaviour
 
 	void Start ()
 	{
-		CalculateAllPaths ();
+        calculatePaths = true;
 	}
 
 	void Update ()
@@ -42,18 +42,13 @@ public class Pathfinding : MonoBehaviour
 				calculatePaths = true;
 				//CalculateAllPaths ();
 			}
-//			if (!currentTargetNode.IsNeighbor (previousTargetNode))
-//				previousTargetNode = currentTargetNode;
 		} 
-//		else {
 		previousTargetNode = currentTargetNode;
-//		}
 	}
 
 	void CalcOnePathPerFrame ()
 	{
 		if (seekerIndex < numPaths) {
-			//check if seeker can walk on fire
 			FindPathPQ (seekers [seekerIndex].position, target.position, seekerIndex);
 			seekerIndex++;
 		}
@@ -63,7 +58,7 @@ public class Pathfinding : MonoBehaviour
 		}
 	}
 
-	void CalcPathsPerXFrame (int x)
+	void CalcPathPerXFrame (int x)
 	{
 		if (seekerIndex < numPaths * x) {
 			if (seekerIndex % x == 0)
@@ -85,53 +80,6 @@ public class Pathfinding : MonoBehaviour
 		}
 	}
 
-//	void FindPathList (Vector3 startPos, Vector3 targetPos, int num)
-//	{
-//		Node startNode = grid.NodeFromWorldPoint (startPos);
-//		Node targetNode = grid.NodeFromWorldPoint (targetPos);
-//		List<Node> openSet = new List<Node> ();
-//		HashSet<Node> closedSet = new HashSet<Node> ();
-//		openSet.Add (startNode);
-//
-//		while (openSet.Count > 0) {
-//			Node currentNode = openSet [0];
-//			//get the lowest fCost in openSet
-//			//this is o(n) time
-//			for (int i = 1; i < openSet.Count; i++) {
-//				if (openSet [i].fCost < currentNode.fCost || openSet [i].fCost == currentNode.fCost && openSet [i].hCost < currentNode.hCost) {
-//					currentNode = openSet [i];
-//				}
-//			}
-//			//list removal is o(n), o(2n) vs. o(1) with PQ
-//			openSet.Remove (currentNode);
-//
-//			closedSet.Add (currentNode);
-//
-//			if (currentNode == targetNode) {
-//				RetracePath (startNode, targetNode, num);
-//				return;
-//			}
-//
-//			foreach (Node neighbor in grid.GetNeighbors(currentNode)) {
-//				//if not walkable or visited already, then skip
-//				if (!neighbor.walkable || closedSet.Contains (neighbor)) {
-//					continue;
-//				}
-//
-//				int newMovementCostToNeighbor = currentNode.gCost + GetDistance (currentNode, neighbor);
-//				//list contains is o(n)
-//				if (newMovementCostToNeighbor < neighbor.gCost || !openSet.Contains (neighbor)) {
-//					neighbor.gCost = newMovementCostToNeighbor;
-//					neighbor.hCost = GetDistance (neighbor, targetNode);
-//					neighbor.parent = currentNode;
-//
-//					if (!openSet.Contains (neighbor))
-//						openSet.Add (neighbor);
-//				}
-//			}
-//		}
-//	}
-
 	void FindPathPQ (Vector3 startPos, Vector3 targetPos, int x)
 	{
 		Node startNode = grid.NodeFromWorldPoint (startPos);
@@ -140,7 +88,7 @@ public class Pathfinding : MonoBehaviour
 		HashSet<Node> closedSet = new HashSet<Node> ();
 		openSet.Enqueue (startNode.fCost, startNode);
 		while (openSet.Count > 0) {
-			//get the lowest fCost in openSet, o(1)
+			//get the lowest fCost in openSet, o(logn)
 			Node currentNode = openSet.Dequeue ();
 			closedSet.Add (currentNode);
 
@@ -152,22 +100,19 @@ public class Pathfinding : MonoBehaviour
 				if (!neighbor.walkable || closedSet.Contains (neighbor)) {
 					continue;
 				}
-				int newMovementCostToNeighbor = currentNode.gCost + GetDistance (currentNode, neighbor);
+                //calculate new cost it takes to get to neighbor
+				int newMovementCostToNeighbor = currentNode.gCost + GetNeighborCost (currentNode, neighbor, x);
 
-				if (neighbor.isFire) {
-					if (!seekerMoveControllers [x].canWalkOnFire)
-						newMovementCostToNeighbor += 800 * weight;
-				}
-				//contains is constant because custom PQ uses another Dict<node,bool> to track values added
+				//update if new path to neighbor is less costly, or neighbor hasn't been considered
 				if (newMovementCostToNeighbor < neighbor.gCost || !openSet.Contains (neighbor)) {
 					neighbor.gCost = newMovementCostToNeighbor;
 					neighbor.hCost = GetDistance (neighbor, targetNode);
 					neighbor.parent = currentNode;
-
 					if (!openSet.Contains (neighbor)) {
 						openSet.Enqueue (neighbor.fCost, neighbor);
 					}
 				}
+
 			}
 		}
 	}
@@ -184,6 +129,18 @@ public class Pathfinding : MonoBehaviour
 		grid.paths [x] = path;
 		seekerMoveControllers [x].SetPath (path);
 	}
+
+    //checks for distance and accounts for terrain/type costs
+    int GetNeighborCost (Node current, Node neighbor, int x)
+    {
+        int cost = GetDistance(current, neighbor);
+        if (neighbor.isFire)
+        {
+            if (!seekerMoveControllers[x].canWalkOnFire)
+               cost += 80 * weight;
+        }
+        return cost;
+    }
 
 	int GetDistance (Node nodeA, Node nodeB)
 	{

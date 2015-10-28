@@ -42,14 +42,6 @@ public class Grid: MonoBehaviour
 		}
 	}
 
-	void Update ()
-	{
-		CreateGrid ();
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			Debug.Log ("creating grid");
-		}
-	}
-
 	public List<Node> GetNeighbors (Node node)
 	{
 		List<Node> neighbors = new List<Node> ();

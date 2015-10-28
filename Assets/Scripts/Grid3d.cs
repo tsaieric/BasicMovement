@@ -33,8 +33,11 @@ public class Grid3d : MonoBehaviour
 			for (int y = 0; y < gridY; y++) {
 				for (int z = 0; z < gridZ; z++) {
 					Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius) + Vector3.up * (z * nodeDiameter + nodeRadius);
-//					bool walkable = !(Physics.CheckSphere (worldPoint, nodeRadius, unwalkableMask));
+
 					bool walkable = (Physics.CheckSphere (worldPoint, nodeRadius, walkableMask));
+					if (Physics.CheckSphere (worldPoint, nodeRadius, unwalkableMask)) {
+						walkable = false;
+					}
 					grid [x, y, z] = new Node3d (walkable, worldPoint, x, y, z);
 				}
 			}

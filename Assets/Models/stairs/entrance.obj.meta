@@ -1,27 +1,19 @@
 fileFormatVersion: 2
-guid: 50e12c4fa600e824e96b2c40db949c5d
-labels:
-- exterior
-- building
-- concrete
-- modern
-- lego
-- modular
-- meshset
-- zombiegons
-- constructionkit
+guid: 1ee662dadf8017448be7bc122cb47329
+timeCreated: 1446064081
+licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Wall_A_01
-    6400000: //RootNode
-    11100000: //RootNode
+    100000: entrance
+    100002: //RootNode
+    400000: entrance
+    400002: //RootNode
+    2300000: entrance
+    3300000: entrance
+    4300000: entrance
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
@@ -45,7 +37,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -57,12 +49,12 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 2
+    tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -78,7 +70,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

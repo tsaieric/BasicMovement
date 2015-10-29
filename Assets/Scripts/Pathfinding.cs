@@ -40,12 +40,12 @@ public class Pathfinding : MonoBehaviour
 			//if current target node != previous target node, then calculate all paths
 			if (!currentTargetNode.IsPositionEqualTo (previousTargetNode) && currentTargetNode.walkable) {
 				calculatePaths = true;
-				//CalculateAllPaths ();
 			}
 		} 
 		previousTargetNode = currentTargetNode;
 	}
 
+	//used to calculate a path per frame instead of all paths in one frame
 	void CalcOnePathPerFrame ()
 	{
 		if (seekerIndex < numPaths) {
@@ -58,6 +58,7 @@ public class Pathfinding : MonoBehaviour
 		}
 	}
 
+	//not being used
 	void CalcPathPerXFrame (int x)
 	{
 		if (seekerIndex < numPaths * x) {

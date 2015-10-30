@@ -62,7 +62,7 @@ public class Pathfinding3d : MonoBehaviour
 		}
 	}
 
-	void CalcXPathsPerFrame (int x)
+	void CalcPathsPerXFrame (int x)
 	{
 		if (seekerIndex < numPaths * x) {
 			if (seekerIndex % x == 0)
@@ -137,7 +137,7 @@ public class Pathfinding3d : MonoBehaviour
 	{
 		int diffX = nodeA.gridX - nodeB.gridX;
 		int diffY = nodeA.gridY - nodeB.gridY;
-        int diffZ = nodeA.gridZ - nodeB.gridZ;
-        return Mathf.FloorToInt(Mathf.Sqrt(diffX * diffX + diffY * diffY + diffZ * diffZ));
+		int diffZ = nodeA.gridZ - nodeB.gridZ;
+		return Mathf.FloorToInt (Mathf.Sqrt (diffX * diffX + diffY * diffY + diffZ * diffZ));
 	}
 }

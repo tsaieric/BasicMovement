@@ -18,6 +18,13 @@ public class PlayerMovement : MonoBehaviour
 		anim.SetFloat ("currentSpeed", speed);
 	}
 
+    void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            anim.SetTrigger("Punch");
+        }
+    }
 	// Update is called once per frame
 	void FixedUpdate ()
 	{

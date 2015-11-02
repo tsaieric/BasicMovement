@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
 	public float speed = 6f;
     public LayerMask floorMask;
-    float camRayLength = 150f;
+    float camRayLength = 200f;
 	Vector3 movement;
 	Animator anim;
 	Rigidbody playerRigidbody;
@@ -37,8 +37,10 @@ public class PlayerMovement : MonoBehaviour
     {
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit rayHitInfo;
+        //Debug.DrawRay(Camera.main.transform.position,mouseRay.direction*150f,Color.black);
         if(Physics.Raycast(mouseRay, out rayHitInfo, camRayLength,floorMask))
         {
+            Debug.Log("hitting");
             Vector3 playerToMouse = rayHitInfo.point - this.transform.position;
             playerToMouse.y = 0f;
             playerRigidbody.MoveRotation(Quaternion.LookRotation(playerToMouse));

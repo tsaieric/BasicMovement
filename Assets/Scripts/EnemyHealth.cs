@@ -5,11 +5,11 @@ public class EnemyHealth : MonoBehaviour
 {
 	private float currentHealth = 100f;
 	private float totalHealth = 100f;
-	public Transform healthBar;
+	private Transform healthBar;
 	// Use this for initialization
 	void Awake ()
 	{
-//		healthBar = this.transform.Find ("HealthColor");
+		healthBar = this.transform.Find ("HealthBarCanvas/HealthColor");
 	}
 	
 	// Update is called once per frame

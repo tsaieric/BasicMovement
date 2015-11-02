@@ -6,7 +6,6 @@ public class MoveController : MonoBehaviour
 	public float maxSpeed = 10f;
 	public float maxForce = 20f;
 	public bool canWalkOnFire;
-    public bool rotatable = true;
 	private List<Node> path;
 	private List<Node3d> path3d;
 	private int destNodeIndex;
@@ -47,7 +46,7 @@ public class MoveController : MonoBehaviour
 
 		//p_0 + v*t
 		this.transform.position = currentPos + finalVelocity * Time.deltaTime;
-		if (finalVelocity != Vector3.zero && rotatable)
+		if (finalVelocity != Vector3.zero)
 			this.transform.rotation = Quaternion.Slerp (this.transform.rotation, Quaternion.LookRotation (finalVelocity), Time.deltaTime * 2);
 
 		//update current velocity for the next second

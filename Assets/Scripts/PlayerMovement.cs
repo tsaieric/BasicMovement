@@ -3,79 +3,67 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public bool disabled = false;
-    public float speed = 6f;
-    public LayerMask floorMask;
-    float camRayLength = 1000f;
-    Vector3 movement;
-    Animator anim;
-    Rigidbody playerRigidbody;
-    // Use this for initialization
-    void Start()
-    {
-        anim = GetComponent<Animator>();
-        playerRigidbody = GetComponent<Rigidbody>();
-        anim.SetFloat("currentSpeed", speed);
-    }
+	public bool disabled = false;
+	public float speed = 6f;
+	public LayerMask floorMask;
+	float camRayLength = 1000f;
+	Vector3 movement;
+	Animator anim;
+	Rigidbody playerRigidbody;
+	// Use this for initialization
+	void Start ()
+	{
+		anim = GetComponent<Animator> ();
+		playerRigidbody = GetComponent<Rigidbody> ();
+		anim.SetFloat ("currentSpeed", speed);
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+	// Update is called once per frame
+	void Update ()
+	{
+		float h = Input.GetAxis ("Horizontal");
+		float v = Input.GetAxis ("Vertical");
 
-        if (!disabled)
-        {
-            Move(h, v);
-            //this.transform.position += new Vector3(h, 0, v) * Time.deltaTime * speed;        
-            //Vector3 direction = new Vector3 (h, 0, v);
-            //if (direction != Vector3.zero)
-            //	this.transform.rotation = Quaternion.LookRotation (direction);
-        }
-        else
-        {
-            v = 0f;
-            h = 0f;
-        }
-        Animating(h, v);
-        TurnToMouse();
-    }
+		if (disabled) {
+			v = 0f;
+			h = 0f;
+		}
+		Move (h, v);
+		Animating (h, v);
+		TurnToMouse ();
+	}
 
-    void TurnToMouse()
-    {
-        Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit rayHitInfo;
-        if (Physics.Raycast(mouseRay, out rayHitInfo, camRayLength, floorMask))
-        {
-            Vector3 playerToMouse = rayHitInfo.point - this.transform.position;
-            playerToMouse.y = 0f;
-            playerRigidbody.MoveRotation(Quaternion.LookRotation(playerToMouse));
-        }
-    }
+	void TurnToMouse ()
+	{
+		Ray mouseRay = Camera.main.ScreenPointToRay (Input.mousePosition);
+		RaycastHit rayHitInfo;
+		if (Physics.Raycast (mouseRay, out rayHitInfo, camRayLength, floorMask)) {
+			Vector3 playerToMouse = rayHitInfo.point - this.transform.position;
+			playerToMouse.y = 0f;
+			playerRigidbody.MoveRotation (Quaternion.LookRotation (playerToMouse));
+		}
+	}
 
-    void Move(float h, float v)
-    {
-        movement.Set(h, 0f, v);
-        movement = movement.normalized * speed * Time.deltaTime;
-        playerRigidbody.MovePosition(transform.position + movement);
+	void Move (float h, float v)
+	{
+		movement.Set (h, 0f, v);
+		movement = movement.normalized * speed * Time.deltaTime;
+		playerRigidbody.MovePosition (transform.position + movement);
 
-    }
+	}
 
-    void Animating(float h, float v)
-    {
-        bool walking = h != 0f || v != 0f;
-        // Debug.Log(walking);
-        anim.SetBool("IsWalking", walking);
-        Vector3 moveDir = new Vector3(h, 0, v);
-        //animate in reverse if you're moving backwards or forwards
-        float result = Vector3.Dot(moveDir, this.transform.forward);
-        if (result >= 0)
-        {
-            anim.SetFloat("currentSpeed", speed);
-        }
-        else
-        {
-            anim.SetFloat("currentSpeed", -speed);
-        }
-    }
+	void Animating (float h, float v)
+	{
+		bool walking = h != 0f || v != 0f;
+		// Debug.Log(walking);
+		anim.SetBool ("IsWalking", walking);
+		Vector3 moveDir = new Vector3 (h, 0, v);
+		//animate in reverse if you're moving backwards or forwards
+		float result = Vector3.Dot (moveDir, this.transform.forward);
+		if (result >= 0) {
+			anim.SetFloat ("currentSpeed", speed);
+		} else {
+			anim.SetFloat ("currentSpeed", -speed);
+		}
+	}
 }

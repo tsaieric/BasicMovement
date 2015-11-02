@@ -40,7 +40,6 @@ public class PlayerMovement : MonoBehaviour
         //Debug.DrawRay(Camera.main.transform.position,mouseRay.direction*150f,Color.black);
         if(Physics.Raycast(mouseRay, out rayHitInfo, camRayLength,floorMask))
         {
-            Debug.Log("hitting");
             Vector3 playerToMouse = rayHitInfo.point - this.transform.position;
             playerToMouse.y = 0f;
             playerRigidbody.MoveRotation(Quaternion.LookRotation(playerToMouse));
@@ -60,5 +59,16 @@ public class PlayerMovement : MonoBehaviour
 		bool walking = h != 0f || v != 0f;
 		// Debug.Log(walking);
 		anim.SetBool ("IsWalking", walking);
-	}
+        Vector3 moveDir = new Vector3(h, 0, v);
+        //animate in reverse if you're moving backwards or forwards
+        float result = Vector3.Dot(moveDir, this.transform.forward);
+        if (result>=0)
+        {
+            anim.SetFloat("currentSpeed", speed);
+        }
+        else
+        {
+            anim.SetFloat("currentSpeed", -speed);
+        }
+    }
 }

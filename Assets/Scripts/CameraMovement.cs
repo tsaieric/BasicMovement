@@ -16,7 +16,7 @@ public class CameraMovement : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         camOffset = this.transform.position - player.transform.position;
-        speed = player.GetComponent<PlayerMovement>().speed*2/3;
+        speed = player.GetComponent<PlayerMovement>().speed*3/4;
         //behavior = CameraBehavior.Seek;
         //moveController = this.GetComponent<MoveController>();
         //moveController.rotatable = false;

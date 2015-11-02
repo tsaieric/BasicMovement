@@ -1,8 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+public enum Behavior
+{
+	Seek,
+	Flee,
+	Arrive,
+	Wander,
+	FlockingWander,
+	FleeFromGroup,
+	Formation,
+	SeekAStar,
+	SeekAStar3D
+}
 
-public class Zombie : MonoBehaviour
+public class ZombieMovement: MonoBehaviour
 {
 	public GameObject targetObj;
 	public GameObject[] bigZombies;

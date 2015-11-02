@@ -14,10 +14,12 @@ public class Grid: MonoBehaviour
 	Node[,] grid;
 	float nodeDiameter;
 	int gridX, gridY;
+	public List<Node>[] paths;
 
 	void Awake ()
 	{
 		Instance = this;
+		paths = new List<Node>[this.GetComponent<Pathfinding> ().numPaths];
 	}
 
 	void Start ()
@@ -71,8 +73,6 @@ public class Grid: MonoBehaviour
 		int y = Mathf.RoundToInt ((gridY - 1) * percentY);
 		return grid [x, y];
 	}
-
-	public List<Node>[] paths = new List<Node>[10];
 
 	void OnDrawGizmos ()
 	{

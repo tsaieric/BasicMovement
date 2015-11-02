@@ -1,20 +1,33 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+public enum DogBehavior
+{
+	Seek,
+	Flee,
+	Arrive,
+	Wander,
+	FlockingWander,
+	FleeFromGroup,
+	Formation,
+	SeekAStar,
+	SeekAStar3D
+}
 
-public class Zombie : MonoBehaviour
+public class DogMovement: MonoBehaviour
 {
 	public GameObject targetObj;
-	public GameObject[] bigZombies;
+	public GameObject[] runAwayFrom;
 	public DogBehavior thisBehavior;
 	private Vector3 targetPosition;
 	private MoveController moveController;
 	private MoveController targetMoveController;
 	private Animator anim;
-
+	private Transform player;
 	// Use this for initialization
 	void Start ()
 	{
+		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		moveController = this.GetComponent<MoveController> ();
 		anim = this.GetComponent<Animator> ();
 		if (targetObj != null)
@@ -23,12 +36,12 @@ public class Zombie : MonoBehaviour
 			moveController.Set3D (true);
 		}
 	}
-
+	
 	void FixedUpdate ()
 	{
 		if (targetObj != null)
 			targetPosition = targetObj.transform.position;
-
+		
 		moveController.ResetSteering ();
 		switch (thisBehavior) {
 		case DogBehavior.SeekAStar3D:
@@ -61,7 +74,7 @@ public class Zombie : MonoBehaviour
 			break;
 		case DogBehavior.FleeFromGroup:
 			bool awayFromAll = true;
-			foreach (GameObject zombie in bigZombies) {
+			foreach (GameObject zombie in runAwayFrom) {
 				float distFromBigZombie = (this.transform.position - zombie.transform.position).magnitude;
 				if (distFromBigZombie <= 30f) {
 					awayFromAll = false;
@@ -75,13 +88,15 @@ public class Zombie : MonoBehaviour
 			break;
 		}
 
+		float distanceFromPlayer = Vector3.Distance (this.transform.position, player.position);
+
+		moveController.maxSpeed = Mathf.Clamp (distanceFromPlayer, 1f, 20f);
 		if (this.thisBehavior != DogBehavior.Formation) {
 			moveController.Separation (3f, 30f);
 			moveController.ObstacleAvoidance (2f, 30f);
 			moveController.UpdateEverything ();
 		}
-
-		//change Zombie animation speed based on current speed
+		
 		anim.SetFloat ("currentSpeed", moveController.GetCurrentVelocity ().magnitude);
 	}
 }

@@ -464,7 +464,469 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: bottom
+        weight: 1
+      - path: DogRig
+        weight: 1
+      - path: DogRig/dog
+        weight: 1
+      - path: DogRig/Global_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G/B_L_Lg_bn
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G/B_L_Lg_bn/B_L_Lg_bn_01
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G/B_L_Lg_bn/B_L_Lg_bn_01/B_L_Lg_bn_02
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G/B_L_Lg_bn/B_L_Lg_bn_01/B_L_Lg_bn_02/B_L_Lg_bn_03
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G/B_L_Lg_bn/B_L_Lg_bn_01/B_L_Lg_bn_02/B_L_Lg_bn_03/B_L_Lg_bn_04
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G/B_L_Lg_bn/B_L_Lg_bn_01/B_L_Lg_bn_02/B_L_Lg_bn_03/B_L_Lg_bn_04/B_L_Lg_bn_05
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G/B_R_Lg_bn
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G/B_R_Lg_bn/B_R_Lg_bn_01
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G/B_R_Lg_bn/B_R_Lg_bn_01/B_R_Lg_bn_02
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G/B_R_Lg_bn/B_R_Lg_bn_01/B_R_Lg_bn_02/B_R_Lg_bn_03
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G/B_R_Lg_bn/B_R_Lg_bn_01/B_R_Lg_bn_02/B_R_Lg_bn_03/B_R_Lg_bn_04
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/B_Lg_bn_G/B_R_Lg_bn/B_R_Lg_bn_01/B_R_Lg_bn_02/B_R_Lg_bn_03/B_R_Lg_bn_04/B_R_Lg_bn_05
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Er_bn_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Er_bn_G/L_Er_bn_01
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Er_bn_G/L_Er_bn_01/L_Er_bn_02
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Er_bn_G/L_Er_bn_01/L_Er_bn_02/L_Er_bn_03
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Er_bn_G/L_Er_bn_01/L_Er_bn_02/L_Er_bn_03/L_Er_bn_04
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Er_bn_G/R_Er_bn_01
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Er_bn_G/R_Er_bn_01/R_Er_bn_02
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Er_bn_G/R_Er_bn_01/R_Er_bn_02/R_Er_bn_03
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Er_bn_G/R_Er_bn_01/R_Er_bn_02/R_Er_bn_03/R_Er_bn_04
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G/F_L_Lg_bn_01
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G/F_L_Lg_bn_01/F_L_Lg_bn_02
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G/F_L_Lg_bn_01/F_L_Lg_bn_02/F_L_Lg_bn_03
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G/F_L_Lg_bn_01/F_L_Lg_bn_02/F_L_Lg_bn_03/F_L_Lg_bn_04
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G/F_L_Lg_bn_01/F_L_Lg_bn_02/F_L_Lg_bn_03/F_L_Lg_bn_04/F_L_Lg_bn_05
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G/F_L_Lg_bn_01/F_L_Lg_bn_02/F_L_Lg_bn_03/F_L_Lg_bn_04/F_L_Lg_bn_05/F_L_Lg_bn_06
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G/F_R_Lg_bn_01
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G/F_R_Lg_bn_01/F_R_Lg_bn_02
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G/F_R_Lg_bn_01/F_R_Lg_bn_02/F_R_Lg_bn_03
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G/F_R_Lg_bn_01/F_R_Lg_bn_02/F_R_Lg_bn_03/F_R_Lg_bn_04
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G/F_R_Lg_bn_01/F_R_Lg_bn_02/F_R_Lg_bn_03/F_R_Lg_bn_04/F_R_Lg_bn_05
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/F_Lg_bn_G/F_R_Lg_bn_01/F_R_Lg_bn_02/F_R_Lg_bn_03/F_R_Lg_bn_04/F_R_Lg_bn_05/F_R_Lg_bn_06
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Jaw_bn_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Jaw_bn_G/Jaw_bn_01
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Jaw_bn_G/Jaw_bn_01/Jaw_bn_02
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Nk_bn_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Nk_bn_G/Nk_bn_01
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Nk_bn_G/Nk_bn_01/Nk_bn_02
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Nk_bn_G/Nk_bn_01/Nk_bn_02/Nk_bn_03
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Nk_bn_G/Nk_bn_01/Nk_bn_02/Nk_bn_03/Nk_bn_04
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Nk_bn_G/Nk_bn_01/Nk_bn_02/Nk_bn_03/Nk_bn_04/Nk_bn_05
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Nk_bn_G/Nk_bn_01/Nk_bn_02/Nk_bn_03/Nk_bn_04/Nk_bn_05/Nk_bn_06
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Nk_bn_G/Nk_bn_01/Nk_bn_02/Nk_bn_03/Nk_bn_04/Nk_bn_05/Nk_bn_06/joint1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Nk_bn_G/Nk_bn_01/Nk_bn_02/Nk_bn_03/Nk_bn_04/Nk_bn_05/Nk_bn_06/joint13
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Nk_bn_G/Nk_bn_01/Nk_bn_02/Nk_bn_03/Nk_bn_04/Nk_bn_05/Nk_bn_06/Nk_bn_07
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Pennis_bn_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Pennis_bn_G/Ps_bn_01
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Pennis_bn_G/Ps_bn_01/Ps_bn_02
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Cluster_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Cluster_G/cluster1Handle
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Cluster_G/cluster2Handle
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Cluster_G/cluster3Handle
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Cluster_G/cluster4Handle
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Cluster_G/cluster5Handle
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/curve1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Hip_bn_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Hip_bn_G/Hip_bn
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Sp_bn_01
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Sp_bn_01/Sp_bn_02
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Sp_bn_01/Sp_bn_02/Sp_bn_03
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Sp_bn_01/Sp_bn_02/Sp_bn_03/Sp_bn_04
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Sp_bn_01/Sp_bn_02/Sp_bn_03/Sp_bn_04/Sp_bn_05
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Sp_bn_01/Sp_bn_02/Sp_bn_03/Sp_bn_04/Sp_bn_05/Sp_bn_06
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Root_bn_G/Sp_bn_01/Sp_bn_02/Sp_bn_03/Sp_bn_04/Sp_bn_05/Sp_bn_06/Sp_bn_07
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07/Ti_bn_08
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07/Ti_bn_08/Ti_bn_09
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07/Ti_bn_08/Ti_bn_09/Ti_bn_10
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07/Ti_bn_08/Ti_bn_09/Ti_bn_10/Ti_bn_11
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07/Ti_bn_08/Ti_bn_09/Ti_bn_10/Ti_bn_11/Ti_bn_12
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07/Ti_bn_08/Ti_bn_09/Ti_bn_10/Ti_bn_11/Ti_bn_12/Ti_bn_13
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07/Ti_bn_08/Ti_bn_09/Ti_bn_10/Ti_bn_11/Ti_bn_12/Ti_bn_13/Ti_bn_14
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07/Ti_bn_08/Ti_bn_09/Ti_bn_10/Ti_bn_11/Ti_bn_12/Ti_bn_13/Ti_bn_14/Ti_bn_15
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07/Ti_bn_08/Ti_bn_09/Ti_bn_10/Ti_bn_11/Ti_bn_12/Ti_bn_13/Ti_bn_14/Ti_bn_15/Ti_bn_16
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07/Ti_bn_08/Ti_bn_09/Ti_bn_10/Ti_bn_11/Ti_bn_12/Ti_bn_13/Ti_bn_14/Ti_bn_15/Ti_bn_16/Ti_bn_17
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07/Ti_bn_08/Ti_bn_09/Ti_bn_10/Ti_bn_11/Ti_bn_12/Ti_bn_13/Ti_bn_14/Ti_bn_15/Ti_bn_16/Ti_bn_17/Ti_bn_18
+        weight: 1
+      - path: DogRig/Global_C/Main_C/bn_G/Tail_bn_G/Ti_bn_01/Ti_bn_02/Ti_bn_03/Ti_bn_04/Ti_bn_05/Ti_bn_06/Ti_bn_07/Ti_bn_08/Ti_bn_09/Ti_bn_10/Ti_bn_11/Ti_bn_12/Ti_bn_13/Ti_bn_14/Ti_bn_15/Ti_bn_16/Ti_bn_17/Ti_bn_18/Ti_bn_19
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_L_Foot_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_L_Foot_CG/B_L_Foot_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_L_Pole_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_L_Pole_CG/B_L_Pole_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_L_Toe_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_L_Toe_CG/B_L_Toe_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_L_Toe_CG/B_L_Toe_C/B_L_Ball_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_L_Toe_CG/B_L_Toe_C/B_L_Ball_CG/B_L_Ball_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_L_Toe_CG/B_L_Toe_C/B_L_Ball_CG/B_L_Ball_C/B_L_Ankle_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_L_Toe_CG/B_L_Toe_C/B_L_Ball_CG/B_L_Ball_C/B_L_Ankle_CG/B_L_Ankle_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_R_Foot_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_R_Foot_CG/B_R_Foot_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_R_Pole_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_R_Pole_CG/B_R_Pole_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_R_Toe_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_R_Toe_CG/B_R_Toe_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_R_Toe_CG/B_R_Toe_C/B_R_Ball_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_R_Toe_CG/B_R_Toe_C/B_R_Ball_CG/B_R_Ball_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_R_Toe_CG/B_R_Toe_C/B_R_Ball_CG/B_R_Ball_C/B_R_Ankle_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/B_R_Toe_CG/B_R_Toe_C/B_R_Ball_CG/B_R_Ball_C/B_R_Ankle_CG/B_R_Ankle_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Clavical_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Clavical_CG/F_L_Clavical_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Foot_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Foot_CG/F_L_Foot_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Pelvish_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Pelvish_CG/F_L_Pelvish_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Pole_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Pole_CG/F_L_Pole_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Toe_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Toe_CG/F_L_Toe_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Toe_CG/F_L_Toe_C/F_L_Ball_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Toe_CG/F_L_Toe_C/F_L_Ball_CG/F_L_Ball_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Toe_CG/F_L_Toe_C/F_L_Ball_CG/F_L_Ball_C/F_L_Ankle_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_L_Toe_CG/F_L_Toe_C/F_L_Ball_CG/F_L_Ball_C/F_L_Ankle_CG/F_L_Ankle_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Clavical_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Clavical_CG/F_R_Clavical_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Foot_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Foot_CG/F_R_Foot_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Pelvish_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Pelvish_CG/F_R_Pelvish_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Pole_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Pole_CG/F_R_Pole_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Toe_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Toe_CG/F_R_Toe_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Toe_CG/F_R_Toe_C/F_R_Ball_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Toe_CG/F_R_Toe_C/F_R_Ball_CG/F_R_Ball_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Toe_CG/F_R_Toe_C/F_R_Ball_CG/F_R_Ball_C/F_R_Ankle_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/F_R_Toe_CG/F_R_Toe_C/F_R_Ball_CG/F_R_Ball_C/F_R_Ankle_CG/F_R_Ankle_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Nk_01_C1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Nk_01_C1/Nk_01_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Nk_02_C1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Nk_02_C1/Nk_02_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Nk_03_C1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Nk_03_C1/Nk_03_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Nk_03_C1/Nk_03_C/Er_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Nk_03_C1/Nk_03_C/Er_CG/L_Er_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Nk_03_C1/Nk_03_C/Er_CG/R_Er_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Nk_03_C1/Nk_03_C/Jaw_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Nk_03_C1/Nk_03_C/Jaw_CG/Jaw_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Penis_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Penis_CG/Penis_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Root_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Root_C/Sp_End_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Root_C/Sp_End_CG/Sp_End_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Root_C/Sp_Mid_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Root_C/Sp_Mid_CG/Sp_Mid_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Root_C/Sp_Start_CG
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Root_C/Sp_Start_CG/Sp_Start_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_01_C1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_01_C1/Tail_01_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_02_C1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_02_C1/Tail_02_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_03_C1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_03_C1/Tail_03_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_04_C1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_04_C1/Tail_04_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_05_C1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_05_C1/Tail_05_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_06_C1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_06_C1/Tail_06_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_07_C1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_07_C1/Tail_07_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_08_C1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_08_C1/Tail_08_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_09_C1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/C_G/Tail_09_C1/Tail_09_C
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_L_Foot_ik_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_L_Foot_ik_G/Heel
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_L_Foot_ik_G/Heel/Toe
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_L_Foot_ik_G/Heel/Toe/Ball
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_L_Foot_ik_G/Heel/Toe/Ball/ikHandle1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_L_Foot_ik_G/Heel/Toe/Ball/ikHandle2
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_L_Foot_ik_G/Heel/Toe/Tape
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_L_Foot_ik_G/Heel/Toe/Tape/ikHandle3
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_R_Foot_ik_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_R_Foot_ik_G/Heel 1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_R_Foot_ik_G/Heel 1/Toe 1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_R_Foot_ik_G/Heel 1/Toe 1/Ball 1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_R_Foot_ik_G/Heel 1/Toe 1/Ball 1/ikHandle4
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_R_Foot_ik_G/Heel 1/Toe 1/Ball 1/ikHandle5
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_R_Foot_ik_G/Heel 1/Toe 1/Tape 1
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/B_R_Foot_ik_G/Heel 1/Toe 1/Tape 1/ikHandle6
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_L_Foot_ik_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_L_Foot_ik_G/Heel 2
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_L_Foot_ik_G/Heel 2/Toe 2
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_L_Foot_ik_G/Heel 2/Toe 2/Ball 2
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_L_Foot_ik_G/Heel 2/Toe 2/Ball 2/ikHandle7
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_L_Foot_ik_G/Heel 2/Toe 2/Ball 2/ikHandle8
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_L_Foot_ik_G/Heel 2/Toe 2/Tape 2
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_L_Foot_ik_G/Heel 2/Toe 2/Tape 2/ikHandle9
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_R_Foot_ik_G
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_R_Foot_ik_G/Heel 3
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_R_Foot_ik_G/Heel 3/Toe 3
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_R_Foot_ik_G/Heel 3/Toe 3/Ball 3
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_R_Foot_ik_G/Heel 3/Toe 3/Ball 3/ikHandle10
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_R_Foot_ik_G/Heel 3/Toe 3/Ball 3/ikHandle11
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_R_Foot_ik_G/Heel 3/Toe 3/Tape 3
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/F_R_Foot_ik_G/Heel 3/Toe 3/Tape 3/ikHandle12
+        weight: 1
+      - path: DogRig/Global_C/Main_C/ik_G/ikHandle13
+        weight: 1
+      - path: left
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -501,10 +963,8 @@ ModelImporter:
     legStretch: .0500000007
     feetSpacing: 0
     rootMotionBoneName: 
-    hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
-  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

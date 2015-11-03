@@ -12,10 +12,10 @@ public class PlayerShooting : MonoBehaviour
     Ray shootRay;
     RaycastHit shootHit;
     int shootableMask;
-    /*ParticleSystem gunParticles;
+    ParticleSystem gunParticles;
     LineRenderer gunLine;
     AudioSource gunAudio;
-    Light gunLight;*/
+    Light gunLight;
     float effectsDisplayTime = 0.2f;
 
 

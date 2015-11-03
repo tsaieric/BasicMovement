@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+		if(Input.GetMouseButtonDown(0)||Input.GetMouseButtonDown(1))
         {
             anim.SetTrigger("Punch");
         }

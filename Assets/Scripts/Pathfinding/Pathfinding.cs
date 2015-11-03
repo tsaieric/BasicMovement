@@ -49,7 +49,8 @@ public class Pathfinding : MonoBehaviour
 	void CalcOnePathPerFrame ()
 	{
 		if (seekerIndex < numPaths) {
-			FindPathPQ (seekers [seekerIndex].position, target.position, seekerIndex);
+			if (seekers [seekerIndex] != null)
+				FindPathPQ (seekers [seekerIndex].position, target.position, seekerIndex);
 			seekerIndex++;
 		}
 		if (seekerIndex == numPaths) {

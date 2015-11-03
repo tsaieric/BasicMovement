@@ -15,7 +15,7 @@ public class MoveController : MonoBehaviour
 	private string wallTag = "WallObs";
 	private RaycastHit hitInfo;
 	private MoveController[] group;
-    private bool move3D = false;
+	private bool move3D = false;
 	void Start ()
 	{
 		currentPos = this.transform.position;
@@ -37,11 +37,11 @@ public class MoveController : MonoBehaviour
 
 	public void UpdateEverything ()
 	{
-        if(!move3D)
-            finalSteering.y = 0f; //zero out y velocities
+		if (!move3D)
+			finalSteering.y = 0f; //zero out y velocities
 
-        //v_0 + a*t
-        Vector3 finalVelocity = currentVelocity + finalSteering * Time.deltaTime;
+		//v_0 + a*t
+		Vector3 finalVelocity = currentVelocity + finalSteering * Time.deltaTime;
 		finalVelocity = Vector3.ClampMagnitude (finalVelocity, maxSpeed);
 
 		//p_0 + v*t
@@ -53,11 +53,12 @@ public class MoveController : MonoBehaviour
 		currentVelocity = finalVelocity;
 	}
 
-    public void Set3D(bool input) {
-        move3D = input;
-    }
+	public void Set3D (bool input)
+	{
+		move3D = input;
+	}
 
-    public Vector3 ObstacleAvoidance (float minDetectDist, float weight)
+	public Vector3 ObstacleAvoidance (float minDetectDist, float weight)
 	{
 		Vector3 obsSteering = Vector3.zero;
 		//change the detecting distance based on currentVelocity
@@ -239,11 +240,13 @@ public class MoveController : MonoBehaviour
 		Vector3 steering = Vector3.zero;
 		float neighborCount = 0f;
 		foreach (MoveController moveControl in group) {
-			Vector3 neighborDirection = moveControl.transform.position - currentPos;
-			float distance = neighborDirection.magnitude;
-			if (distance <= neighborRange && distance != 0) {
-				steering += _Flee (moveControl.transform.position);
-				neighborCount++;
+			if (moveControl != null) {
+				Vector3 neighborDirection = moveControl.transform.position - currentPos;
+				float distance = neighborDirection.magnitude;
+				if (distance <= neighborRange && distance != 0) {
+					steering += _Flee (moveControl.transform.position);
+					neighborCount++;
+				}
 			}
 		}
 		if (neighborCount != 0f)

@@ -6,15 +6,21 @@ public class EnemyHealth : MonoBehaviour
 	private float currentHealth = 100f;
 	private float totalHealth = 100f;
 	private Transform healthBar;
+	public bool isAlive = true;
+	private Animator anim;
 	// Use this for initialization
 	void Awake ()
 	{
+		anim = this.GetComponent<Animator> ();
 		healthBar = this.transform.Find ("HealthBarCanvas/HealthColor");
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
+		if (!isAlive) {
+			this.GetComponent<Rigidbody> ().isKinematic = true;
+		}
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			ReduceHealth (30f);
 		}
@@ -23,16 +29,22 @@ public class EnemyHealth : MonoBehaviour
 		}
 	}
 
-	void ReduceHealth (float difference)
+	public void ReduceHealth (float difference)
 	{
 		float newHealth = Mathf.Max (0, currentHealth - difference);
 		float speed = 1f;
 		currentHealth = newHealth;
+		if (currentHealth <= 0 && isAlive) {
+			anim.SetBool ("Alive", false);
+			anim.SetTrigger ("Die");
+			isAlive = false;
+			Destroy (this.gameObject, 1.3f);
+		}
 //		StartCoroutine (SetHealth (newHealth, speed));
 		StartCoroutine (SetBar (newHealth, speed));
 	}
 
-	void AddHealth (float difference)
+	public void AddHealth (float difference)
 	{
 		float newHealth = Mathf.Min (totalHealth, currentHealth + difference);
 		float speed = 1f;

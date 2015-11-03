@@ -6,9 +6,11 @@ public class ZombieActions : MonoBehaviour
 	private Transform playerT;
 	private float attackDist;
 	private Animator anim;
+	private PlayerHealth playerHealth;
 	void Awake ()
 	{
 		playerT = GameObject.FindGameObjectWithTag ("Player").transform;		
+		playerHealth = playerT.GetComponent<PlayerHealth> ();
 		anim = this.GetComponent<Animator> ();
 	}
 	// Use this for initialization
@@ -26,5 +28,10 @@ public class ZombieActions : MonoBehaviour
 		} else {
 			anim.SetBool ("isAttacking", false);
 		}
+	}
+
+	public void Attack ()
+	{
+		playerHealth.ReduceHealth (10f);
 	}
 }

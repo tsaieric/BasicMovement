@@ -6,37 +6,44 @@ public class PlayerHealth : MonoBehaviour
 	private float currentHealth = 100f;
 	private float totalHealth = 100f;
 	private Transform healthBar;
+	private Animator anim;
+	private bool isAlive = true;
 	// Use this for initialization
 	void Awake ()
 	{
+		anim = this.GetComponent<Animator> ();
 		healthBar = this.transform.Find ("HealthBarCanvas/HealthColor");
 	}
 	
-	// Update is called once per frame
-	void Update ()
-	{
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			ReduceHealth (30f);
-		}
-		if (Input.GetKeyDown (KeyCode.V)) {
-			AddHealth (10f);
-		}
-	}
+//	// Update is called once per frame
+//	void Update ()
+//	{
+////		if (Input.GetKeyDown (KeyCode.Space)) {
+////			ReduceHealth (30f);
+////		}
+////		if (Input.GetKeyDown (KeyCode.V)) {
+////			AddHealth (10f);
+////		}
+//	}
 	
-	void ReduceHealth (float difference)
+	public void ReduceHealth (float difference)
 	{
 		float newHealth = Mathf.Max (0, currentHealth - difference);
 		float speed = 1f;
 		currentHealth = newHealth;
+		if (newHealth <= 0 && isAlive) {
+			anim.SetTrigger ("Die");
+			isAlive = false;
+		}
 		//		StartCoroutine (SetHealth (newHealth, speed));
 		StartCoroutine (SetBar (newHealth, speed));
 	}
 	
-	void AddHealth (float difference)
+	public void AddHealth (float difference)
 	{
 		float newHealth = Mathf.Min (totalHealth, currentHealth + difference);
 		float speed = 1f;
-		currentHealth = newHealth;
+		currentHealth = newHealth;		
 		//		StartCoroutine (SetHealth (newHealth, speed));
 		StartCoroutine (SetBar (newHealth, speed));
 	}

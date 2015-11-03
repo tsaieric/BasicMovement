@@ -18,10 +18,7 @@ public class BulletScript : MonoBehaviour
 
 	void OnTriggerEnter (Collider col)
 	{
-		//Destroy (col.gameObject);
-
 		if (col.tag == "Zombie") {
-			Debug.Log ("collision");
 			col.GetComponent<EnemyHealth> ().ReduceHealth (40f);
 		}
 	}

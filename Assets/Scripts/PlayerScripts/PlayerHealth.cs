@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public Image blackOverlay;
 	private float currentHealth = 100f;
 	private float totalHealth = 100f;
 	private Transform healthBar;
@@ -11,30 +13,16 @@ public class PlayerHealth : MonoBehaviour
 	// Use this for initialization
 	void Awake ()
 	{
-		anim = this.GetComponent<Animator> ();
+        blackOverlay.canvasRenderer.SetAlpha(0);
+        anim = this.GetComponent<Animator> ();
 		healthBar = this.transform.Find ("HealthBarCanvas/HealthColor");
 	}
-	
-//	// Update is called once per frame
-//	void Update ()
-//	{
-////		if (Input.GetKeyDown (KeyCode.Space)) {
-////			ReduceHealth (30f);
-////		}
-////		if (Input.GetKeyDown (KeyCode.V)) {
-////			AddHealth (10f);
-////		}
-//	}
 	
 	public void ReduceHealth (float difference)
 	{
 		float newHealth = Mathf.Max (0, currentHealth - difference);
 		float speed = 1f;
 		currentHealth = newHealth;
-		if (newHealth <= 0 && isAlive) {
-			anim.SetTrigger ("Die");
-			isAlive = false;
-		}
 		//		StartCoroutine (SetHealth (newHealth, speed));
 		StartCoroutine (SetBar (newHealth, speed));
 	}
@@ -65,7 +53,22 @@ public class PlayerHealth : MonoBehaviour
 			healthBar.transform.localScale = Vector3.MoveTowards (curScale, dest, speed * Time.deltaTime);
 			yield return null;
 		}
-	}
+        if (currentHealth <= 0 && isAlive)
+        {
+            StartCoroutine(EndGame());
+         }
+    }
+
+    IEnumerator EndGame()
+    {
+        Time.timeScale = .2f;
+        anim.SetTrigger("Die");
+        isAlive = false;
+        yield return new WaitForSeconds(.2f);
+        blackOverlay.CrossFadeAlpha(1f, 1f, false);
+        yield return new WaitForSeconds(1f);
+        Application.LoadLevel("EndScene");
+    }
 
     void OnTriggerEnter(Collider other)
     {

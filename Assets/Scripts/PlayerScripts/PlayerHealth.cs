@@ -13,6 +13,7 @@ public class PlayerHealth : MonoBehaviour
 	// Use this for initialization
 	void Awake ()
 	{
+        blackOverlay.gameObject.SetActive(true);
         blackOverlay.canvasRenderer.SetAlpha(0);
         anim = this.GetComponent<Animator> ();
 		healthBar = this.transform.Find ("HealthBarCanvas/HealthColor");

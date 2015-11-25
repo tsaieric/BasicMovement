@@ -38,8 +38,8 @@ public class EnemyHealth : MonoBehaviour
 			anim.SetBool ("Alive", false);
 			anim.SetTrigger ("Die");
 			isAlive = false;
-			Destroy (this.gameObject, 1.3f);
-		}
+            Destroy(this.gameObject, 1.3f);
+        }
 //		StartCoroutine (SetHealth (newHealth, speed));
 		StartCoroutine (SetBar (newHealth, speed));
 	}
@@ -49,7 +49,6 @@ public class EnemyHealth : MonoBehaviour
 		float newHealth = Mathf.Min (totalHealth, currentHealth + difference);
 		float speed = 1f;
 		currentHealth = newHealth;
-//		StartCoroutine (SetHealth (newHealth, speed));
 		StartCoroutine (SetBar (newHealth, speed));
 	}
 

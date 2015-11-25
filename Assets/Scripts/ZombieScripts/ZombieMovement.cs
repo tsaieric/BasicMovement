@@ -3,110 +3,97 @@ using System.Collections;
 using System.Collections.Generic;
 public enum Behavior
 {
-    Seek,
-    Flee,
-    Arrive,
-    Wander,
-    FlockingWander,
-    FleeFromGroup,
-    Formation,
-    SeekAStar,
-    SeekAStar3D
+	Seek,
+	Flee,
+	Arrive,
+	Wander,
+	FlockingWander,
+	FleeFromGroup,
+	Formation,
+	SeekAStar,
+	SeekAStar3D
 }
 
-public class ZombieMovement : MonoBehaviour
+public class ZombieMovement: MonoBehaviour
 {
-    public GameObject targetObj;
-    public GameObject[] bigZombies;
-    public Behavior thisBehavior;
-    private Vector3 targetPosition;
-    private MoveController moveController;
-    private MoveController targetMoveController;
-    private Animator anim;
-    private EnemyHealth health;
-    // Use this for initialization
-    void Start()
-    {
-        moveController = this.GetComponent<MoveController>();
-        anim = this.GetComponent<Animator>();
-        health = this.GetComponent<EnemyHealth>();
-        if (targetObj != null)
-            targetMoveController = targetObj.GetComponent<MoveController>();
-        if (thisBehavior == Behavior.SeekAStar3D)
-        {
-            moveController.Set3D(true);
-        }
-    }
+	public GameObject targetObj;
+	public GameObject[] bigZombies;
+	public Behavior thisBehavior;
+	private Vector3 targetPosition;
+	private MoveController moveController;
+	private MoveController targetMoveController;
+	private Animator anim;
 
-    void FixedUpdate()
-    {
-        if (targetObj != null)
-            targetPosition = targetObj.transform.position;
+	// Use this for initialization
+	void Start ()
+	{
+		moveController = this.GetComponent<MoveController> ();
+		anim = this.GetComponent<Animator> ();
+		if (targetObj != null)
+			targetMoveController = targetObj.GetComponent<MoveController> ();
+		if (thisBehavior == Behavior.SeekAStar3D) {
+			moveController.Set3D (true);
+		}
+	}
 
-        moveController.ResetSteering();
-        switch (thisBehavior)
-        {
-            case Behavior.SeekAStar3D:
-                moveController.FollowPath3d(5f);
-                break;
-            case Behavior.SeekAStar:
-                if (health.isAlive)
-                {
-                    moveController.FollowPath(5f);
-                }
-                else
-                {
-                    moveController.ResetSteering(); //stop if dead
-                }
-                break;
-            case Behavior.Seek:
-                moveController.Seek(targetPosition);
-                break;
-            case Behavior.Flee:
-                float distance = (this.transform.position - targetPosition).magnitude;
-                if (distance <= 30f)
-                    moveController.Flee(targetPosition);
-                else
-                    moveController.Wander(15f, 150f);
-                break;
-            case Behavior.Arrive:
-                moveController.Arrive(targetPosition, 20f);
-                break;
-            case Behavior.Wander:
-                moveController.Wander(15f, 120f);
-                break;
-            case Behavior.FlockingWander:
-                float neighborRange = 5f;
-                moveController.FollowLeader(targetMoveController, 1f);
-                moveController.Cohesion(neighborRange);
-                moveController.Alignment(neighborRange);
-                break;
-            case Behavior.FleeFromGroup:
-                bool awayFromAll = true;
-                foreach (GameObject zombie in bigZombies)
-                {
-                    float distFromBigZombie = (this.transform.position - zombie.transform.position).magnitude;
-                    if (distFromBigZombie <= 30f)
-                    {
-                        awayFromAll = false;
-                        moveController.Flee(zombie.transform.position);
-                    }
-                }
-                if (awayFromAll)
-                    moveController.Wander(15f, 120f);
-                break;
-            case Behavior.Formation:
-                break;
-        }
-        //stop moving if dead
-        if (this.thisBehavior != Behavior.Formation && health.isAlive)
-        {
-            moveController.Separation(3f, 30f);
-            moveController.ObstacleAvoidance(2f, 30f);
-            moveController.UpdateEverything();
-        }
+	void FixedUpdate ()
+	{
+		if (targetObj != null)
+			targetPosition = targetObj.transform.position;
 
-        //change Zombie animation speed based on current speed
-        anim.SetFloat("currentSpeed", moveController.GetCurrentVelocity().magnitude);
-    }
+		moveController.ResetSteering ();
+		switch (thisBehavior) {
+		case Behavior.SeekAStar3D:
+			moveController.FollowPath3d (5f);
+			break;
+		case Behavior.SeekAStar:
+			moveController.FollowPath (5f);
+			break;
+		case Behavior.Seek:
+			moveController.Seek (targetPosition);
+			break;
+		case Behavior.Flee:
+			float distance = (this.transform.position - targetPosition).magnitude;
+			if (distance <= 30f)
+				moveController.Flee (targetPosition);
+			else
+				moveController.Wander (15f, 150f);
+			break;
+		case Behavior.Arrive:
+			moveController.Arrive (targetPosition, 20f);
+			break;
+		case Behavior.Wander:
+			moveController.Wander (15f, 120f);
+			break;
+		case Behavior.FlockingWander:
+			float neighborRange = 5f;
+			moveController.FollowLeader (targetMoveController, 1f);
+			moveController.Cohesion (neighborRange);
+			moveController.Alignment (neighborRange);
+			break;
+		case Behavior.FleeFromGroup:
+			bool awayFromAll = true;
+			foreach (GameObject zombie in bigZombies) {
+				float distFromBigZombie = (this.transform.position - zombie.transform.position).magnitude;
+				if (distFromBigZombie <= 30f) {
+					awayFromAll = false;
+					moveController.Flee (zombie.transform.position);
+				}
+			}
+			if (awayFromAll)
+				moveController.Wander (15f, 120f);
+			break;
+		case Behavior.Formation:
+			break;
+		}
+
+		if (this.thisBehavior != Behavior.Formation) {
+			moveController.Separation (3f, 30f);
+			moveController.ObstacleAvoidance (2f, 30f);
+			moveController.UpdateEverything ();
+		}
+
+		//change Zombie animation speed based on current speed
+		anim.SetFloat ("currentSpeed", moveController.GetCurrentVelocity ().magnitude);
+	}
 }

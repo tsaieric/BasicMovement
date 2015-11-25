@@ -16,7 +16,7 @@ public class ZombieActions : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		attackDist = 3f;
+		attackDist = 2f;
 	}
 	
 	// Update is called once per frame

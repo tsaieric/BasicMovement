@@ -104,6 +104,7 @@ public class GoalPlanner : MonoBehaviour
         return hasPath;
     }
 
+    //create a new state with the effects added in to the state
     private Dictionary<string, object> CreateStateWithEffects(Dictionary<string, object> effects, Dictionary<string, object> state)
     {
         Dictionary<string, object> result = new Dictionary<string, object>(state);
@@ -114,6 +115,7 @@ public class GoalPlanner : MonoBehaviour
         return result;
     }
 
+    //check if conditions are a subset of the current state
     private bool AreConditionsInState(Dictionary<string, object> conditions, Dictionary<string, object> state)
     {
         bool inState = true;

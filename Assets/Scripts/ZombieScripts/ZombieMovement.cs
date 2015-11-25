@@ -98,7 +98,7 @@ public class ZombieMovement : MonoBehaviour
             case Behavior.Formation:
                 break;
         }
-
+        //stop moving if dead
         if (this.thisBehavior != Behavior.Formation && health.isAlive)
         {
             moveController.Separation(3f, 30f);

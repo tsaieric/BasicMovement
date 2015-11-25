@@ -66,4 +66,12 @@ public class PlayerHealth : MonoBehaviour
 			yield return null;
 		}
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "HealthPack") { 
+            Destroy(other.gameObject);
+            AddHealth(15f);
+        }
+    }
 }

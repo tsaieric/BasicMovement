@@ -15,44 +15,33 @@ public class EnemyHealth : MonoBehaviour
         healthBar = this.transform.Find("HealthBarCanvas/HealthColor");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!isAlive)
-        {
-            this.GetComponent<Rigidbody>().isKinematic = true;
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ReduceHealth(30f);
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            AddHealth(10f);
-        }
-    }
-
     public void ReduceHealth(float difference)
     {
-        float newHealth = Mathf.Max(0, currentHealth - difference);
-        float speed = 1f;
-        currentHealth = newHealth;
-        if (currentHealth <= 0 && isAlive)
+        if (isAlive)
         {
-            //anim.SetBool("Alive", false);
-            //anim.SetTrigger("Die");
-            //isAlive = false;
-            //Destroy(this.gameObject, 1.3f);
+            float newHealth = Mathf.Max(0, currentHealth - difference);
+            float speed = 1f;
+            currentHealth = newHealth;
+            if (currentHealth <= 0)
+            {
+                //anim.SetBool("Alive", false);
+                //anim.SetTrigger("Die");
+                //isAlive = false;
+                //Destroy(this.gameObject, 1.3f);
+            }
+            StartCoroutine(SetBar(newHealth, speed));
         }
-        StartCoroutine(SetBar(newHealth, speed));
     }
 
     public void AddHealth(float difference)
     {
-        float newHealth = Mathf.Min(totalHealth, currentHealth + difference);
-        float speed = 1f;
-        currentHealth = newHealth;
-        StartCoroutine(SetBar(newHealth, speed));
+        if (isAlive)
+        {
+            float newHealth = Mathf.Min(totalHealth, currentHealth + difference);
+            float speed = 1f;
+            currentHealth = newHealth;
+            StartCoroutine(SetBar(newHealth, speed));
+        }
     }
 
     //IEnumerator SetHealth (float input, float speed)
@@ -67,7 +56,7 @@ public class EnemyHealth : MonoBehaviour
     {
         float ratio = input / totalHealth;
         Vector3 dest = new Vector3(ratio, 1f, 1f);
-        while (healthBar.transform.localScale != dest)
+        while (Vector3.Distance(healthBar.transform.localScale, dest) > .05f)//healthBar.transform.localScale != dest)
         {
             Vector3 curScale = healthBar.transform.localScale;
             healthBar.transform.localScale = Vector3.MoveTowards(curScale, dest, speed * Time.deltaTime);
@@ -78,7 +67,7 @@ public class EnemyHealth : MonoBehaviour
             anim.SetBool("Alive", false);
             anim.SetTrigger("Die");
             isAlive = false;
-            Destroy(this.gameObject, 1.3f);
+            Destroy(this.gameObject, 3f);
         }
     }
 }

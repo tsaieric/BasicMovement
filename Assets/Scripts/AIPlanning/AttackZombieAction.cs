@@ -6,7 +6,13 @@ public class AttackZombieAction : Action {
 
     public GameObject[] enemies;
     private GameObject targetEnemy;
-    
+    private DogMovement movement;
+
+    void Start()
+    {
+        movement = this.GetComponent<DogMovement>();
+    }
+
     public AttackZombieAction()
     {
         AddPrecondition("healthLow", false);
@@ -46,12 +52,20 @@ public class AttackZombieAction : Action {
 
     public override bool Act()
     {
-        if(inRange)
+        if (targetEnemy == null)
         {
-            //play attackAnim;
             return true;
-        } else
+        }
+        float distance = Vector3.Distance(this.transform.position, targetEnemy.transform.position);
+        if (distance <= .1f)
         {
+            //attack
+            return true;
+        }
+        else
+        {
+            movement.targetObj = targetEnemy;
+            movement.thisBehavior = DogBehavior.Arrive;
             //MoveController seeks target
             return false;
         }

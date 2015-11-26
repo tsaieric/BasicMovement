@@ -69,8 +69,9 @@ public class DogHealth : MonoBehaviour
     {
         if (other.tag == "HealthPack")
         {
-            Destroy(other.gameObject);
+            Debug.Log("reached health pack");
             AddHealth(15f);
+            Destroy(other.gameObject);
         }
     }
 

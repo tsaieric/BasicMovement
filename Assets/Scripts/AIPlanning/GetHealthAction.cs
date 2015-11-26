@@ -5,6 +5,12 @@ using System;
 public class GetHealthAction : Action
 {
     private GameObject targetFood;
+    private DogMovement movement;
+
+    public void Start()
+    {
+        movement = this.GetComponent<DogMovement>();
+    }
 
     public GetHealthAction()
     {
@@ -44,12 +50,19 @@ public class GetHealthAction : Action
 
     public override bool Act()
     {
-        if (inRange)
+        if(targetFood == null)
+        {
+            return true;
+        }
+        float distance = Vector3.Distance(this.transform.position, targetFood.transform.position);
+        if (distance<=.1f)
         {
             return true;
         }
         else
         {
+            movement.targetObj = targetFood;
+            movement.thisBehavior = DogBehavior.Arrive;
             //MoveController seeks target
             return false;
         }

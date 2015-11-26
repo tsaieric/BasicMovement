@@ -20,7 +20,7 @@ public class DogPlanner : MonoBehaviour
     public Dictionary<string, object> GetWorldState()
     {
         Dictionary<string, object> worldState = new Dictionary<string, object>();
-        worldState.Add("healthLow", health.GetHealth()<30f);
+        worldState.Add("healthLow", health.GetHealth() < 30f);
         return worldState;
     }
 
@@ -30,7 +30,7 @@ public class DogPlanner : MonoBehaviour
         Dictionary<string, object> goalState = new Dictionary<string, object>();
         goalState.Add("healthLow", false);
         goalState.Add("attackingZombie", true);
-    
+
         actionList = planner.Plan(availableActions, GetWorldState(), goalState);
         if (actionList != null)
         {
@@ -53,9 +53,21 @@ public class DogPlanner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             PlanAttackMode();
+        }
+        if (actionList != null)
+        {
+            if (actionList.Count > 0)
+            {
+                Action a = actionList.Peek();
+                //if acts successfully, pop off
+                if (a.Act())
+                {
+                    actionList.Dequeue();
+                }
+            }
         }
     }
 }

@@ -26,8 +26,8 @@ public class PlayerHealth : MonoBehaviour
             float newHealth = Mathf.Max(0, currentHealth - difference);
             float speed = 1f;
             currentHealth = newHealth;
-            StartCoroutine(FlashRed(.2f));
             StartCoroutine(SetBar(newHealth, speed));
+            StartCoroutine(FlashRed(.2f));
         }
     }
 
@@ -78,6 +78,7 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(time);
         blackOverlay.canvasRenderer.SetAlpha(0f);
     }
+
     IEnumerator EndGame()
     {
         Time.timeScale = .2f;

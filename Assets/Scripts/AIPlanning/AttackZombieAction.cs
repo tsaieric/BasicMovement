@@ -9,7 +9,7 @@ public class AttackZombieAction : Action
     private GameObject targetEnemy;
     private DogMovement movement;
     private Animator anim;
-
+    private EnemyHealth enemyHealth;
     void Start()
     {
         anim = this.GetComponent<Animator>();
@@ -77,6 +77,7 @@ public class AttackZombieAction : Action
             {
                 anim.SetBool("IsWalking", false);
             }
+            Debug.Log(anim.playbackTime);
             return true;
         }
         else
@@ -87,6 +88,15 @@ public class AttackZombieAction : Action
             movement.thisBehavior = DogBehavior.Arrive;
             //MoveController seeks target
             return false;
+        }
+    }
+
+    public void Attack()
+    {
+        if (targetEnemy != null)
+        {
+            enemyHealth = targetEnemy.GetComponent<EnemyHealth>();
+            enemyHealth.ReduceHealth(10f);
         }
     }
 

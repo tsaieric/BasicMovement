@@ -19,7 +19,6 @@ public class PlanNode
 
 public class GoalPlanner : MonoBehaviour
 {
-
     public Queue<Action> Plan(HashSet<Action> availableActions, Dictionary<string,object> currentState, Dictionary<string,object> goalState) 
     {
         foreach(Action a in availableActions)
@@ -45,6 +44,8 @@ public class GoalPlanner : MonoBehaviour
         }
     }
 
+    //GOALSTATE: zombieAlive, false + dogAlive, true
+    //pickuphealth, attackzombie
     public bool BuildTree(PlanNode parent, HashSet<Action> actionList, Dictionary<string, object> goalState, List<PlanNode> leaves)
     {
         bool hasPath = false;
@@ -52,8 +53,11 @@ public class GoalPlanner : MonoBehaviour
         {
             if (AreConditionsInState(a.preconditions, parent.currentState))
             {
+                //attackzombie effects = dog loses health, zombie loses health
                 Dictionary<string, object> newState = CreateStateWithEffects(a.effects, parent.currentState);
                 PlanNode newNode = new PlanNode(parent, parent.totalCost + a.cost, newState, a);
+                //newState: zombieAlive, false + dogAlive, true
+                //goalState: zombieAlive, false + dogAlive, true
                 if (AreConditionsInState(goalState, newState))
                 {
                     leaves.Add(newNode);
@@ -62,7 +66,7 @@ public class GoalPlanner : MonoBehaviour
                 else
                 {
                     HashSet<Action> actionsMinusOne = new HashSet<Action>(actionList);
-                    actionsMinusOne.Remove(a);
+                    actionsMinusOne.Remove(a); //this list only contains attackZombie now
                     BuildTree(newNode, actionsMinusOne, goalState, leaves);
                 }
             }

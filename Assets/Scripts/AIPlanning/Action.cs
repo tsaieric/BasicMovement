@@ -4,9 +4,19 @@ using System.Collections.Generic;
 
 public abstract class Action : MonoBehaviour
 {
-
     public Dictionary<string, object> preconditions;
     public Dictionary<string, object> effects;
+    //Attack Mode -> Goal States (kill zombie and stay alive and nearMax)
+    //Defend Mode -> Goal States (Max is alive and zombie is dead)
+    //StayClose Mode -> Goal States (near Max)
+    //FindFood -> Goal State (dog is near food)
+
+    //GetHealth, SmellFood
+    //AttackZombie, Preconditions: ZombieNearby, Effect: Zombie loses health, Dog loses health
+    //RunAway
+    //Threaten
+    //RunToMax
+
     public float cost;
 
     public Action()

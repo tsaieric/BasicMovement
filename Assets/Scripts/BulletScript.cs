@@ -20,6 +20,7 @@ public class BulletScript : MonoBehaviour
 	{
 		if (col.tag == "Zombie") {
 			col.GetComponent<EnemyHealth> ().ReduceHealth (40f);
+            Destroy(this.gameObject);
 		}
 	}
 }

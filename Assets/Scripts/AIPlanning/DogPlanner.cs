@@ -20,7 +20,7 @@ public class DogPlanner : MonoBehaviour
     public Dictionary<string, object> GetWorldState()
     {
         Dictionary<string, object> worldState = new Dictionary<string, object>();
-        worldState.Add("healthLow", true);// health.GetHealth()<30f);
+        worldState.Add("healthLow", health.GetHealth()<30f);
         return worldState;
     }
 
@@ -30,21 +30,14 @@ public class DogPlanner : MonoBehaviour
         Dictionary<string, object> goalState = new Dictionary<string, object>();
         goalState.Add("healthLow", false);
         goalState.Add("attackingZombie", true);
-
-        foreach (Action a in availableActions)
-        {
-            Debug.Log(a.Print());
-        }
+    
         actionList = planner.Plan(availableActions, GetWorldState(), goalState);
         if (actionList != null)
         {
+            Debug.Log("ACTIONLIST IS: ");
             foreach (Action a in actionList)
             {
                 Debug.Log("Action: " + a.Print());
-                foreach (string key in a.effects.Keys)
-                {
-                    Debug.Log(a.effects[key]);
-                }
             }
         }
     }

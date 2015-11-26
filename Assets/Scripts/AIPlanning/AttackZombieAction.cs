@@ -18,7 +18,7 @@ public class AttackZombieAction : Action {
     {
         //GameObject[] enemies = (GameObject[])UnityEngine.GameObject.FindObjectsOfType(typeof(EnemyHealth));
         GameObject[] enemies2 = GameObject.FindGameObjectsWithTag("Zombie");
-       float closestDistance = 0;
+        float closestDistance = 0;
         foreach(GameObject enemy in enemies2)
         {
             if(targetEnemy == null)
@@ -46,7 +46,15 @@ public class AttackZombieAction : Action {
 
     public override bool Act()
     {
-        throw new NotImplementedException();
+        if(inRange)
+        {
+            //play attackAnim;
+            return true;
+        } else
+        {
+            //MoveController seeks target
+            return false;
+        }
     }
 
     public override bool isDone()

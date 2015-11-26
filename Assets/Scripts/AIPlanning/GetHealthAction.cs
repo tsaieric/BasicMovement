@@ -4,9 +4,7 @@ using System;
 
 public class GetHealthAction : Action
 {
-
-    public GameObject[] enemies;
-    private GameObject targetEnemy;
+    private GameObject targetFood;
 
     public GetHealthAction()
     {
@@ -16,38 +14,45 @@ public class GetHealthAction : Action
     //addrange later
     public override bool CheckInRange()
     {
-        //GameObject[] enemies = (GameObject[])UnityEngine.GameObject.FindObjectsOfType(typeof(EnemyHealth));
-        GameObject[] enemies2 = GameObject.FindGameObjectsWithTag("Zombie");
+        GameObject[] foods = GameObject.FindGameObjectsWithTag("HealthPack");
         float closestDistance = 0;
-        foreach (GameObject enemy in enemies2)
+        foreach (GameObject food in foods)
         {
-            if (targetEnemy == null)
+            if (targetFood == null)
             {
-                closestDistance = Vector3.Distance(this.transform.position, enemy.transform.position);
-                targetEnemy = enemy;
+                closestDistance = Vector3.Distance(this.transform.position, food.transform.position);
+                targetFood = food;
             }
             else
             {
-                float dist = Vector3.Distance(this.transform.position, enemy.transform.position);
+                float dist = Vector3.Distance(this.transform.position, food.transform.position);
                 if (dist < closestDistance)
                 {
-                    targetEnemy = enemy;
+                    targetFood = food;
                     closestDistance = dist;
                 }
             }
         }
-        target = targetEnemy;
-        return targetEnemy != null;
+        target = targetFood;
+        return targetFood != null;
     }
 
     public override void Reset()
     {
-        targetEnemy = null;
+        targetFood = null;
     }
 
     public override bool Act()
     {
-        throw new NotImplementedException();
+        if (inRange)
+        {
+            return true;
+        }
+        else
+        {
+            //MoveController seeks target
+            return false;
+        }
     }
 
     public override bool isDone()
@@ -62,6 +67,6 @@ public class GetHealthAction : Action
 
     public override string Print()
     {
-        return "attackZombieAction";
+        return "getHealthAction";
     }
 }

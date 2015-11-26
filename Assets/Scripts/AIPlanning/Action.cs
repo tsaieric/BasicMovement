@@ -9,6 +9,7 @@ public abstract class Action : MonoBehaviour
     public bool inRange;
     public float cost = 1f;
     public GameObject target;
+    private MoveController movement;
     //Attack Mode -> Goal States (kill zombie and stay alive and nearMax)
     //Defend Mode -> Goal States (Max is alive and zombie is dead)
     //StayClose Mode -> Goal States (near Max)
@@ -19,7 +20,10 @@ public abstract class Action : MonoBehaviour
     //RunAway
     //Threaten
     //RunToMax
-
+    void Start()
+    {
+        movement = this.GetComponent<MoveController>();
+    }
 
     public Action()
     {

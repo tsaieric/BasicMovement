@@ -16,6 +16,13 @@ public class DogHealth : MonoBehaviour
         healthBar = this.transform.Find("HealthBarCanvas/HealthColor");
     }
 
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            ReduceHealth(10f);
+        }
+    }
     public void ReduceHealth(float difference)
     {
         if (isAlive)
@@ -38,15 +45,6 @@ public class DogHealth : MonoBehaviour
             StartCoroutine(SetBar(newHealth, speed));
         }
     }
-
-    //IEnumerator SetHealth(float input, float speed)
-    //{
-    //    while (currentHealth != input)
-    //    {
-    //        currentHealth = Mathf.MoveTowards(currentHealth, input, speed * Time.deltaTime);
-    //        yield return null;
-    //    }
-    //}
 
     IEnumerator SetBar(float input, float speed)
     {

@@ -92,7 +92,7 @@ public class GoalPlanner : MonoBehaviour
                 {
                     HashSet<Action> actionsMinusOne = new HashSet<Action>(actionList);
                     actionsMinusOne.Remove(a); //this list only contains attackZombie now
-                    BuildTree(newNode, actionsMinusOne, goalState, leaves);
+                    hasPath = hasPath || BuildTree(newNode, actionsMinusOne, goalState, leaves);
                 }
             }
         }
@@ -113,7 +113,6 @@ public class GoalPlanner : MonoBehaviour
                 {
                     if (leastCostLeaf == null)
                     {
-                        Debug.Log("reached a goal state?");
                         leastCostLeaf = newNode;
                     }
                     else if (newNode.totalCost < leastCostLeaf.totalCost)
@@ -141,7 +140,7 @@ public class GoalPlanner : MonoBehaviour
         Dictionary<string, object> result = new Dictionary<string, object>(state);
         foreach (string key in effects.Keys)
         {
-            result.Add(key, effects[key]);
+            result[key] = effects[key];
         }
         return result;
     }
@@ -166,4 +165,14 @@ public class GoalPlanner : MonoBehaviour
         }
         return inState;
     }
+
+    private void PrintState(Dictionary<string, object> state)
+    {
+        Debug.Log("STATE:");
+        foreach (string key in state.Keys)
+        {
+            Debug.Log(key + ": " + state[key]);
+        }
+        Debug.Log("END STATE");
+    } 
 }

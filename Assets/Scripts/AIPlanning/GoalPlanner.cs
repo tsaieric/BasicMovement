@@ -21,18 +21,43 @@ public class GoalPlanner : MonoBehaviour
 {
     public Queue<Action> Plan(HashSet<Action> availableActions, Dictionary<string,object> currentState, Dictionary<string,object> goalState) 
     {
+        HashSet<Action> excludeActions = new HashSet<Action>();
         foreach(Action a in availableActions)
         {
             a.Reset();
+            if(a.RequiresInRange())
+            {
+                //if its not in range, add to excludeactions
+                if(!a.CheckInRange())
+                {
+                    excludeActions.Add(a);
+                }
+            }
         }
+        availableActions.ExceptWith(excludeActions);
+        //check which actions can or cannot run according to their range
+        Debug.Log("leftover actions available: "+availableActions.Count);
         List<PlanNode> leaves = new List<PlanNode>();
         PlanNode leastCostLeaf = null;
         PlanNode first = new PlanNode(null, 0f, currentState, null);
-        bool planAvailable = BuildTree(first, availableActions, goalState, leastCostLeaf);
+        bool planAvailable = BuildTree(first, availableActions, goalState, leaves);
+        foreach(PlanNode leaf in leaves)
+        {
+            if(leastCostLeaf==null)
+            {
+                leastCostLeaf = leaf;
+            } else
+            {
+                if(leaf.totalCost<leastCostLeaf.totalCost)
+                {
+                    leastCostLeaf = leaf;
+                }
+            }
+        }
         if(planAvailable)
         {
             LinkedList<Action> list = new LinkedList<Action>();
-            while(leastCostLeaf!=null) {
+            while(leastCostLeaf.action!=null) {
                 list.AddFirst(leastCostLeaf.action);
                 leastCostLeaf = leastCostLeaf.parent;
             }
@@ -88,6 +113,7 @@ public class GoalPlanner : MonoBehaviour
                 {
                     if (leastCostLeaf == null)
                     {
+                        Debug.Log("reached a goal state?");
                         leastCostLeaf = newNode;
                     }
                     else if (newNode.totalCost < leastCostLeaf.totalCost)

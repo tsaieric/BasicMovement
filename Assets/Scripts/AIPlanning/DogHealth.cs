@@ -2,9 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class PlayerHealth : MonoBehaviour
+public class DogHealth : MonoBehaviour
 {
-    public Image blackOverlay;
     private float currentHealth = 100f;
     private float totalHealth = 100f;
     private Transform healthBar;
@@ -13,8 +12,6 @@ public class PlayerHealth : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        blackOverlay.gameObject.SetActive(true);
-        blackOverlay.canvasRenderer.SetAlpha(0);
         anim = this.GetComponent<Animator>();
         healthBar = this.transform.Find("HealthBarCanvas/HealthColor");
     }
@@ -26,7 +23,6 @@ public class PlayerHealth : MonoBehaviour
             float newHealth = Mathf.Max(0, currentHealth - difference);
             float speed = 1f;
             currentHealth = newHealth;
-            StartCoroutine(FlashRed(.2f));
             StartCoroutine(SetBar(newHealth, speed));
         }
     }
@@ -66,28 +62,9 @@ public class PlayerHealth : MonoBehaviour
             }
             if (currentHealth <= 0)
             {
-                StartCoroutine(EndGame());
+                Destroy(this.gameObject);
             }
         }
-    }
-
-    IEnumerator FlashRed(float time)
-    {
-        blackOverlay.color = Color.red;
-        blackOverlay.CrossFadeAlpha(.4f, time, false);
-        yield return new WaitForSeconds(time);
-        blackOverlay.canvasRenderer.SetAlpha(0f);
-    }
-    IEnumerator EndGame()
-    {
-        Time.timeScale = .2f;
-        anim.SetTrigger("Die");
-        isAlive = false;
-        yield return new WaitForSeconds(.2f);
-        blackOverlay.color = Color.black;
-        blackOverlay.CrossFadeAlpha(1f, 1f, false);
-        yield return new WaitForSeconds(1f);
-        Application.LoadLevel("EndScene");
     }
 
     void OnTriggerEnter(Collider other)
@@ -97,5 +74,10 @@ public class PlayerHealth : MonoBehaviour
             Destroy(other.gameObject);
             AddHealth(15f);
         }
+    }
+
+    public float GetHealth()
+    {
+        return currentHealth;
     }
 }

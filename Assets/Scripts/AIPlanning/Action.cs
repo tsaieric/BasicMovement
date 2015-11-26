@@ -6,6 +6,9 @@ public abstract class Action : MonoBehaviour
 {
     public Dictionary<string, object> preconditions;
     public Dictionary<string, object> effects;
+    public bool inRange;
+    public float cost = 1f;
+    public GameObject target;
     //Attack Mode -> Goal States (kill zombie and stay alive and nearMax)
     //Defend Mode -> Goal States (Max is alive and zombie is dead)
     //StayClose Mode -> Goal States (near Max)
@@ -17,12 +20,12 @@ public abstract class Action : MonoBehaviour
     //Threaten
     //RunToMax
 
-    public float cost;
 
     public Action()
     {
         preconditions = new Dictionary<string, object>();
         effects = new Dictionary<string, object>();
+        inRange = false;
     }
 
     public void AddPrecondition(string key, object value)
@@ -45,5 +48,13 @@ public abstract class Action : MonoBehaviour
         effects.Remove(key);
     }
 
-    public virtual void Reset() { }
+    public abstract void Reset();// { }
+    
+    public abstract bool isDone();// { }
+
+    public abstract bool Act();
+
+    public abstract bool RequiresInRange();
+    public abstract bool CheckInRange();
+    public abstract string Print();
 }

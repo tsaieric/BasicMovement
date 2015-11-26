@@ -13,6 +13,7 @@ public class ZombieActions : MonoBehaviour
 		playerHealth = playerT.GetComponent<PlayerHealth> ();
 		anim = this.GetComponent<Animator> ();
 	}
+
 	// Use this for initialization
 	void Start ()
 	{

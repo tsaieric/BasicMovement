@@ -19,22 +19,27 @@ public class PlanNode
 
 public class GoalPlanner : MonoBehaviour
 {
-    public Queue<Action> Plan(HashSet<Action> availableActions, Dictionary<string,object> currentState, Dictionary<string,object> goalState) 
+    public Queue<Action> Plan(HashSet<Action> allActions, Dictionary<string,object> currentState, Dictionary<string,object> goalState) 
     {
-        HashSet<Action> excludeActions = new HashSet<Action>();
-        foreach(Action a in availableActions)
+        foreach(Action a in allActions)
         {
             a.Reset();
-            if(a.RequiresInRange())
+        }
+        HashSet<Action> availableActions = new HashSet<Action>();
+        foreach(Action a in allActions)
+        {
+            if (a.RequiresInRange())
             {
-                //if its not in range, add to excludeactions
-                if(!a.CheckInRange())
+                //if it requires range and is in range
+                if (a.CheckInRange())
                 {
-                    excludeActions.Add(a);
+                    availableActions.Add(a);
                 }
+            } else
+            {
+                availableActions.Add(a);
             }
         }
-        availableActions.ExceptWith(excludeActions);
         //check which actions can or cannot run according to their range
         Debug.Log("leftover actions available: "+availableActions.Count);
         List<PlanNode> leaves = new List<PlanNode>();

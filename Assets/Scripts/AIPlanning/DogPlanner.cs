@@ -3,14 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 public class DogPlanner : MonoBehaviour
 {
-
+    private GameObject player;
     private DogHealth health;
     private Queue<Action> actionList;
     private HashSet<Action> availableActions;
     private GoalPlanner planner;
+    private float lowHealthThreshold = 30f;
+    private float distFromMaxThreshold = 30f;
+
     // Use this for initialization
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         planner = this.GetComponent<GoalPlanner>();
         health = this.GetComponent<DogHealth>();
         availableActions = new HashSet<Action>();
@@ -20,7 +24,8 @@ public class DogPlanner : MonoBehaviour
     public Dictionary<string, object> GetWorldState()
     {
         Dictionary<string, object> worldState = new Dictionary<string, object>();
-        worldState.Add("healthLow", health.GetHealth() < 30f);
+        worldState.Add("healthLow", health.GetHealth() < lowHealthThreshold);
+        worldState.Add("nearMax", Vector3.Distance(this.transform.position, player.transform.position) < distFromMaxThreshold);
         return worldState;
     }
 
@@ -30,7 +35,7 @@ public class DogPlanner : MonoBehaviour
         Dictionary<string, object> goalState = new Dictionary<string, object>();
         goalState.Add("healthLow", false);
         goalState.Add("attackingZombie", true);
-
+        goalState.Add("nearMax", true);
         actionList = planner.Plan(availableActions, GetWorldState(), goalState);
         if (actionList != null)
         {
@@ -57,6 +62,7 @@ public class DogPlanner : MonoBehaviour
         {
             PlanAttackMode();
         }
+        PlanAttackMode();
         if (actionList != null)
         {
             if (actionList.Count > 0)

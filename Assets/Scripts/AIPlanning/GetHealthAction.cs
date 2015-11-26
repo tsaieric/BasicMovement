@@ -14,6 +14,7 @@ public class GetHealthAction : Action
 
     public GetHealthAction()
     {
+        AddPrecondition("nearMax", true);
         AddEffect("healthLow", false);
     }
 
@@ -39,6 +40,10 @@ public class GetHealthAction : Action
                 }
             }
         }
+        if(closestDistance>30f)
+        {
+            targetFood = null;
+        }
         target = targetFood;
         return targetFood != null;
     }
@@ -46,6 +51,7 @@ public class GetHealthAction : Action
     public override void Reset()
     {
         targetFood = null;
+        target = null;
     }
 
     public override bool Act()

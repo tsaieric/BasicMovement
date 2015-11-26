@@ -15,6 +15,7 @@ public class AttackZombieAction : Action {
 
     public AttackZombieAction()
     {
+        AddPrecondition("nearMax", true);
         AddPrecondition("healthLow", false);
         AddEffect("attackingZombie", true);
     }
@@ -41,6 +42,9 @@ public class AttackZombieAction : Action {
                 }
             }
         }
+        if (closestDistance > 30f) {
+            targetEnemy = null;
+        }
         target = targetEnemy;
         return targetEnemy != null;
     }
@@ -48,6 +52,7 @@ public class AttackZombieAction : Action {
     public override void Reset()
     {
         targetEnemy = null;
+        target = null;
     }
 
     public override bool Act()

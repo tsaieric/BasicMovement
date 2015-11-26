@@ -19,6 +19,7 @@ public class PlanNode
 
 public class GoalPlanner : MonoBehaviour
 {
+
     public Queue<Action> Plan(HashSet<Action> availableActions, Dictionary<string,object> currentState, Dictionary<string,object> goalState) 
     {
         foreach(Action a in availableActions)

@@ -41,7 +41,6 @@ public class GoalPlanner : MonoBehaviour
             }
         }
         //check which actions can or cannot run according to their range
-        Debug.Log("leftover actions available: "+availableActions.Count);
         List<PlanNode> leaves = new List<PlanNode>();
         PlanNode leastCostLeaf = null;
         PlanNode first = new PlanNode(null, 0f, currentState, null);

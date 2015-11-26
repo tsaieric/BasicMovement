@@ -40,7 +40,7 @@ public class GetHealthAction : Action
                 }
             }
         }
-        if(closestDistance>30f)
+        if(closestDistance>50f)
         {
             targetFood = null;
         }

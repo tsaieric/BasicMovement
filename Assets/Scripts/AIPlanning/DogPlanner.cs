@@ -9,7 +9,7 @@ public class DogPlanner : MonoBehaviour
     private HashSet<Action> availableActions;
     private GoalPlanner planner;
     private float lowHealthThreshold = 30f;
-    private float distFromMaxThreshold = 30f;
+    private float distFromMaxThreshold = 40f;
 
     // Use this for initialization
     void Start()

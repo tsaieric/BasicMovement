@@ -22,31 +22,6 @@ public class MoveToMaxAction : Action
     public override bool CheckInRange()
     {
         return true;
-        //GameObject[] foods = GameObject.FindGameObjectsWithTag("HealthPack");
-        //float closestDistance = 0;
-        //foreach (GameObject food in foods)
-        //{
-        //    if (targetPlayer == null)
-        //    {
-        //        closestDistance = Vector3.Distance(this.transform.position, food.transform.position);
-        //        targetPlayer = food;
-        //    }
-        //    else
-        //    {
-        //        float dist = Vector3.Distance(this.transform.position, food.transform.position);
-        //        if (dist < closestDistance)
-        //        {
-        //            targetPlayer = food;
-        //            closestDistance = dist;
-        //        }
-        //    }
-        //}
-        //if (closestDistance > 30f)
-        //{
-        //    targetPlayer = null;
-        //}
-        //target = targetPlayer;
-        //return targetPlayer != null;
     }
 
     public override void Reset()

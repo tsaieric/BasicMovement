@@ -2,14 +2,17 @@
 using System.Collections;
 using System;
 
-public class AttackZombieAction : Action {
+public class AttackZombieAction : Action
+{
 
     public GameObject[] enemies;
     private GameObject targetEnemy;
     private DogMovement movement;
+    private Animator anim;
 
     void Start()
     {
+        anim = this.GetComponent<Animator>();
         movement = this.GetComponent<DogMovement>();
     }
 
@@ -26,23 +29,25 @@ public class AttackZombieAction : Action {
         //GameObject[] enemies = (GameObject[])UnityEngine.GameObject.FindObjectsOfType(typeof(EnemyHealth));
         GameObject[] enemies2 = GameObject.FindGameObjectsWithTag("Zombie");
         float closestDistance = 0;
-        foreach(GameObject enemy in enemies2)
+        foreach (GameObject enemy in enemies2)
         {
-            if(targetEnemy == null)
+            if (targetEnemy == null)
             {
                 closestDistance = Vector3.Distance(this.transform.position, enemy.transform.position);
                 targetEnemy = enemy;
-            } else
+            }
+            else
             {
                 float dist = Vector3.Distance(this.transform.position, enemy.transform.position);
-                if(dist<closestDistance)
+                if (dist < closestDistance)
                 {
                     targetEnemy = enemy;
                     closestDistance = dist;
                 }
             }
         }
-        if (closestDistance > 30f) {
+        if (closestDistance > 40f)
+        {
             targetEnemy = null;
         }
         target = targetEnemy;
@@ -62,13 +67,22 @@ public class AttackZombieAction : Action {
             return true;
         }
         float distance = Vector3.Distance(this.transform.position, targetEnemy.transform.position);
-        if (distance <= .1f)
+        if (distance <= 5f)
         {
-            //attack
+            if (!anim.GetBool("IsAttacking"))
+            {
+                anim.SetBool("IsAttacking", true);
+            }
+            if (anim.GetBool("IsWalking"))
+            {
+                anim.SetBool("IsWalking", false);
+            }
             return true;
         }
         else
         {
+            anim.SetBool("IsWalking", true);
+            anim.SetBool("IsAttacking", false);
             movement.targetObj = targetEnemy;
             movement.thisBehavior = DogBehavior.Arrive;
             //MoveController seeks target

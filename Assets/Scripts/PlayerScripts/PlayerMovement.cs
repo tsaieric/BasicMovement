@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.Networking;
-public class PlayerMovement : NetworkBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public bool disabled = false;
     public float speed = 6f;
@@ -20,31 +19,25 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        if (!isLocalPlayer)
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
-            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
-            {
-                anim.SetTrigger("Punch");
-            }
+            anim.SetTrigger("Punch");
         }
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!isLocalPlayer)
-        {
-            float h = Input.GetAxis("Horizontal");
-            float v = Input.GetAxis("Vertical");
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
 
-            if (disabled)
-            {
-                v = 0f;
-                h = 0f;
-            }
-            Move(h, v);
-            Animating(h, v);
-            TurnToMouse();
+        if (disabled)
+        {
+            v = 0f;
+            h = 0f;
         }
+        Move(h, v);
+        Animating(h, v);
+        TurnToMouse();
     }
 
     void TurnToMouse()

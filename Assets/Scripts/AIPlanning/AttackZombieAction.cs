@@ -5,7 +5,7 @@ using System;
 public class AttackZombieAction : Action
 {
 
-    public GameObject[] enemies;
+    public EnemyHealth[] enemies;
     private GameObject targetEnemy;
     private DogMovement movement;
     private Animator anim;
@@ -26,29 +26,32 @@ public class AttackZombieAction : Action
     //addrange later
     public override bool CheckInRange()
     {
-        //GameObject[] enemies = (GameObject[])UnityEngine.GameObject.FindObjectsOfType(typeof(EnemyHealth));
-        GameObject[] enemies2 = GameObject.FindGameObjectsWithTag("Zombie");
+        //GameObject[] enemies2 = GameObject.FindGameObjectsWithTag("Zombie");
         float closestDistance = 0;
-        foreach (GameObject enemy in enemies2)
+        foreach (EnemyHealth enemy in enemies)
         {
-            if (targetEnemy == null)
+            if (enemy.isAlive)
             {
-                closestDistance = Vector3.Distance(this.transform.position, enemy.transform.position);
-                targetEnemy = enemy;
-            }
-            else
-            {
-                float dist = Vector3.Distance(this.transform.position, enemy.transform.position);
-                if (dist < closestDistance)
+                if (targetEnemy == null)
                 {
-                    targetEnemy = enemy;
-                    closestDistance = dist;
+                    closestDistance = Vector3.Distance(this.transform.position, enemy.transform.position);
+                    targetEnemy = enemy.gameObject;
+                }
+                else
+                {
+                    float dist = Vector3.Distance(this.transform.position, enemy.transform.position);
+                    if (dist < closestDistance)
+                    {
+                        targetEnemy = enemy.gameObject;
+                        closestDistance = dist;
+                    }
                 }
             }
         }
         if (closestDistance > 40f)
         {
             targetEnemy = null;
+            anim.SetBool("IsAttacking", false);
         }
         target = targetEnemy;
         return targetEnemy != null;
@@ -64,6 +67,8 @@ public class AttackZombieAction : Action
     {
         if (targetEnemy == null)
         {
+            anim.SetBool("IsWalking", true);
+            anim.SetBool("IsAttacking", false);
             return true;
         }
         float distance = Vector3.Distance(this.transform.position, targetEnemy.transform.position);
@@ -77,7 +82,6 @@ public class AttackZombieAction : Action
             {
                 anim.SetBool("IsWalking", false);
             }
-            Debug.Log(anim.playbackTime);
             return true;
         }
         else

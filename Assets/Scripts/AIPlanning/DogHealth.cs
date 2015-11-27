@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class DogHealth : MonoBehaviour
+public class DogHealth : NetworkBehaviour
 {
     private float currentHealth = 100f;
     private float totalHealth = 100f;

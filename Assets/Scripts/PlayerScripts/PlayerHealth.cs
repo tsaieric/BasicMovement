@@ -60,6 +60,7 @@ public class PlayerHealth : Health
 		blackOverlay.color = Color.black;
 		blackOverlay.CrossFadeAlpha (1f, 1f, false);
 		yield return new WaitForSeconds (1f);
+		Time.timeScale = 1f;
 		Application.LoadLevel ("EndScene");
 	}
 

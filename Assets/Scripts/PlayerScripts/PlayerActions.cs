@@ -39,8 +39,12 @@ public class PlayerActions : MonoBehaviour
 		if (Input.GetKeyUp (KeyCode.Space)) {
 			StartCoroutine (ShrinkRadar ());
 		}
-		if (Input.GetButtonDown ("Fire1"))
-			Fire ();
+		if (Input.GetButtonDown ("Fire1")) {
+			ThrowGrenade ();
+			//Fire ();
+		}
+
+
 	}
 	IEnumerator ShrinkRadar ()
 	{
@@ -52,6 +56,10 @@ public class PlayerActions : MonoBehaviour
 		}
 		radar.SetActive (false);
 		movement.disabled = false;
+	}
+
+	public void ThrowGrenade ()
+	{
 	}
 	public void Fire ()
 	{

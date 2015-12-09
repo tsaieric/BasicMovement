@@ -23,12 +23,12 @@ public class ZombieActions : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		float distanceFromPlayer = Vector3.Distance (playerT.position, this.transform.position);
-		if (distanceFromPlayer <= attackDist && !anim.GetBool ("isAttacking")) {
-			anim.SetBool ("isAttacking", true);
-		} else {
-			anim.SetBool ("isAttacking", false);
-		}
+//		float distanceFromPlayer = Vector3.Distance (playerT.position, this.transform.position);
+//		if (distanceFromPlayer <= attackDist && !anim.GetBool ("isAttacking")) {
+//			anim.SetBool ("isAttacking", true);
+//		} else {
+//			anim.SetBool ("isAttacking", false);
+//		}
 	}
 
 	public void Attack ()

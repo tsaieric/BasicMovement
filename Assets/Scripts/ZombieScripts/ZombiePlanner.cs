@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public class DogPlanner : MonoBehaviour
+public class ZombiePlanner : MonoBehaviour
 {
 	private GameObject player;
-	private DogHealth health;
+	private EnemyHealth health;
 	private Queue<Action> actionList;
 	private HashSet<Action> availableActions;
 	private GoalPlanner planner;
-	private float lowHealthThreshold = 30f;
-	private float distFromMaxThreshold = 20f;
+	private float lowHealthThreshold = 50f;
+	private float distFromMaxThreshold = 40f;
 
 	// Use this for initialization
 	void Start ()
 	{
 		player = GameObject.FindGameObjectWithTag ("Player");
 		planner = this.GetComponent<GoalPlanner> ();
-		health = this.GetComponent<DogHealth> ();
+		health = this.GetComponent<EnemyHealth> ();
 		availableActions = new HashSet<Action> ();
 		GetActions ();
 	}
@@ -34,8 +34,7 @@ public class DogPlanner : MonoBehaviour
 		//attack
 		Dictionary<string, object> goalState = new Dictionary<string, object> ();
 		goalState.Add ("healthLow", false);
-		goalState.Add ("attackingZombie", true);
-		goalState.Add ("nearMax", true);
+		goalState.Add ("attackingPlayer", true);
 		actionList = planner.Plan (availableActions, GetWorldState (), goalState);
 		//if (actionList != null)
 		//{

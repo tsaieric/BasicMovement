@@ -10,8 +10,10 @@ public class AttackZombieAction : Action
 	private DogMovement movement;
 	private Animator anim;
 	private EnemyHealth enemyHealth;
+	private GameObject player;
 	void Start ()
 	{
+		player = GameObject.FindGameObjectWithTag ("Player");
 		anim = this.GetComponent<Animator> ();
 		movement = this.GetComponent<DogMovement> ();
 		enemies2 = EnemyHealth.FindObjectsOfType<EnemyHealth> ();
@@ -44,8 +46,13 @@ public class AttackZombieAction : Action
 			}
 		}
 		if (closestDistance > 40f) {
+			movement.targetObj = player;
+			movement.thisBehavior = DogBehavior.Arrive;
 			targetEnemy = null;
 			anim.SetBool ("IsAttacking", false);
+			if (!anim.GetBool ("Iswalking")) {
+				anim.SetBool ("IsWalking", true);
+			}
 		}
 		target = targetEnemy;
 		return targetEnemy != null;
@@ -64,6 +71,7 @@ public class AttackZombieAction : Action
 			anim.SetBool ("IsAttacking", false);
 			return true;
 		}
+
 		float distance = Vector3.Distance (this.transform.position, targetEnemy.transform.position);
 		if (distance <= 5f) {
 			if (!anim.GetBool ("IsAttacking")) {

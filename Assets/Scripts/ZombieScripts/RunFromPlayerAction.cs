@@ -57,7 +57,6 @@ public class RunFromPlayerAction : Action
 	
 	public override bool Act ()
 	{
-		Debug.Log ("acting?");
 		if (player == null) {
 			anim.SetBool ("isWalking", true);
 			anim.SetBool ("isAttacking", false);

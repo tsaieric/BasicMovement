@@ -57,7 +57,7 @@ public class GoalPlanner : MonoBehaviour
 			}
 			return new Queue<Action> (list);
 		} else {
-			Debug.Log ("no plan available currently");
+//			Debug.Log ("no plan available currently");
 			return null;
 		}
 	}

@@ -7,12 +7,14 @@ public class Health : MonoBehaviour
 	protected float totalHealth = 100f;
 	protected Transform healthBar;
 	protected Animator anim;
+	private Health[] healths;
 	public bool isAlive = true;
 
 	virtual protected void  Awake ()
 	{
 		anim = this.GetComponent<Animator> ();
 		healthBar = this.transform.Find ("HealthBarCanvas/HealthColor");
+		healths = GameObject.FindObjectsOfType<Health> ();
 	}
 
 	
@@ -30,7 +32,9 @@ public class Health : MonoBehaviour
 	{
 		if (other.tag == "HealthPack") {
 			Destroy (other.gameObject);
-			AddHealth (15f);
+			foreach (Health h in healths) {
+				h.AddHealth (15f);
+			}
 		}
 	}
 

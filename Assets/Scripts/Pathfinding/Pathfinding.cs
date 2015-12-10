@@ -49,8 +49,11 @@ public class Pathfinding : MonoBehaviour
 	void CalcOnePathPerFrame ()
 	{
 		if (seekerIndex < numPaths) {
-			if (seekers [seekerIndex] != null)
-				FindPathPQ (seekers [seekerIndex].position, target.position, seekerIndex);
+			if (seekers [seekerIndex] != null) {
+				if (seekers [seekerIndex].GetComponent<ZombieMovement> ().thisBehavior == Behavior.SeekAStar) {
+					FindPathPQ (seekers [seekerIndex].position, target.position, seekerIndex);
+				}
+			}
 			seekerIndex++;
 		}
 		if (seekerIndex == numPaths) {

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class GrenadeScript : MonoBehaviour
 {
+	public float damage = 50f;
+	public float range = 8f;
 	private EnemyHealth[] enemyHealths;
 	private float timeBeforeExplosion = 1.5f;
 	// Use this for initialization
@@ -23,11 +25,9 @@ public class GrenadeScript : MonoBehaviour
 
 	void DamageNearestEnemies ()
 	{
-		float range = 8f;
 		foreach (EnemyHealth enemy in enemyHealths) {
-			Debug.Log (Vector3.Distance (enemy.transform.position, this.transform.position));
 			if (Vector3.Distance (enemy.transform.position, this.transform.position) < range) {
-				enemy.ReduceHealth (40f);
+				enemy.ReduceHealth (damage);
 			}
 		}
 	}

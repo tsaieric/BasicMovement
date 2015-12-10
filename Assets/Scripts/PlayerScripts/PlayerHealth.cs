@@ -64,4 +64,11 @@ public class PlayerHealth : Health
 		Application.LoadLevel ("EndScene");
 	}
 
+	public IEnumerator WinGame ()
+	{
+		blackOverlay.color = Color.black;
+		blackOverlay.CrossFadeAlpha (1f, 1f, false);
+		yield return new WaitForSeconds (1f);
+		Application.LoadLevel ("VictoryScene");
+	}
 }

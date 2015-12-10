@@ -28,15 +28,18 @@ public class BeaconResponse : MonoBehaviour
 			bool allDead = true;
 			foreach (GameObject guardian in guardians) {
 				if (guardian == null) {
-					Debug.Log ("guaridna is dead");
 					allDead = allDead && true;
 				} else {
-					allDead = false;
+					if (!guardian.GetComponent<EnemyHealth> ().isAlive) {
+						allDead = allDead && true;
+					} else {
+						allDead = false;
+					}
 				}
 			}
 			if (allDead) {
 				Debug.Log ("VICTORY");
-				Application.LoadLevel ("VictoryScene");
+				StartCoroutine (other.gameObject.GetComponent<PlayerHealth> ().WinGame ());
 				//load victory scene
 			}
 		}

@@ -62,8 +62,8 @@ public class PlayerActions : MonoBehaviour
 
 	public void ThrowGrenade ()
 	{
-		GameObject newGrenade = (GameObject)GameObject.Instantiate (grenade, this.transform.position + this.transform.forward * 2f + this.transform.up * 2f, Quaternion.identity);
-		newGrenade.GetComponent<Rigidbody> ().AddForce ((this.transform.forward + Vector3.up) * 500f);
+		GameObject newGrenade = (GameObject)GameObject.Instantiate (grenade, this.transform.position + this.transform.forward * 3f + this.transform.up * 2f, Quaternion.identity);
+		newGrenade.GetComponent<Rigidbody> ().AddForce ((this.transform.forward + Vector3.up) * 4000f);
 	}
 
 	public void Fire ()

@@ -6,6 +6,7 @@ public class PlayerActions : MonoBehaviour
 {
 	public float radarSpeed = 10f;
 	public Rigidbody bullet;
+	public GameObject grenade;
 	private float bulletSpeed = 30f;
 	private PlayerMovement movement;
 	private GameObject radar;
@@ -23,6 +24,10 @@ public class PlayerActions : MonoBehaviour
 	void Update ()
 	{
 		RadarControl ();
+		if (Input.GetButtonDown ("Fire2")) {
+			ThrowGrenade ();
+			//Fire ();
+		}
 	}
 
 	void RadarControl ()
@@ -31,21 +36,18 @@ public class PlayerActions : MonoBehaviour
 			radar.SetActive (true);
 			movement.disabled = true;
 		}
+
 		if (Input.GetKey (KeyCode.Space)) {
 			Vector3 curScale = radar.transform.localScale;
 			radar.transform.localScale = Vector3.MoveTowards (curScale, curScale * 100, Time.deltaTime * radarSpeed);
 			radar.transform.Rotate (Vector3.up, 1f);
 		}
+
 		if (Input.GetKeyUp (KeyCode.Space)) {
 			StartCoroutine (ShrinkRadar ());
 		}
-		if (Input.GetButtonDown ("Fire1")) {
-			ThrowGrenade ();
-			//Fire ();
-		}
-
-
 	}
+
 	IEnumerator ShrinkRadar ()
 	{
 		while (radar.transform.localScale!=Vector3.one) {
@@ -60,7 +62,10 @@ public class PlayerActions : MonoBehaviour
 
 	public void ThrowGrenade ()
 	{
+		GameObject newGrenade = (GameObject)GameObject.Instantiate (grenade, this.transform.position + this.transform.forward * 2f + this.transform.up * 2f, Quaternion.identity);
+		newGrenade.GetComponent<Rigidbody> ().AddForce ((this.transform.forward + Vector3.up) * 500f);
 	}
+
 	public void Fire ()
 	{
 		Rigidbody bulletClone = (Rigidbody)Instantiate (bullet, gunEnd.transform.position, bullet.rotation);//Quaternion.identity);

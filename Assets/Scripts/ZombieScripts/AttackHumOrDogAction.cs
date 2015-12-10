@@ -83,7 +83,7 @@ public class AttackHumOrDogAction : Action
 		}
 	}
 	
-	public void Attack ()
+	public void AttackHumOrDog ()
 	{
 		float healthLoss = 10f;
 		if (player != null) {

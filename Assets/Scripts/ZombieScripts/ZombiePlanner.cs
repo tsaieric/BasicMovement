@@ -8,7 +8,7 @@ public class ZombiePlanner : MonoBehaviour
 	private Queue<Action> actionList;
 	private HashSet<Action> availableActions;
 	private GoalPlanner planner;
-	private float lowHealthThreshold = 50f;
+	private float lowHealthThreshold = 40f;
 	private float distFromMaxThreshold = 40f;
 
 	// Use this for initialization

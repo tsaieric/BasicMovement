@@ -20,6 +20,7 @@ public class PlayerHealth : Health
 			float newHealth = Mathf.Max (0, currentHealth - difference);
 			float speed = 1f;
 			currentHealth = newHealth;
+            SoundManager.Instance.PlayerHurt();
 			StartCoroutine (SetBar (newHealth, speed));
 			StartCoroutine (FlashRed (.2f));
 		}
@@ -53,6 +54,7 @@ public class PlayerHealth : Health
 
 	IEnumerator EndGame ()
 	{
+        SoundManager.Instance.PlayerDie();
 		Time.timeScale = .2f;
 		anim.SetTrigger ("Die");
 		isAlive = false;

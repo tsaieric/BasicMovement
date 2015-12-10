@@ -19,6 +19,14 @@ public class LightingController : Singleton<LightingController>
 		if (Mathf.Abs (totalChange - 3f) <= .01f) {
 			totalChange = 0;
 			isDay = !isDay;
+            if(isDay)
+            {
+                SoundManager.Instance.DayCome();
+            } else
+            {
+                SoundManager.Instance.StopAudio();
+                SoundManager.Instance.NightCome();
+            }
 		}
 		this.transform.RotateAround (-Vector3.forward, 1f * Time.deltaTime * speed);
 	}

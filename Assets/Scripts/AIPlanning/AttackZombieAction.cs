@@ -94,6 +94,7 @@ public class AttackZombieAction : Action
 	public void Attack ()
 	{
 		if (targetEnemy != null) {
+            SoundManager.Instance.DogAttack();
 			enemyHealth = targetEnemy.GetComponent<EnemyHealth> ();
 			enemyHealth.ReduceHealth (10f);
 		}

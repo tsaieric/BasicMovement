@@ -24,6 +24,7 @@ public class DogHealth : Health
 			float newHealth = Mathf.Max (0, currentHealth - difference);
 			float speed = 1f;
 			currentHealth = newHealth;
+            SoundManager.Instance.DogHurt();
 			StartCoroutine (SetBar (newHealth, speed));
 		}
 	}

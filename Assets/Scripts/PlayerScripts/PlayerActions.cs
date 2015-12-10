@@ -40,6 +40,7 @@ public class PlayerActions : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            SoundManager.Instance.PlayRadar();
             radar.SetActive(true);
             movement.disabled = true;
         }
@@ -53,6 +54,7 @@ public class PlayerActions : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
+            SoundManager.Instance.PlayRadar();
             StartCoroutine(ShrinkRadar());
         }
     }
@@ -75,7 +77,6 @@ public class PlayerActions : MonoBehaviour
         if (UIController.Instance.grenadesLeft > 0)
         {
             UIController.Instance.DecreaseGrenadeCount();
-
             GameObject newGrenade = (GameObject)GameObject.Instantiate(grenade, this.transform.position + this.transform.forward * 3f + this.transform.up * 2f, Quaternion.identity);
             newGrenade.GetComponent<Rigidbody>().AddForce((this.transform.forward + Vector3.up) * 4000f);
         }

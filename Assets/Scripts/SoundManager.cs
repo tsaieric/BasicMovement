@@ -11,6 +11,10 @@ public class SoundManager : Singleton<SoundManager> {
         aSource = this.GetComponent<AudioSource>();
 	}
 	
+    public void StopAudio()
+    {
+        aSource.Stop();
+    }
     public void PlayGunShot()
     {
         aSource.PlayOneShot(clips[0]);

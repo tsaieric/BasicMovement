@@ -21,6 +21,7 @@ public class GrenadeScript : MonoBehaviour
 		GameObject explosionParticles = (GameObject)Instantiate (Resources.Load ("GrenadeExplosion"), this.transform.position, Quaternion.identity);
 		Destroy (explosionParticles, 2f);
 		DamageNearestEnemies ();
+        SoundManager.Instance.PlayGrenade();
 	}
 
 	void DamageNearestEnemies ()

@@ -90,8 +90,10 @@ public class AttackHumOrDogAction : Action
 		if (player != null) {
 			PlayerHealth health = player.GetComponent<PlayerHealth> ();
 			if (health != null) {
+                SoundManager.Instance.ZombieAttack();
 				health.ReduceHealth (healthLoss);
 			} else {
+                SoundManager.Instance.ZombieAttack();
 				player.GetComponent<DogHealth> ().ReduceHealth (healthLoss);
 			}
 		}

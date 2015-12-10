@@ -63,6 +63,7 @@ public class EnemyHealth : MonoBehaviour
 			yield return null;
 		}
 		if (currentHealth <= 0 && isAlive) {
+            SoundManager.Instance.ZombieDie();
 			anim.SetBool ("Alive", false);
 			anim.SetTrigger ("Die");
 			isAlive = false;

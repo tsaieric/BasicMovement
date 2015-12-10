@@ -5,7 +5,7 @@ public class LightingController : MonoBehaviour
 {
 	private bool isDay = true;
 	public float speed;
-	private float totalChange = 0f;
+	private float totalChange = 1.5f;
 	private GameObject[] zombies;
 	void Awake ()
 	{
@@ -22,5 +22,10 @@ public class LightingController : MonoBehaviour
 			Debug.Log (isDay);
 		}
 		this.transform.RotateAround (-Vector3.forward, 1f * Time.deltaTime * speed);
+	}
+
+	public bool IsDaytime ()
+	{
+		return isDay;
 	}
 }

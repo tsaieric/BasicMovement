@@ -38,6 +38,10 @@ public class ZombieMovement : MonoBehaviour
 		}
 	}
 
+	void Update ()
+	{
+
+	}
 	void FixedUpdate ()
 	{
 		if (targetObj != null)

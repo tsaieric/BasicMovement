@@ -7,7 +7,7 @@ public class UIController : Singleton<UIController>
     public Text grenadeText;
     public float playerHealth;
     public float dogHealth;
-    public int grenadesLeft = 20;
+    public int grenadesLeft = 15;
     public int foodLeft = 10;
     // Use this for initialization
     void Start()

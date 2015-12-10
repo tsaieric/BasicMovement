@@ -16,5 +16,6 @@ public class GrenadeScript : MonoBehaviour
 		yield return new WaitForSeconds (delay - .2f);
 		GameObject explosionParticles = (GameObject)Instantiate (Resources.Load ("GrenadeExplosion"), this.transform.position, Quaternion.identity);
 		Destroy (explosionParticles, 2f);
+
 	}
 }

@@ -3,8 +3,8 @@ using System.Collections;
 
 public class EnemyHealth : MonoBehaviour
 {
-	private float currentHealth = 100f;
-	private float totalHealth = 100f;
+	public float currentHealth = 100f;
+	public float totalHealth = 100f;
 	private Transform healthBar;
 	public bool isAlive = true;
 	private Animator anim;

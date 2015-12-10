@@ -4,6 +4,8 @@ using System;
 
 public class AttackHumOrDogAction : Action
 {
+	public float healthLoss = 10f;
+	public float attackRadius = 2f;
 	private Health[] players;
 	private GameObject player;
 	private ZombieMovement movement;
@@ -65,7 +67,7 @@ public class AttackHumOrDogAction : Action
 			return true;
 		}
 		float distance = Vector3.Distance (this.transform.position, player.transform.position);
-		if (distance <= 2f) {
+		if (distance <= attackRadius) {
 			if (!anim.GetBool ("isAttacking")) {
 				anim.SetBool ("isAttacking", true);
 			}
@@ -85,7 +87,6 @@ public class AttackHumOrDogAction : Action
 	
 	public void AttackHumOrDog ()
 	{
-		float healthLoss = 10f;
 		if (player != null) {
 			PlayerHealth health = player.GetComponent<PlayerHealth> ();
 			if (health != null) {

@@ -24,11 +24,16 @@ public class PlayerActions : MonoBehaviour
 	void Update ()
 	{
 		RadarControl ();
-		if (Input.GetButtonDown ("Fire2")) {
-			ThrowGrenade ();
-			//Fire ();
+
+        if (Input.GetButtonDown ("Fire2")) {
+			Fire ();
 		}
-	}
+
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            ThrowGrenade();
+        }
+    }
 
 	void RadarControl ()
 	{
@@ -68,6 +73,7 @@ public class PlayerActions : MonoBehaviour
 
 	public void Fire ()
 	{
+        SoundManager.Instance.PlayGunShot();
 		Rigidbody bulletClone = (Rigidbody)Instantiate (bullet, gunEnd.transform.position, bullet.rotation);//Quaternion.identity);
 		bulletClone.velocity = this.transform.forward * bulletSpeed;
 	}

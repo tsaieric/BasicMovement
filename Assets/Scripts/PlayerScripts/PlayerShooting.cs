@@ -54,8 +54,8 @@ public class PlayerShooting : MonoBehaviour
 	{
 		timer = 0f;
 
-		//gunAudio.Play();
-
+        //gunAudio.Play();
+        SoundManager.Instance.PlayLaserShot();
 		gunLight.enabled = true;
 
 //		gunParticles.Stop ();

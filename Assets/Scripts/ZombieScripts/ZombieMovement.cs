@@ -25,6 +25,8 @@ public class ZombieMovement : MonoBehaviour
 	private MoveController targetMoveController;
 	private Animator anim;
 	private EnemyHealth health;
+	private float startSpeed;
+	private TrailRenderer trail;
 	// Use this for initialization
 	void Start ()
 	{
@@ -36,12 +38,23 @@ public class ZombieMovement : MonoBehaviour
 		if (thisBehavior == Behavior.SeekAStar3D) {
 			moveController.Set3D (true);
 		}
+		trail = this.GetComponent<TrailRenderer> ();
+		trail.enabled = false;
+		startSpeed = moveController.maxSpeed;
 	}
 
 	void Update ()
 	{
-
+		if (LightingController.Instance.IsDaytime () && moveController.maxSpeed != startSpeed) {
+			trail.enabled = false;
+			moveController.maxSpeed = startSpeed;
+		} 
+		if (!LightingController.Instance.IsDaytime () && moveController.maxSpeed != startSpeed * 3) {
+			trail.enabled = true;
+			moveController.maxSpeed = startSpeed * 3;
+		}
 	}
+
 	void FixedUpdate ()
 	{
 		if (targetObj != null)

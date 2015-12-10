@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LightingController : MonoBehaviour
+public class LightingController : Singleton<LightingController>
 {
 	private bool isDay = true;
 	public float speed;
@@ -28,4 +28,5 @@ public class LightingController : MonoBehaviour
 	{
 		return isDay;
 	}
+
 }

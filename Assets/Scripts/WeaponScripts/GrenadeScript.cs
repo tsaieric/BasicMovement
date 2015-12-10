@@ -26,8 +26,10 @@ public class GrenadeScript : MonoBehaviour
 	void DamageNearestEnemies ()
 	{
 		foreach (EnemyHealth enemy in enemyHealths) {
-			if (Vector3.Distance (enemy.transform.position, this.transform.position) < range) {
-				enemy.ReduceHealth (damage);
+			if (enemy != null) {
+				if (Vector3.Distance (enemy.transform.position, this.transform.position) < range) {
+					enemy.ReduceHealth (damage);
+				}
 			}
 		}
 	}

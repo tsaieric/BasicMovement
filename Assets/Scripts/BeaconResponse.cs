@@ -36,6 +36,7 @@ public class BeaconResponse : MonoBehaviour
 			}
 			if (allDead) {
 				Debug.Log ("VICTORY");
+				Application.LoadLevel ("VictoryScene");
 				//load victory scene
 			}
 		}

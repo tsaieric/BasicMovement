@@ -68,7 +68,9 @@ public class AttackHumOrDogAction : Action
 		}
 		float distance = Vector3.Distance (this.transform.position, player.transform.position);
 		if (distance <= attackRadius) {
-			if (!anim.GetBool ("isAttacking")) {
+            movement.thisBehavior = Behavior.Wander;
+
+            if (!anim.GetBool ("isAttacking")) {
 				anim.SetBool ("isAttacking", true);
 			}
 			if (anim.GetBool ("isWalking")) {

@@ -43,7 +43,7 @@ public class MoveToMaxAction : Action
         else
         {
             movement.targetObj = targetPlayer;
-            movement.thisBehavior = DogBehavior.Arrive;
+            movement.thisBehavior = DogBehavior.SeekAStar;
             //MoveController seeks target
             return false;
         }

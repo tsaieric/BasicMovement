@@ -37,7 +37,7 @@ public class Health : MonoBehaviour
 			Destroy (other.gameObject);
             UIController.Instance.DecreaseFoodCount();
 			foreach (Health h in healths) {
-				h.AddHealth (15f);
+				h.AddHealth (30f);
 			}
 		}
 	}

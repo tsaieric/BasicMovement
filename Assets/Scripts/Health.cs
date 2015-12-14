@@ -17,6 +17,9 @@ public class Health : MonoBehaviour
 		healths = GameObject.FindObjectsOfType<Health> ();
 	}
 
+	public float GetHealth() {
+		return currentHealth;
+	}
 	
 	public void AddHealth (float difference)
 	{

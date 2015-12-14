@@ -59,7 +59,6 @@ public class Pathfinding : MonoBehaviour
                 {
                     if (seekers[seekerIndex].GetComponent<ZombieMovement>().thisBehavior == Behavior.SeekAStar)
                     {
-                        Debug.Log("zombiesmoving");
                         FindPathPQ(seekers[seekerIndex].position, target.position, seekerIndex);
                     }
                 } else

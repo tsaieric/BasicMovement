@@ -31,18 +31,17 @@ public class DogPlanner : MonoBehaviour
 
 	public void PlanAttackMode ()
 	{
-		//attack
 		Dictionary<string, object> goalState = new Dictionary<string, object> ();
 		goalState.Add ("healthLow", false);
 		goalState.Add ("attackingZombie", true);
 		goalState.Add ("nearMax", true);
 		actionList = planner.Plan (availableActions, GetWorldState (), goalState);
-		if (actionList != null) {
-			Debug.Log ("ACTIONLIST IS: ");
-			foreach (Action a in actionList) {
-				Debug.Log ("Action: " + a.Print ());
-			}
-		}
+		//if (actionList != null) {
+		//	Debug.Log ("ACTIONLIST IS: ");
+		//	foreach (Action a in actionList) {
+		//		Debug.Log ("Action: " + a.Print ());
+		//	}
+		//}
 	}
 
 	private void GetActions ()

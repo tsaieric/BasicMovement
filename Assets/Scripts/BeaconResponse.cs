@@ -25,6 +25,7 @@ public class BeaconResponse : MonoBehaviour
 		}
 		
 		if (other.tag == "Player") {
+            Debug.Log("player in beacon");
 			bool allDead = true;
 			foreach (GameObject guardian in guardians) {
 				if (guardian == null) {
